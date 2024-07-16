@@ -1,7 +1,7 @@
 import React, {ButtonHTMLAttributes} from "react";
 import clsx from "clsx";
 
-import Loader from "../../Loader/Loader";
+import Loader from "../Loader/Loader";
 
 import './Button.css'
 

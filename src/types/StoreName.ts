@@ -1,5 +1,4 @@
 export enum StoreName{
-    // SECTION = 'Section',
     // LIMIT = 'Limit',
     // EXPENSE = 'Expense',
     // EXPENSES_ACTUAL = 'expenses_actual',
@@ -10,7 +9,6 @@ export enum StoreName{
     // CHECKLIST = 'Checklist',
     // TRAVEL_WAYPOINTS = 'travel_waypoints',
     // ROUTE = 'route',
-    // STORE = 'store',
     // CURRENCY = 'Currency',
     // Photo = 'Photo',
     // STORE_ACTIONS = 'storeActions',
@@ -26,6 +24,8 @@ export enum StoreName{
     // PLACE = 'Place',
     // UNINITIALIZED = 'uninitialized'
 
-    ITEMS = 'Items'
+    ITEMS = 'Items',
+    STORE = 'Store',
+    SECTIONS = 'Sections',
 
 }

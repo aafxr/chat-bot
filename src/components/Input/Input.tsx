@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import debounce from "lodash.debounce";
+import debounce from "debounce";
 import React, {InputHTMLAttributes, useCallback, useEffect, useRef, useState} from "react";
 
 import './Input.css'
@@ -49,7 +49,7 @@ export default React.forwardRef<HTMLInputElement, InputPropsType>(({delay = 0, v
 
     const handleChangeInput = useCallback(debounce((str: string) => {
         if (change.current) change.current(str)
-    }, delay, {trailing: true}), [delay])
+    }, delay, {immediate: true}), [delay])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>){
         setText(e.target.value)

@@ -1,8 +1,5 @@
 import {openIDBDatabase} from "./openIDBDatabaase";
 import {StoreName} from "../../types/StoreName";
-import {IndexName} from "../../types/IndexName";
-import {ActionType} from "../../types/ActionType";
-import {Action} from "../classes";
 import {PredicateType} from "../../types/Predicate";
 
 /**
@@ -178,25 +175,6 @@ export class DB {
     }
 
 
-    static async writeWithAction<T extends Object>(storeName:StoreName, item: T, user_id: string, actionType:ActionType){
-        const action = Action.getAction(item, user_id, storeName, actionType)
-        const db = await openIDBDatabase()
-        const tx = db.transaction([storeName, StoreName.ACTION], 'readwrite')
-        const itemStore = tx.objectStore(storeName)
-        const actionStore = tx.objectStore(StoreName.ACTION)
-        switch (actionType){
-            case ActionType.ADD:
-                itemStore.add(item)
-                actionStore.add(action)
-                return
-            case ActionType.UPDATE:
-                itemStore.put(item)
-                actionStore.put(action)
-                return
-        }
-    }
-
-
     /**
      * записывает список обектов в указанный стор
      * @param storeName
@@ -253,38 +231,17 @@ export class DB {
      * @param direction
      * @param predicate - callback которыый отфильтрует подходящие данные
      */
-    static async* openIndexCursor<T>(storeName: StoreName,indexName: IndexName, query?: IDBValidKey | IDBKeyRange, direction?: IDBCursorDirection, predicate?: PredicateType<T>) {
-        const db = await openIDBDatabase()
-        const index = db.transaction(storeName).objectStore(storeName).index(indexName)
-        let cursor = await index.openCursor(query, direction)
-        while (cursor) {
-            const item = cursor.value as T
-            if(!predicate) yield item
-            else if(predicate(item)) yield item
-            cursor = await cursor.continue()
-        }
-    }
-
-
-    /**
-     * метод позволяет получить список actions удовлетворяющих предикату
-     * @param predicate
-     */
-    static async getLocalActions<T extends {}>(predicate: (action:Action<T>)=> boolean): Promise<Action<T>[]>{
-        const actions: Action<T>[] = []
-
-        const  cursor = await DB.openCursor<Action<T>>(StoreName.ACTION)
-        let action = (await cursor.next()).value
-        while(action){
-            if(predicate(action)) {
-                action.datetime = new Date(action.datetime)
-                actions.push(action)
-            }
-            action = (await cursor.next()).value
-        }
-        return actions
-    }
-
+    // static async* openIndexCursor<T>(storeName: StoreName,indexName: IndexName, query?: IDBValidKey | IDBKeyRange, direction?: IDBCursorDirection, predicate?: PredicateType<T>) {
+    //     const db = await openIDBDatabase()
+    //     const index = db.transaction(storeName).objectStore(storeName).index(indexName)
+    //     let cursor = await index.openCursor(query, direction)
+    //     while (cursor) {
+    //         const item = cursor.value as T
+    //         if(!predicate) yield item
+    //         else if(predicate(item)) yield item
+    //         cursor = await cursor.continue()
+    //     }
+    // }
 
 
     static async getStoreItem<T>(key: string){

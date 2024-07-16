@@ -10,4 +10,6 @@ export enum IndexName {
     // UPDATED_AT = 'updated_at',
     // DATE_START = "date_start",
     // DATETIME = "datetime"
+
+    Title= 'title',
 }
