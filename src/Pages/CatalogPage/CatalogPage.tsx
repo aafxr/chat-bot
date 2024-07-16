@@ -27,12 +27,12 @@ export function CatalogPage({catalog}: CatalogProps) {
         <div className='catalog'>
             <Header/>
             <Container>
-
                 <div className='catalog-sections'>
                     {catalog.sections.map(s => (
                         <Button key={s.id} className='catalog-section-item'>{s.title}</Button>
                     ))}
                 </div>
+
 
                 {catalog.sections.map(s => (
                     <section key={s.id} className='catalog-section'>

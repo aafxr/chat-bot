@@ -13,26 +13,35 @@ const ARTICLES_KEY = 'articles'
 
 export class CatalogService {
     static async getCatalog(cb: CbWithErrorType<Catalog>) {
-        let catalog = await this._loadCatalogLocal()
+        let isLoad = false
+        this._loadCatalogLocal()
+            .then(c => {
+                if (c && !isLoad) cb(undefined, c)
+            })
 
-        if (catalog) cb(undefined, catalog)
 
         this._loadCatalog()
-            .then(c => c && cb(undefined, c))
+            .then(c => {
+                if(c) {
+                    isLoad = true
+                    cb(undefined, c)
+                }
+            })
             .catch(e => cb(e))
     }
-
 
 
     private static async _loadCatalogLocal() {
         const articles = await DB.getStoreItem<CatalogArticlesType>(ARTICLES_KEY)
         if (!articles) return
 
-        let elements = (await DB.getAll<CatalogItem>(StoreName.ITEMS)).reduce<Catalog['elements']>((a, e) => {
+        const items = (await DB.getAll<CatalogItem>(StoreName.ITEMS))
+        if (!items.length) return
+
+        const elements = items.reduce<Catalog['elements']>((a, e) => {
             a[e.id] = new CatalogItem(e)
             return a
         }, {})
-        if (!elements.length) return
 
         let sections = (await DB.getAll<CatalogSection>(StoreName.SECTIONS)).map(e => new CatalogSection(e))
         if (!sections.length) return
@@ -41,21 +50,22 @@ export class CatalogService {
     }
 
 
-
     private static async _loadCatalog() {
         const response = await fetchCatalog()
 
         if (response) {
             let {elements, articles, sections} = response
             const catalog = new Catalog({articles, sections, elements})
-            await DB.setStoreItem(ARTICLES_KEY, catalog.articles)
-            for (const el of Object.values(catalog.elements)){
-                await DB.update(StoreName.ITEMS, el)
-            }
+            new Promise(async () => {
+                await DB.setStoreItem(ARTICLES_KEY, catalog.articles)
+                for (const el of Object.values(catalog.elements)) {
+                    await DB.update(StoreName.ITEMS, el)
+                }
 
-            for (const el of catalog.sections){
-                await DB.update(StoreName.SECTIONS, el)
-            }
+                for (const el of catalog.sections) {
+                    await DB.update(StoreName.SECTIONS, el)
+                }
+            }).catch(console.error)
             return catalog
         }
     }

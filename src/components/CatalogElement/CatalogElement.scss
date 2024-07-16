@@ -6,6 +6,10 @@
     justify-content: stretch;
   }
 
+  &-inner{
+    flex: 1;
+  }
+
   &-img{
     position: relative;
     aspect-ratio: 1/1;
@@ -28,7 +32,8 @@
   }
 
   &-footer{
-    margin-top: auto;
+    flex: none;
+    margin-top: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

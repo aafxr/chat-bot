@@ -14,7 +14,8 @@
     border: none;
     border-radius: 20px;
     padding: 10px 14px;
-    filter: brightness(1.8);
+    color: var(--tg-theme-text-color);
+    background-color: var(--tg-theme-secondary-bg-color);
   }
 
   &-section-item.active{
@@ -27,10 +28,13 @@
   }
 
   &-section-title{
+    padding-top: 8px;
+    padding-bottom: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--tg-theme-section-bg-color);
+    font-size: 1.2rem;
   }
 
   &-elements{

@@ -26,13 +26,15 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
     return (
         <div className={clsx('element', className)}>
             <div className='element-content'>
-                <div className='element-img'>
-                    <LazyLoadImage
-                        alt={item.title}
-                        src={item.preview}
-                    />
+                <div className='element-inner'>
+                    <div className='element-img'>
+                        <LazyLoadImage
+                            alt={item.title}
+                            src={item.preview}
+                        />
+                    </div>
+                    <div className='element-title'>{item.title}</div>
                 </div>
-                <div className='element-title'>{item.title}</div>
                 <div className='element-footer'>
                     <div className='element-price'>{formatter.format(+item.price)}</div>
                     <Button className='element-button' onClick={() => onClick?.(item)}>
