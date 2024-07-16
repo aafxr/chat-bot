@@ -1,0 +1,25 @@
+.header{
+  height: 54px;
+  background-color: var(--tg-theme-header-bg-color);
+  color: var(--tg-theme-text-color);
+
+  &-inner{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--tg-theme-bg-color);
+    border-radius: var(--br-main);
+  }
+
+  &-search{
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  &-input{
+    padding-left: 0;
+    width: 100%;
+    border: none;
+  }
+}

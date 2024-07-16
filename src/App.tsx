@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
+import './css/App.css';
 import {Catalog} from "./core/classes/Catalog";
 import {CatalogService} from "./core/services/CatalogService";
+import {Route, Routes} from "react-router";
+import {CatalogPage} from "./Pages/CatalogPage/CatalogPage";
 
 function App() {
   const [catalog, setCatalog] = useState<Catalog>()
@@ -28,9 +30,11 @@ function App() {
 
 
   return (
-    <div className="App">
-
-    </div>
+      <Routes>
+        <Route path={'/'} element={<CatalogPage />} />
+        <Route path={'/:detailId/'} element={<CatalogPage />} />
+        <Route path={'/order/'} element={<CatalogPage />} />
+      </Routes>
   );
 }
 
