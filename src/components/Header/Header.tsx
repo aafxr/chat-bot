@@ -4,6 +4,8 @@ import clsx from "clsx";
 import {SearchIcon} from "../svg";
 import Input from "../Input/Input";
 
+import {Container} from "../Container";
+
 import './Header.scss'
 
 
@@ -30,15 +32,18 @@ export function Header({onSelect, className}: HeaderProps) {
 
     return (
         <header className={clsx('header', className)}>
-            <div className='header-inner'>
-                <SearchIcon className='header-search' onClick={handleSearchClick} />
-                <Input
-                    className='header-input'
-                    value={value}
-                    onChange={setValue}
-                    onKeyDown={handleTextChange}
-                />
-            </div>
+            <Container className='header-container'>
+                <div className='header-inner'>
+                    <SearchIcon className='header-search' onClick={handleSearchClick}/>
+                    <Input
+                        className='header-input'
+                        value={value}
+                        placeholder={'Поиск по артикулу/названию'}
+                        onChange={setValue}
+                        onKeyDown={handleTextChange}
+                    />
+                </div>
+            </Container>
         </header>
     );
 }

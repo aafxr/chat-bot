@@ -7,7 +7,6 @@ import './Button.css'
 
 
 interface ButtonPropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
-    active?: boolean
     loading?: boolean
 }
 
@@ -28,12 +27,11 @@ export default function Button({
                                    children,
                                    className,
                                    loading = false,
-                                   active = true,
                                    ...props
                                }: ButtonPropsType) {
 
     return (
-        <button className={clsx('full-screen-btn', {active}, className)} {...props}>
+        <button className={clsx('button', className)} {...props}>
             {loading && <Loader />}
             {children || ''}
         </button>

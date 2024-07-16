@@ -1,17 +1,26 @@
 .header{
-  height: 54px;
   background-color: var(--tg-theme-header-bg-color);
   color: var(--tg-theme-text-color);
 
+  &-container{
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+  }
+
   &-inner{
+    flex: 1 1;
     display: flex;
     align-items: center;
     gap: 8px;
     background-color: var(--tg-theme-bg-color);
-    border-radius: var(--br-main);
+    border-radius: 20px;
+    overflow: hidden;
   }
 
   &-search{
+    flex: none;
     width: 32px;
     height: 32px;
     cursor: pointer;
