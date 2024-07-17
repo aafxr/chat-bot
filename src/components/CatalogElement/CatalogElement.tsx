@@ -28,7 +28,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
             <div className='element-content'>
                 <div className='element-inner'>
                     <div className='element-img'>
-                        <LazyLoadImage
+                        <img
                             alt={item.title}
                             src={item.preview}
                         />
