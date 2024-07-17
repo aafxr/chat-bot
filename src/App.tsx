@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Route, Routes} from "react-router";
+import {Route, Routes, useNavigate} from "react-router";
 
 import {CatalogService} from "./core/services/CatalogService";
 import {setCatalog} from './redux/slices/catalog-slice'
@@ -12,6 +12,7 @@ import './css/App.css';
 
 
 function App() {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [isShow, setIsShow] = useState(false)
 
@@ -46,7 +47,9 @@ function App() {
         })
 
         tg.MainButton.setText('main button')
-        tg.MainButton.show()
+        tg.BackButton.show()
+        tg.BackButton.onClick(() => navigate(-1))
+
 
     }, []);
 
