@@ -33,6 +33,14 @@ function App() {
         // @ts-ignore
         const tg: any = window.Telegram.WebApp
         tg.SettingsButton.show()
+
+        tg.SettingsButton.onClick(() => {
+            tg.showConfirm('settings btn clicked', (ok: boolean) => {
+                if(ok) tg.showAlert('Done!')
+                else tg.showAlert('Cancel!')
+            })
+        })
+
         tg.MainButton.setText('main button')
         tg.MainButton.show()
     }, []);
