@@ -89,3 +89,12 @@ registerRoute(
         plugins: [],
     })
 );
+
+
+registerRoute(
+    ({ url }) => url.pathname.startsWith('/upload/resize_cache'),
+    new CacheFirst({
+        cacheName: 'tg-images',
+        plugins: [],
+    })
+);

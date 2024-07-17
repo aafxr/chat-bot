@@ -29,10 +29,12 @@ export function CatalogPage({}: CatalogProps) {
     return (
         <div className='catalog'>
             <Header/>
-            <div className='catalog-sections'>
-                {catalog.sections.map(s => (
-                    <Button key={s.id} className='catalog-section-item'>{s.title}</Button>
-                ))}
+            <div className='catalog-sectionsContainer'>
+                <div className='catalog-sections'>
+                    {catalog.sections.map(s => (
+                        <Button key={s.id} className='catalog-section-item'>{s.title}</Button>
+                    ))}
+                </div>
             </div>
             <Container>
 
