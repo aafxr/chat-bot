@@ -12,6 +12,10 @@ function App() {
     const [catalog, setCatalog] = useState<Catalog>()
 
 
+
+    const [isShow, setIsShow] = useState(false)
+
+
     useEffect(() => {
         function handleService(e?: Error, c?: Catalog) {
             if (e) {
@@ -43,6 +47,10 @@ function App() {
 
         tg.MainButton.setText('main button')
         tg.MainButton.show()
+        tg.MainButton.onClick(() => {
+            tg.SettingsButton[isShow ? 'show' : 'hide']?.()
+            setIsShow(!isShow)
+        })
     }, []);
 
 
