@@ -1,6 +1,10 @@
 :root{
     --br-main: 8px;
     --margin-main: 15px;
+    --header-height: 54px;
+
+
+    --offset-main: var(--margin-main);
 
     --tg-color-scheme: ;
     --tg-viewport-height: 100vh;
@@ -16,7 +20,7 @@
     --tg-theme-accent-text-color: #2c77ff;
     --tg-theme-section-bg-color: #eee;
     --tg-theme-section-header-text-color: #777;
-    --tg-theme-section-separator-color: white;
+    --tg-theme-section-separator-color: var(--tg-theme-section-bg-color);
     --tg-theme-subtitle-text-color: #777;
     --tg-theme-destructive-text-color: #FF4B41;
 

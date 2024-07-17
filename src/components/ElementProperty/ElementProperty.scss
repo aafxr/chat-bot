@@ -1,0 +1,23 @@
+.property{
+  color: var(--tg-theme-text-color);
+  font-size: 0.75rem;
+
+
+  &-container{
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--tg-theme-section-bg-color);
+    border-radius: var(--br-main);
+  }
+
+  &-name{
+
+  }
+
+  &-value{
+
+  }
+
+}

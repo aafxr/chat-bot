@@ -12,7 +12,7 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import {CacheFirst} from 'workbox-strategies';
+import {CacheFirst, NetworkFirst} from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -80,3 +80,12 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+
+registerRoute(
+    ({ url }) => url.pathname.startsWith('/app/tg'),
+    new NetworkFirst({
+        cacheName: 'tg-app-data',
+        plugins: [],
+    })
+);

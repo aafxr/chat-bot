@@ -19,6 +19,10 @@ export const DB_STORES: DBStoreDescriptionType[] = [
         name: StoreName.STORE,
         key: 'name',
         indexes: [],
-
+    },
+    {
+        name: StoreName.PRODUCT_DETAILS,
+        key: 'id',
+        indexes: [],
     },
 ]

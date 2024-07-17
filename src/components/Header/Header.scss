@@ -1,12 +1,17 @@
 .header{
-  background-color: var(--tg-theme-header-bg-color);
-  color: var(--tg-theme-text-color);
+    position: fixed;
+    right: 0;
+    left: 0;
+    color: var(--tg-theme-text-color);
+    background-color: var(--tg-theme-header-bg-color);
 
   &-container{
-    height: 54px;
+
+    height: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: stretch;
+    z-index: 2;
   }
 
   &-inner{

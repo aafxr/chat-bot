@@ -27,5 +27,6 @@ export enum StoreName{
     ITEMS = 'Items',
     STORE = 'Store',
     SECTIONS = 'Sections',
+    PRODUCT_DETAILS = 'ProductDetails'
 
 }

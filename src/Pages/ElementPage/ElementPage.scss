@@ -1,6 +1,6 @@
 .itemDetails{
   &-container{
-    margin: 0 var(--margin-main);
+    margin: var(--margin-main) var(--margin-main) 0;
   }
 
   &-slider{
@@ -12,4 +12,62 @@
   &-slide{
     aspect-ratio: 1/1;
   }
+
+  &-inner{
+    padding: var(--offset-main);
+  }
+
+  &-title{
+    margin-top: 0.5rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+
+  &-section{
+    margin-top: 0.5rem;
+    padding: 8px;
+    background-color: var(--tg-theme-section-bg-color);
+    border-radius: var(--br-main);
+  }
+
+  &-prop{
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-propName{
+    flex: 2 1;
+    font-size: 0.75rem;
+  }
+
+  &-propValue{
+    flex: 1 1;
+    font-weight: 600;
+    font-size: 0.875rem;
+
+  }
+
+  &-separator{
+    height: 8px;
+    background-color: var(--tg-theme-section-separator-color);
+  }
+
+  &-subtitle{
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &-property{
+    margin-top: 0.5rem;
+  }
+
+  &-property + &-property{
+    margin-top: 4px;
+  }
+
+
+
 }

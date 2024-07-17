@@ -6,6 +6,8 @@ import {StoreName} from "../../types/StoreName";
 import {CatalogItem} from "../classes/CatalogItem";
 import {CatalogSection} from "../classes/CatalogSection";
 import {fetchCatalog} from "../../api/fetchCatalog";
+import {ProductDetails} from "../classes/ProductDetails";
+import {fetchElementDetail} from "../../api/fetchElementDetail";
 
 
 const ARTICLES_KEY = 'articles'
@@ -68,6 +70,24 @@ export class CatalogService {
             }).catch(console.error)
             return catalog
         }
+    }
+
+
+    static async getProductDetails(item: CatalogItem, cb: CbWithErrorType<ProductDetails>){
+        DB.getOne<ProductDetails>(StoreName.PRODUCT_DETAILS, item.id)
+            .then(pd => cb(undefined, pd? new ProductDetails(pd) : undefined))
+            .catch(e => cb(e))
+
+        fetchElementDetail(item)
+            .then(pd => {
+                if(pd){
+                    pd = new ProductDetails(pd)
+                    pd.id = item.id
+                    DB.update(StoreName.PRODUCT_DETAILS, pd)
+                    cb(undefined, pd )
+                }
+            })
+            .catch(e => cb(e))
     }
 
 
