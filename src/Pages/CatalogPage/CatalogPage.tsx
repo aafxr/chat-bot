@@ -9,20 +9,25 @@ import {CatalogElement} from "../../components/CatalogElement/CatalogElement";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 
 import './Catalog.scss'
+import {useCatalog} from "../../redux/hooks/useCatalog";
+import {useNavigate} from "react-router";
 
 
 export type CatalogProps = {
-    catalog: Catalog
 }
 
 
-export function CatalogPage({catalog}: CatalogProps) {
+export function CatalogPage({}: CatalogProps) {
+    const catalog = useCatalog()
+    const navigate = useNavigate()
 
 
     function handleElementClick(item: CatalogItem){
-        console.log(item)
+        navigate(`/${item.id}`)
     }
 
+
+    if(!catalog) return null
 
     return (
         <div className='catalog'>
