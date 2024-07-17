@@ -29,6 +29,15 @@ function App() {
     }, []);
 
 
+    useEffect(() => {
+        // @ts-ignore
+        const tg: any = window.Telegram.WebApp
+        tg.SettingsButton.show()
+        tg.MainButton.setText('main button')
+        tg.MainButton.show()
+    }, []);
+
+
     console.log(catalog)
 
 

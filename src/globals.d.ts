@@ -2,7 +2,7 @@ declare global {
 
 
     interface Window {
-        Telegram?: any
+        Telegram: any
     }
 
 }

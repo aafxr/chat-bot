@@ -5,9 +5,10 @@ import {Catalog} from "../../core/classes/Catalog";
 import Button from "../../components/Button/Button";
 import {Container} from "../../components/Container";
 
-import './Catalog.scss'
 import {CatalogElement} from "../../components/CatalogElement/CatalogElement";
 import {CatalogItem} from "../../core/classes/CatalogItem";
+
+import './Catalog.scss'
 
 
 export type CatalogProps = {
