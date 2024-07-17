@@ -9,6 +9,7 @@ import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 
 import './Catalog.scss'
+import {CatalogSections} from "../../components/CatalogSections";
 
 
 export type CatalogProps = {}
@@ -29,13 +30,7 @@ export function CatalogPage({}: CatalogProps) {
     return (
         <div className='catalog'>
             <Header/>
-            <div className='catalog-sectionsContainer'>
-                <div className='catalog-sections'>
-                    {catalog.sections.map(s => (
-                        <Button key={s.id} className='catalog-section-item'>{s.title}</Button>
-                    ))}
-                </div>
-            </div>
+            <CatalogSections catalog={catalog}/>
             <Container>
 
                 <div className='catalog-content'>

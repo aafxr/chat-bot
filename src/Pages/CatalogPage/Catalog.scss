@@ -9,29 +9,6 @@
     background-color: var(--tg-theme-header-bg-color);
   }
 
-  &-sections{
-    height: var(--header-height);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    overflow-x: scroll;
-  }
-
-  &-section-item{
-    flex: none;
-    white-space: nowrap;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 14px;
-    color: var(--tg-theme-text-color);
-    background-color: var(--tg-theme-secondary-bg-color);
-  }
-
-  &-section-item.active{
-    color: var(--tg-theme-button-text-color);
-    background-color: var(--tg-theme-button-color);
-  }
-
   &-content{
     padding-top: calc(var(--header-height ) * 2);
   }
