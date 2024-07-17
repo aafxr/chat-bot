@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate, useParams} from "react-router";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 
@@ -12,6 +12,15 @@ export function ElementPage() {
     const {detailId} = useParams()
     const element = useCatalogElement(detailId)
     const navigate = useNavigate()
+
+
+    useEffect(() => {
+        // @ts-ignore
+        const tg = window.Telegram.WebApp
+        tg.BackButton.show()
+        return () => {tg.BackButton.hide()}
+    }, []);
+
 
     if (!element) {
         navigate('/')

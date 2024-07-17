@@ -47,7 +47,6 @@ function App() {
         })
 
         tg.MainButton.setText('main button')
-        tg.BackButton.show()
         tg.BackButton.onClick(() => navigate(-1))
 
 
