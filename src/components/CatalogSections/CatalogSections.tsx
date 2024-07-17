@@ -19,11 +19,9 @@ export type CatalogArticlesProps = {
 export function CatalogSections({catalog, className, selected, onSelect}: CatalogArticlesProps) {
 
 
-
-
-
     return (
-            <div className={clsx('sections sections-container', className)}>
+        <div className={clsx('sections', className)}>
+            <div className='sections-container'>
                 <div className='sections-list'>
                     {catalog.sections.map(s => (
                         <Button
@@ -37,6 +35,7 @@ export function CatalogSections({catalog, className, selected, onSelect}: Catalo
                     ))}
                 </div>
             </div>
+        </div>
     );
 }
 
