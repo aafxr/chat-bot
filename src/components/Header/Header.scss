@@ -4,14 +4,13 @@
     left: 0;
     color: var(--tg-theme-text-color);
     background-color: var(--tg-theme-header-bg-color);
+    z-index: 2;
 
   &-container{
-
     height: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: stretch;
-    z-index: 2;
   }
 
   &-inner{
