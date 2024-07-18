@@ -1,69 +1,81 @@
-.itemDetails{
-  &-container{
+.itemDetails {
+  &-container {
     margin: var(--margin-main) var(--margin-main) 0;
   }
 
-  &-slider{
+  &-slider {
     aspect-ratio: 1/1;
     border-radius: var(--br-main);
     overflow: hidden;
   }
 
-  &-slide{
+  &-slide {
     aspect-ratio: 1/1;
     background-size: cover;
     background-repeat: no-repeat;
   }
 
-  &-inner{
+  &-inner {
   }
 
-  &-title{
+  &-title {
     margin-top: 1rem;
   }
 
-  &-section{
+  &-section {
     margin-top: 0.5rem;
   }
 
-  &-prop{
+  &-prop {
     display: flex;
     justify-content: stretch;
     align-items: center;
     gap: 8px;
   }
 
-  &-propName{
+  &-propName {
     flex: 2 1;
     font-size: 0.75rem;
   }
 
-  &-propValue{
+  &-propValue {
     flex: 1 1;
     font-weight: 600;
     font-size: 0.875rem;
 
   }
 
-  &-separator{
+  &-separator {
     height: 8px;
     background-color: var(--tg-theme-section-separator-color);
   }
 
-  &-subtitle{
+  &-subtitle {
     margin-top: 1rem;
     font-size: 1rem;
     font-weight: 600;
   }
 
-  &-property{
+  &-property {
     margin-top: 0.5rem;
   }
 
-  &-property + &-property{
+  &-property + &-property {
     margin-top: 4px;
   }
 
+  &-balance {
+    margin-top: 12px;
+  }
 
+  &-total {
+    margin-top: 1rem;
+    font-weight: 700;
+
+    .balance-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  }
 
 }

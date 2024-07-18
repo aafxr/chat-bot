@@ -1,0 +1,44 @@
+.balance{
+  font-size: 0.875rem;
+  &-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-name{
+    font-weight: 400;
+  }
+
+  &-rest{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  &-quantity{
+
+  }
+
+  &-mesure{
+    margin-left: 4px;
+    sub{
+      position: relative;
+      font-size: .7rem;
+      top: -.4rem;
+    }
+  }
+}
+
+
+.balance.active{
+  .balance-name{
+    font-weight: 700;
+  }
+
+  .balance-quantity{
+    font-weight: 700;
+  }
+}

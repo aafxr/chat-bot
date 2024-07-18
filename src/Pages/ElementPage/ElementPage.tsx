@@ -7,8 +7,11 @@ import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
+import {ElementBalance} from "../../components/ElementBalance";
+import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
 import {Section} from "../../components/Section";
+import {Radio} from "../../components/Radio";
 import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
@@ -19,6 +22,7 @@ export function ElementPage() {
     const element = useCatalogElement(detailId)
     const navigate = useNavigate()
     const [productDetails, setProductDetails] = useState<ProductDetails>()
+    const [balance, setBalance] = useState<Balance>()
 
 
     useEffect(() => {
@@ -106,7 +110,39 @@ export function ElementPage() {
                             </Section>
 
                             <Section className='itemDetails-section'>
+                                <>
+                                <Subtitle>Доступно для заказа</Subtitle>
+                                {productDetails.Balance_Strings
+                                    .filter(b => !b.TradeArea_Name.toLowerCase().startsWith('всего'))
+                                    .map( b => (
+                                    <Radio
+                                        key={b.TradeArea_Id}
+                                        className='itemDetails-balance'
+                                        name='tranzit'
+                                        value={b.TradeArea_Name}
+                                        onClick={() => setBalance(b)}
+                                        checked={b.TradeArea_Id === balance?.TradeArea_Id}
+                                    >
+                                        <ElementBalance
+                                            balance={b}
+                                            packUnit={+productDetails.PackUnitQuantity}
+                                            active={b.TradeArea_Id === balance?.TradeArea_Id}
+                                        />
+                                    </Radio>
+                                ))}
 
+                                {productDetails.Balance_Strings
+                                    .filter(b => b.TradeArea_Name.toLowerCase().startsWith('всего'))
+                                    .map(b => (
+                                        <ElementBalance
+                                            key={b.TradeArea_Id}
+                                            className='itemDetails-total'
+                                            balance={b}
+                                            packUnit={+productDetails.PackUnitQuantity}
+                                        />
+                                    ))
+                                }
+                                </>
                             </Section>
                             {/*<div className="selected-list-item warehouse selected">*/}
                             {/*    <div className="col-none">*/}
