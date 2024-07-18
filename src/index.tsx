@@ -8,18 +8,22 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import {store} from "./redux/store";
 import App from './App';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/index.css';
+import {BootstrapThemeProvider} from "./providers/BootstrapThemeProvider/BootstrapThemeProvider";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     // <React.StrictMode>
-    <Provider store={store}>
-        <BrowserRouter>
-            <App/>
-        </BrowserRouter>
-    </Provider>
+    <BootstrapThemeProvider>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
+        </Provider>
+    </BootstrapThemeProvider>
     // </React.StrictMode>
 );
 

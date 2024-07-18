@@ -42,3 +42,12 @@ code {
   margin-top: auto;
 }
 
+.bot-card-title{
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.bot-card-body{
+  padding: 4px;
+}
+
