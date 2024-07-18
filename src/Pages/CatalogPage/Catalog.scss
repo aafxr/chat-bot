@@ -1,23 +1,18 @@
 .catalog{
 
-  &-sectionsContainer{
-    position: fixed;
-    right: 0;
-    left: 0;
-    top: var(--header-height);
-    z-index: 2;
-    background-color: var(--tg-theme-header-bg-color);
+  &-container{
   }
 
   &-content{
+    height: 100%;
     padding-top: calc(var(--header-height ) * 2);
+    overflow: auto;
+    scroll-behavior: smooth;
   }
 
-  &-section{
-
-  }
 
   &-section-title{
+    margin: 0.5rem 0;
     padding-top: 8px;
     padding-bottom: 8px;
     display: flex;
@@ -31,7 +26,8 @@
 
   &-elements{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);//(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: var(--margin-main);
   }
+
 }

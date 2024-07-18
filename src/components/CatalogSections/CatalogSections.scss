@@ -10,11 +10,13 @@
   }
 
   &-list{
+    position: relative;
     height: var(--header-height);
     display: flex;
     align-items: center;
     gap: 8px;
     overflow-x: scroll;
+    scroll-behavior: smooth;
   }
 
   &-item{

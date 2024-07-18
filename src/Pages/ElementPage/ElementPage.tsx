@@ -9,9 +9,9 @@ import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
 import {Subtitle} from "../../components/Subtitle";
 import {Section} from "../../components/Section";
+import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
-import {Title} from "../../components/Title";
 
 
 export function ElementPage() {
@@ -48,8 +48,6 @@ export function ElementPage() {
         navigate('/')
         return <></>
     }
-
-    console.log(productDetails)
 
 
     return (
