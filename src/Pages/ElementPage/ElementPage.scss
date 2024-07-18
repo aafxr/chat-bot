@@ -14,20 +14,14 @@
   }
 
   &-inner{
-    padding: var(--offset-main);
   }
 
   &-title{
-    margin-top: 0.5rem;
-    font-weight: 600;
-    font-size: 1.25rem;
+    margin-top: 1rem;
   }
 
   &-section{
     margin-top: 0.5rem;
-    padding: 8px;
-    background-color: var(--tg-theme-section-bg-color);
-    border-radius: var(--br-main);
   }
 
   &-prop{

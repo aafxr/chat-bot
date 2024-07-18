@@ -4,8 +4,9 @@
     right: 0;
     left: 0;
     top: var(--header-height);
-    z-index: 2;
     background-color: var(--tg-theme-header-bg-color);
+    overflow: hidden;
+    z-index: 2;
   }
 
   &-list{

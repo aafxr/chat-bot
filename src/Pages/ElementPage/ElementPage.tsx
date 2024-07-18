@@ -1,14 +1,17 @@
+import 'react-slideshow-image/dist/styles.css'
+import {Slide} from 'react-slideshow-image';
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
+
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
-
 import {CatalogService} from "../../core/services/CatalogService";
-import {Slide} from 'react-slideshow-image';
-
-import './ElementPage.scss'
-import 'react-slideshow-image/dist/styles.css'
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
+import {Subtitle} from "../../components/Subtitle";
+import {Section} from "../../components/Section";
+
+import './ElementPage.scss'
+import {Title} from "../../components/Title";
 
 
 export function ElementPage() {
@@ -72,12 +75,10 @@ export function ElementPage() {
 
                 </div>
                 <div className='itemDetails-inner'>
-                    <div className='itemDetails-title'>
-                        {element.title}
-                    </div>
+                    <Title className='itemDetails-title'>{element.title}</Title>
                     {productDetails && (
                         <>
-                            <div className='itemDetails-section'>
+                            <Section className='itemDetails-section'>
                                 <div className='itemDetails-prop'>
                                     <div className='itemDetails-propName'>{productDetails.Price_MRC.Name}</div>
                                     <div className='itemDetails-propValue'>
@@ -98,26 +99,30 @@ export function ElementPage() {
                                         {productDetails.PackUnitMeasure}&nbsp;=&nbsp;{productDetails.PackUnitQuantity}&nbsp;{productDetails.UnitOfMeasure}
                                     </div>
                                 </div>
-                            </div>
-                            <div className='itemDetails-subtitle'>
-                                Характеристики
-                            </div>
-                            {element.properties.map(p => (
-                                <ElementProperty key={p.id} className='itemDetails-property' property={p}/>
-                            ))}
-                            <div className="selected-list-item warehouse selected">
-                                <div className="col-none">
-                                    <input
-                                        type="radio"
-                                        name="warehouse-selected"
-                                        value="e3b35c38-65f0-11eb-bfb1-902b3434e458"
-                                    />
-                                </div>
-                                <div className="col-none warehouse-item-name">Москва Север<br/></div>
-                                <div className="col"></div>
-                                <div className="col-none warehouse-item-quantity"><span>19,97</span><br/>12</div>
-                                <div className="col-none warehouse-item-measure">м2<br/>упак</div>
-                            </div>
+                            </Section>
+                            <Section className='itemDetails-section'>
+                                <Subtitle>Характеристики</Subtitle>
+                                {element.properties.map(p => (
+                                    <ElementProperty key={p.id} className='itemDetails-property' property={p}/>
+                                ))}
+                            </Section>
+
+                            <Section className='itemDetails-section'>
+
+                            </Section>
+                            {/*<div className="selected-list-item warehouse selected">*/}
+                            {/*    <div className="col-none">*/}
+                            {/*        <input*/}
+                            {/*            type="radio"*/}
+                            {/*            name="warehouse-selected"*/}
+                            {/*            value="e3b35c38-65f0-11eb-bfb1-902b3434e458"*/}
+                            {/*        />*/}
+                            {/*    </div>*/}
+                            {/*    <div className="col-none warehouse-item-name">Москва Север<br/></div>*/}
+                            {/*    <div className="col"></div>*/}
+                            {/*    <div className="col-none warehouse-item-quantity"><span>19,97</span><br/>12</div>*/}
+                            {/*    <div className="col-none warehouse-item-measure">м2<br/>упак</div>*/}
+                            {/*</div>*/}
                         </>
                     )}
                 </div>
