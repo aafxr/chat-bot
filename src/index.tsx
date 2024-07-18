@@ -9,7 +9,7 @@ import {store} from "./redux/store";
 import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/index.css';
+import './css/index.scss';
 import {BootstrapThemeProvider} from "./providers/BootstrapThemeProvider/BootstrapThemeProvider";
 
 const root = ReactDOM.createRoot(
