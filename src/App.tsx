@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Route, Routes, useNavigate} from "react-router";
 
 import {CatalogService} from "./core/services/CatalogService";
 import {setCatalog} from './redux/slices/catalog-slice'
+import {useCatalog} from "./redux/hooks/useCatalog";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {Catalog} from "./core/classes/Catalog";
@@ -14,10 +15,11 @@ import './css/App.css';
 function App() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const [isShow, setIsShow] = useState(false)
+    const catalog = useCatalog()
 
 
     useEffect(() => {
+        if(catalog) return
         function handleService(e?: Error, c?: Catalog) {
             if (e) {
                 console.error(e)
@@ -37,30 +39,9 @@ function App() {
     useEffect(() => {
         // @ts-ignore
         const tg: any = window.Telegram.WebApp
-        tg.SettingsButton.show()
-
-        tg.SettingsButton.onClick(() => {
-            tg.showConfirm('settings btn clicked', (ok: boolean) => {
-                if (ok) tg.showAlert('Done!')
-                else tg.showAlert('Cancel!')
-            })
-        })
-
         tg.MainButton.setText('main button')
         tg.BackButton.onClick(() => navigate(-1))
-
-
     }, []);
-
-
-    useEffect(() => {
-        // @ts-ignore
-        const tg: any = window.Telegram.WebApp
-        tg.MainButton.onClick(() => {
-            tg.SettingsButton[isShow ? 'show' : 'hide']?.()
-            setIsShow(!isShow)
-        })
-    }, [isShow]);
 
 
     return (

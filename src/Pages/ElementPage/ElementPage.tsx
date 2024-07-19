@@ -2,13 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
 import {Carousel, Tab, Tabs} from "react-bootstrap";
 
-import {CatalogElement} from "../../components/CatalogElement/CatalogElement";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
 import {ElementBalance} from "../../components/ElementBalance";
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {RelatedItems} from "../../components/RelatedItems";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
@@ -24,17 +23,11 @@ type ElementPageState = {
     productDetailsRequested: boolean
 
     balance?: Balance
-    related: ProductDetails[]
-    relatedLoading: boolean
-    relatedRequested: boolean
 }
 
 const defaultState: ElementPageState = {
     productDetailsLoading: false,
     productDetailsRequested: false,
-    related: [],
-    relatedLoading: false,
-    relatedRequested: false
 }
 
 
@@ -69,28 +62,6 @@ export function ElementPage() {
     }, [element, state]);
 
 
-    useEffect(() => {
-        const {productDetails} = state
-        if (!productDetails || !element || state.relatedLoading || state.relatedRequested) return
-
-        setState(p => ({...p, elatedLoading: true, relatedRequested: true}))
-        CatalogService.relatedProducts(
-            productDetails,
-            (e?: Error, p?: ProductDetails[]) => {
-                if (p) setState(prev => ({...prev, related: p}))
-            })
-            .catch(console.error)
-            .finally(() => setState(p => ({...p, relatedLoading: false})))
-    }, [element, state]);
-
-
-    function handleRelatedClick(item: CatalogItem) {
-        setState({...defaultState})
-        navigate(`/${item.id}`)
-    }
-
-
-    const relatedItems = (catalog && state.related.map(r => catalog.getElementByArticle(r.ProductArticleForChatBot))) || []
 
     useEffect(() => {
         // @ts-ignore
@@ -107,9 +78,7 @@ export function ElementPage() {
         return <></>
     }
 
-    const {productDetails, balance, related} = state
-    console.log(state)
-
+    const {productDetails, balance} = state
 
 
     return (
@@ -230,18 +199,7 @@ export function ElementPage() {
                                 </Tab>
                             </Tabs>
 
-                            <div className='itemDetails-related mt-2'>
-                                {relatedItems.map(r => (
-                                    <CatalogElement
-                                        key={r.id}
-                                        className='itemDetails-related-item'
-                                        item={r}
-                                        onClick={handleRelatedClick}
-                                    />
-                                ))
-                                }
-                            </div>
-
+                            {productDetails && <RelatedItems productDetails={productDetails} />}
 
                             {/*<div className="selected-list-item warehouse selected">*/}
                             {/*    <div className="col-none">*/}
