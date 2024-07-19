@@ -8,6 +8,7 @@ import {CatalogSection} from "../classes/CatalogSection";
 import {fetchCatalog} from "../../api/fetchCatalog";
 import {ProductDetails} from "../classes/ProductDetails";
 import {fetchElementDetail} from "../../api/fetchElementDetail";
+import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 
 
 const ARTICLES_KEY = 'articles'
@@ -86,6 +87,18 @@ export class CatalogService {
                     DB.update(StoreName.PRODUCT_DETAILS, pd)
                     cb(undefined, pd )
                 }
+            })
+            .catch(e => cb(e))
+    }
+
+
+    static async relatedProducts(pd: ProductDetails, cb: CbWithErrorType<ProductDetails[]>){
+        fetchRelatedProducts(pd)
+            .then(p => {
+                if(!p) return
+                p = p.map(e => new ProductDetails(e))
+                cb(undefined, p)
+
             })
             .catch(e => cb(e))
     }

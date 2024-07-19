@@ -78,4 +78,16 @@
     }
   }
 
+  &-related{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    gap: 1rem;
+
+    &-item{
+      flex: none;
+      width: 150px;
+    }
+  }
+
 }

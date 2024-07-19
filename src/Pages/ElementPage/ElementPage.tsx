@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
 import {Carousel, Tab, Tabs} from "react-bootstrap";
 
+import {CatalogElement} from "../../components/CatalogElement/CatalogElement";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
-import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
 import {ElementBalance} from "../../components/ElementBalance";
+import {CatalogItem} from "../../core/classes/CatalogItem";
+import {useCatalog} from "../../redux/hooks/useCatalog";
 import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
 import {Section} from "../../components/Section";
@@ -16,32 +18,79 @@ import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
 
+type ElementPageState = {
+    productDetails?: ProductDetails
+    productDetailsLoading: boolean
+    productDetailsRequested: boolean
+
+    balance?: Balance
+    related: ProductDetails[]
+    relatedLoading: boolean
+    relatedRequested: boolean
+}
+
+const defaultState: ElementPageState = {
+    productDetailsLoading: false,
+    productDetailsRequested: false,
+    related: [],
+    relatedLoading: false,
+    relatedRequested: false
+}
+
 
 export function ElementPage() {
-    const {detailId} = useParams()
-    const element = useCatalogElement(detailId)
     const navigate = useNavigate()
-    const [productDetails, setProductDetails] = useState<ProductDetails>()
-    const [balance, setBalance] = useState<Balance>()
+    const {detailId} = useParams()
+    const catalog = useCatalog()
+    const element = useCatalogElement(detailId)
+    const [state, setState] = useState({...defaultState})
+
+    useEffect(() => {
+        setState({...defaultState})
+    }, [detailId]);
 
 
     useEffect(() => {
-        if (!element) return
+        if (!element || state.productDetailsLoading || state.productDetailsRequested) return
+
+        setState({...state, productDetailsLoading: true})
         CatalogService.getProductDetails(element,
             (e, pd) => {
-                console.log(pd)
-                console.error(e)
                 if (pd) {
-                    setProductDetails(pd)
-                    fetchRelatedProducts(pd)
-                        .then(console.log)
-                        .catch(console.error)
+                    setState(p => ({...p, productDetails: pd,}))
                 }
-            }
-        )
+            })
             .catch(console.error)
-    }, []);
+            .finally(() => setState(p => ({
+                ...p,
+                productDetailsLoading: false,
+                productDetailsRequested: true
+            })))
+    }, [element, state]);
 
+
+    useEffect(() => {
+        const {productDetails} = state
+        if (!productDetails || !element || state.relatedLoading || state.relatedRequested) return
+
+        setState(p => ({...p, elatedLoading: true, relatedRequested: true}))
+        CatalogService.relatedProducts(
+            productDetails,
+            (e?: Error, p?: ProductDetails[]) => {
+                if (p) setState(prev => ({...prev, related: p}))
+            })
+            .catch(console.error)
+            .finally(() => setState(p => ({...p, relatedLoading: false})))
+    }, [element, state]);
+
+
+    function handleRelatedClick(item: CatalogItem) {
+        setState({...defaultState})
+        navigate(`/${item.id}`)
+    }
+
+
+    const relatedItems = (catalog && state.related.map(r => catalog.getElementByArticle(r.ProductArticleForChatBot))) || []
 
     useEffect(() => {
         // @ts-ignore
@@ -58,27 +107,41 @@ export function ElementPage() {
         return <></>
     }
 
+    const {productDetails, balance, related} = state
+    console.log(state)
+
+
 
     return (
         <div className='itemDetails'>
             <div className="itemDetails-container">
                 <div className='itemDetails-slider'>
-                    <Carousel
-                        controls={false}
-                        pause='hover'
-                        interval={3000}
-                        touch={true}
-                    >
-                        {element.photo.map((slideImage) => (
-                                <Carousel.Item key={slideImage.id}>
-                                    <div
-                                        key={slideImage.id}
-                                        className='itemDetails-slide'
-                                        style={{'backgroundImage': `url(${slideImage.src})`}}
-                                    />
-                                </Carousel.Item>
-                        ))}
-                    </Carousel>
+                    {element.photo.length
+                        ? (
+                            <Carousel
+                                controls={false}
+                                pause='hover'
+                                interval={3000}
+                                touch={true}
+                            >
+                                {element.photo.map((slideImage) => (
+                                    <Carousel.Item key={slideImage.id}>
+                                        <div
+                                            key={slideImage.id}
+                                            className='itemDetails-slide'
+                                            style={{'backgroundImage': `url(${slideImage.src})`}}
+                                        />
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        )
+                        : (
+                            <div
+                                className='itemDetails-slide'
+                                style={{'backgroundImage': `url(${element.preview})`}}
+                            />
+                        )
+                    }
 
 
                 </div>
@@ -135,7 +198,7 @@ export function ElementPage() {
                                                         className='itemDetails-balance'
                                                         name='tranzit'
                                                         value={b.TradeArea_Name}
-                                                        onClick={() => setBalance(b)}
+                                                        onClick={() => setState({...state, balance: b})}
                                                         checked={b.TradeArea_Id === balance?.TradeArea_Id}
                                                     >
                                                         <ElementBalance
@@ -166,6 +229,18 @@ export function ElementPage() {
                                     </Section>
                                 </Tab>
                             </Tabs>
+
+                            <div className='itemDetails-related mt-2'>
+                                {relatedItems.map(r => (
+                                    <CatalogElement
+                                        key={r.id}
+                                        className='itemDetails-related-item'
+                                        item={r}
+                                        onClick={handleRelatedClick}
+                                    />
+                                ))
+                                }
+                            </div>
 
 
                             {/*<div className="selected-list-item warehouse selected">*/}

@@ -18,12 +18,17 @@ export class Catalog {
         this.sections = c.sections !== undefined ? c.sections.map(e => new CatalogSection(e)) : []
     }
 
-    getElements(ids: CatalogItem['id'][]){
+    getElements(ids: CatalogItem['id'][]) {
         const res: CatalogItem[] = []
-        for (const id of ids ){
+        for (const id of ids) {
             const c = this.elements[id]
-            if(c) res.push(c)
+            if (c) res.push(c)
         }
         return res
+    }
+
+    getElementByArticle(article: string) {
+        const elementID = this.articles[article]
+        return this.elements[elementID]
     }
 }
