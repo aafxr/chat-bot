@@ -1,10 +1,13 @@
 .productDetails{
 
-  &-button{
+  &-buttonContainer{
     position: fixed;
-    bottom: 0;
-    left: var(--offset-main);
+    top: 0;
+    right: 0;
     opacity: 1;
+    transform: translateY(-100%) rotate(-90deg);
+    transform-origin: right bottom;
+    transition: opacity .3s;
   }
 
   &-offcanvas{
@@ -31,8 +34,8 @@
 }
 
 .productDetails.open {
-  .productDetails-button {
-    opacity: 0;
+  .productDetails-buttonContainer {
+    opacity: 0.5;
     pointer-events: none;
   }
 }

@@ -68,12 +68,13 @@ export function RelatedItems({productDetails, className}: RelatedItemsProps) {
 
     return (
         <div className={clsx('productDetails', {open: state.open}, className)}>
-            {relatedItems.length && (
+            {!!relatedItems.length && (
                 <>
-                    <Button
-                        className='productDetails-button'
-                        onClick={handleToggleCanvas}
-                    >Сопутствующие товары</Button>
+                    <div className='productDetails-buttonContainer'>
+                        <Button
+                            onClick={handleToggleCanvas}
+                        >Сопутствующие товары</Button>
+                    </div>
                     <Offcanvas
                         className='productDetails-offcanvas'
                         placement='bottom'
