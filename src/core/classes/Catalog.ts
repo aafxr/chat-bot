@@ -40,7 +40,7 @@ export class Catalog {
     }
 
     setFilter(text: string) {
-        this._filter = text
+        this._filter = text.toLowerCase()
         if(!text) {
             this.filteredItems = {}
             return
@@ -48,7 +48,7 @@ export class Catalog {
 
         this.filteredItems = Object.values(this.elements)
             .reduce<Record<CatalogItem['id'], CatalogItem>>((a, e) => {
-                if (e.title.includes(text)) a[e.id] = e
+                if (e.title.toLowerCase().includes(this._filter)) a[e.id] = e
                 return a
             }, {})
     }
