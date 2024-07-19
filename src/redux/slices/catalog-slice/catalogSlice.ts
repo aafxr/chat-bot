@@ -17,9 +17,15 @@ export const catalogSlice = createSlice({
         setCatalog(state, action: PayloadAction<Catalog>){
             state.catalog = action.payload
         },
+        setCatalogFilter(state, action: PayloadAction<string>){
+            if(state.catalog) {
+                state.catalog.setFilter(action.payload)
+                state.catalog = new Catalog(state.catalog)
+            }
+        }
     },
 })
 
-export const { setCatalog } = catalogSlice.actions
+export const { setCatalog, setCatalogFilter } = catalogSlice.actions
 
 export const catalogReducer = catalogSlice.reducer

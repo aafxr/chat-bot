@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
 import clsx from "clsx";
+import React, {useState} from 'react';
+import debounce from "lodash.debounce";
 
-import {SearchIcon} from "../svg";
-import Input from "../Input/Input";
-
+import {setCatalogFilter} from "../../redux/slices/catalog-slice";
+import {useAppDispatch} from "../../redux/hooks";
 import {Container} from "../Container";
+import Input from "../Input/Input";
+import {SearchIcon} from "../svg";
 
 import './Header.scss'
 
@@ -16,17 +18,26 @@ export type HeaderProps = {
 
 
 export function Header({onSelect, className}: HeaderProps) {
-    const [value, setValue] =useState('')
+    const [value, setValue] = useState('')
+    const dispatch = useAppDispatch()
 
 
-    function handleTextChange(e: React.KeyboardEvent<HTMLInputElement>){
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const {key} = e
-        if(key === 'Enter' && value) onSelect?.(value)
+        if (key === 'Enter' && value) {
+            onSelect?.(value)
+        }
     }
 
 
+    const handleTextChange = debounce((value: string) => {
+        setValue(value)
+        dispatch(setCatalogFilter(value))
+    }, 300, {trailing: true})
+
+
     function handleSearchClick() {
-        if(value) onSelect?.(value)
+        if (value) onSelect?.(value)
     }
 
 
@@ -39,8 +50,8 @@ export function Header({onSelect, className}: HeaderProps) {
                         className='header-input'
                         value={value}
                         placeholder={'Поиск по артикулу/названию'}
-                        onChange={setValue}
-                        onKeyDown={handleTextChange}
+                        onChange={handleTextChange}
+                        onKeyDown={handleKeyPress}
                     />
                 </div>
             </Container>
