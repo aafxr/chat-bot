@@ -1,0 +1,28 @@
+.footerMenu{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--header-height);
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  background-color: var(--tg-theme-bg-color);
+
+
+  &-button{
+    flex: none;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-icon{
+    width: 24px;
+    height: 24px;
+  }
+}
+

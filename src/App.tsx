@@ -2,24 +2,29 @@ import React, {useEffect} from 'react';
 import {Route, Routes, useNavigate} from "react-router";
 
 import {CatalogService} from "./core/services/CatalogService";
+import {FooterMenu} from "./components/FooterMenu/FooterMenu";
+import {OrderComponent} from "./components/OrderComponent";
 import {setCatalog} from './redux/slices/catalog-slice'
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {Catalog} from "./core/classes/Catalog";
-import {useAppDispatch} from "./redux/hooks";
+import {useAppDispatch, useAppSelector} from "./redux/hooks";
 
 import './css/App.css';
+import {hideOrder} from "./redux/slices/order-slice";
 
 
 function App() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const {orderShow} = useAppSelector(s => s.order)
     const catalog = useCatalog()
 
 
     useEffect(() => {
-        if(catalog) return
+        if (catalog) return
+
         function handleService(e?: Error, c?: Catalog) {
             if (e) {
                 console.error(e)
@@ -45,11 +50,15 @@ function App() {
 
 
     return (
-        <Routes>
-            <Route path={'/'} element={<CatalogPage/>}/>
-            <Route path={'/:detailId/'} element={<ElementPage/>}/>
-            <Route path={'/order/'} element={<div/>}/>
-        </Routes>
+        <>
+            <Routes>
+                <Route path={'/'} element={<CatalogPage/>}/>
+                <Route path={'/:detailId/'} element={<ElementPage/>}/>
+                <Route path={'/order/'} element={<div/>}/>
+            </Routes>
+            <FooterMenu />
+            <OrderComponent show={orderShow} onHide={() => dispatch(hideOrder())}/>
+        </>
     );
 }
 

@@ -1,0 +1,24 @@
+.orderItem {
+  color: var(--tg-theme-text-color);
+
+  &-inner {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  &-image {
+    flex: none;
+    display: inline-block;
+    width: 100px;
+    border-radius: var(--br-main);
+  }
+}
+
+
+//5800
+//
+//4600
+//
+//2600

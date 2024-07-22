@@ -214,14 +214,14 @@ export function ElementPage() {
                             {productDetails && <RelatedItems productDetails={productDetails}/>}
                         </>
                     )}
-                </div>
-            </div>
-            <div className='wrapper-footer'>
                 {total && productDetails &&
                     <AddOrder
                         product={element}
                         max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
                     />}
+                </div>
+            </div>
+            <div className='wrapper-footer'>
             </div>
         </div>
     );
