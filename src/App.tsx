@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from "./redux/hooks";
 
 import './css/App.css';
 import {hideOrder} from "./redux/slices/order-slice";
+import {OrderPage} from "./Pages/ORderPage";
 
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<CatalogPage/>}/>
                 <Route path={'/:detailId/'} element={<ElementPage/>}/>
-                <Route path={'/order/'} element={<div/>}/>
+                <Route path={'/order'} element={<OrderPage />}/>
             </Routes>
             <FooterMenu />
             <OrderComponent show={orderShow} onHide={() => dispatch(hideOrder())}/>

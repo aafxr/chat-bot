@@ -3,14 +3,13 @@ import {Provider} from "react-redux";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom'
 
+import {BootstrapThemeProvider} from "./providers/BootstrapThemeProvider/BootstrapThemeProvider";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-
 import {store} from "./redux/store";
 import App from './App';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/index.scss';
-import {BootstrapThemeProvider} from "./providers/BootstrapThemeProvider/BootstrapThemeProvider";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

@@ -3,6 +3,10 @@ import React from 'react';
 import {Button, Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 
+import {IconButton} from "../IconButton";
+import {PenIcon} from "../svg/PenIcon";
+import {HeartIcon} from "../svg";
+
 import './CatalogElement.scss'
 
 
@@ -10,6 +14,9 @@ export type CatalogElementProps = {
     className?: string
     item: CatalogItem
     onClick?: (item: CatalogItem) => unknown
+    favorite?: boolean
+    onFavorite?: (v : boolean) => unknown
+
 }
 
 
@@ -25,15 +32,23 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
         "card": "product-card",
         "card-img-top": "product-card-img-top",
         "card-subtitle": "product-card-subtitle",
-        // "card-body": "product-card-body",
+        "card-body": "product-card-body",
         // "btn": "product-btn"
     }
 
     return (
         <ThemeProvider prefixes={prefixes}>
             <Card className={className}>
+                <div className='product-buttons'>
+                    <IconButton className='product-topBtn'>
+                        <HeartIcon className='icon-16' />
+                    </IconButton>
+                    <IconButton className='product-topBtn'>
+                        <PenIcon className='icon-16' />
+                    </IconButton>
+                </div>
                 <Card.Img variant="top" src={item.preview}/>
-                <Card.Body className='product-body'>
+                <Card.Body className='product-card-body'>
                     <Card.Subtitle className='mb-2'>{item.title}</Card.Subtitle>
                     <div className='product-footer'>
                         <span className='product-price '>

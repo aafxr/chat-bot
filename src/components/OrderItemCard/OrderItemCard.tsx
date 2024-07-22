@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from 'react';
 
 import {OrderItem} from "../../core/classes/OrderItem";
@@ -10,22 +11,23 @@ import './OrderItemCard.scss'
 
 export type OrderItemCardProps = {
     orderItem: OrderItem
+    className?: string
 }
 
-export function OrderItemCard({orderItem}: OrderItemCardProps) {
+export function OrderItemCard({orderItem, className}: OrderItemCardProps) {
     return (
-        <div className='orderItem orderItem-container'>
+        <div className={clsx('orderItem orderItem-container', className)}>
             <div className='orderItem-inner'>
                 <Image
                     className='orderItem-image'
                     src={orderItem.product.preview}
                     alt={orderItem.product.title}
                 />
-                <Subtitle>{orderItem.product.title}</Subtitle>
+                <Subtitle className='orderItem-title'>{orderItem.product.title}</Subtitle>
 
 
             </div>
-                <Counter />
+                <Counter className='orderItem-counter mt-2' />
         </div>
     );
 }

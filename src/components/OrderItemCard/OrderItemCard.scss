@@ -1,6 +1,11 @@
 .orderItem {
   color: var(--tg-theme-text-color);
 
+  &-container{
+    display: flex;
+    flex-direction: column;
+  }
+
   &-inner {
     display: flex;
     justify-content: stretch;
@@ -14,11 +19,11 @@
     width: 100px;
     border-radius: var(--br-main);
   }
+
+  &-title{
+    -webkit-line-clamp: 2;
+  }
+
+  &-counter{
+  }
 }
-
-
-//5800
-//
-//4600
-//
-//2600

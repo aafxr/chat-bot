@@ -1,37 +1,45 @@
 import React from 'react';
-import {useNavigate} from "react-router";
+import {NavLink} from "react-router-dom";
 
-import {hideOrder, showOrder} from "../../redux/slices/order-slice";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {CartIcon, HomeIcon} from "../svg";
+import {CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
 
 import './FooterMenu.scss'
 
 
-export type FooterButtonsProps = {
-
-}
+export type FooterButtonsProps = {}
 
 export function FooterMenu({}: FooterButtonsProps) {
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-    const {orderShow} = useAppSelector(s => s.order)
-
+    const navLinkClassName = ({isActive, isPending}: {
+        isActive: boolean,
+        isPending: boolean
+    }) => isPending ? "pending" : isActive ? "active" : ""
 
 
     return (
-        <div className='footerMenu'>
-            <div
-                className={'footerMenu-button'}
-                onClick={() => navigate('/')}
-            >
-                <HomeIcon className='footerMenu-icon' />
+        <div className='footerMenu footerMenu-container'>
+            <div className='footerMenu-item'>
+                <NavLink to='/' className={navLinkClassName}>
+                    <HomeIcon className='footerMenu-icon'/>
+                    <div className='footerMenu-text'>Главная</div>
+                </NavLink>
             </div>
-            <div
-                className={'footerMenu-button'}
-                onClick={() => dispatch(orderShow ? hideOrder() : showOrder())}
-            >
-                <CartIcon className='footerMenu-icon' />
+            <div className='footerMenu-item'>
+                <NavLink to='/order' className={navLinkClassName}>
+                    <CartIcon className='footerMenu-icon'/>
+                    <div className='footerMenu-text'>Заказы</div>
+                </NavLink>
+            </div>
+            <div className='footerMenu-item'>
+                <NavLink to='/favorite' className={navLinkClassName}>
+                    <HeartIcon className='footerMenu-icon'/>
+                    <div className='footerMenu-text'>Избранное</div>
+                </NavLink>
+            </div>
+            <div className='footerMenu-item'>
+                <NavLink to='/profile' className={navLinkClassName}>
+                    <UserIcon className='footerMenu-icon'/>
+                    <div className='footerMenu-text'>Профиль</div>
+                </NavLink>
             </div>
         </div>
     );

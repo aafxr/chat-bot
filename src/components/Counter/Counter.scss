@@ -5,7 +5,8 @@
     justify-content: flex-start;
     align-items: center;
     gap: 4px;
-    font-size: 0.875rem;
+    font-size: 1rem;
+    font-weight: 700;
   }
 
   &-input{
@@ -16,6 +17,14 @@
   }
 
   &-button{
-    //padding: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    color: var(--tg-theme-button-text-color);
+    font-size: inherit;
+    font-weight: inherit;
+    background-color: var(--tg-theme-accent-text-color);
+    border-radius: 4px;
+    cursor: pointer;
   }
 }

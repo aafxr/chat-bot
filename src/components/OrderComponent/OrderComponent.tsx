@@ -1,7 +1,7 @@
 import React from 'react';
 import {Offcanvas} from "react-bootstrap";
 import {useOrder} from "../../redux/hooks/useOrder";
-import {OrderItemCard} from "../OrderItemCard/OrderItemCard";
+import {OrderItemCard} from "../OrderItemCard";
 
 
 type OrderComponentProps = {

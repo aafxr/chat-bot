@@ -36,6 +36,11 @@ export function Header({onSelect, className}: HeaderProps) {
         dispatch(setCatalogFilter(value))
     }, 300, {trailing: true})
 
+    const resetFilter = () => {
+        setValue('')
+        dispatch(setCatalogFilter(''))
+    }
+
 
     function handleSearchClick() {
         if (value) onSelect?.(value)
@@ -55,7 +60,7 @@ export function Header({onSelect, className}: HeaderProps) {
                         onKeyDown={handleKeyPress}
                     />
                     {!!value && (
-                        <div className='header-clear' onClick={() => handleTextChange('')}>
+                        <div className='header-clear' onClick={resetFilter}>
                             <CloseButton />
                         </div>
                     )}
