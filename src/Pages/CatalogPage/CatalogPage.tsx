@@ -34,14 +34,14 @@ export function CatalogPage({}: CatalogProps) {
     useEffect(() => {
 
         const el = catalogContentRef.current
-        if(!el) return
+        if (!el) return
         let options = {
             root: el,
             rootMargin: "0px",
             threshold: 0.1,
         };
 
-        let callback = (entries:IntersectionObserverEntry[]) => {
+        let callback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 // Each entry describes an intersection change for one observed
                 // target element:
@@ -65,10 +65,10 @@ export function CatalogPage({}: CatalogProps) {
     useEffect(() => {
         const el = catalogContentRef.current
         const section = state.section
-        if(!el || !section) return
+        if (!el || !section) return
 
         const s = el.querySelector<HTMLDivElement>(`[data-section-id="${section.id}"]`)
-        if(!s) return
+        if (!s) return
         el.scrollTop = s.offsetTop - 108
     }, [state.section]);
 
@@ -82,10 +82,10 @@ export function CatalogPage({}: CatalogProps) {
         if (state.section?.id !== s.id) {
             setState({...state, section: s})
             const el = catalogContentRef.current
-            if(!el) return
+            if (!el) return
 
             const $s = el.querySelector<HTMLDivElement>(`[data-section-id="${s.id}"]`)
-            if(!$s) return
+            if (!$s) return
             el.scrollTop = $s.offsetTop - 108
         }
     }
@@ -94,6 +94,7 @@ export function CatalogPage({}: CatalogProps) {
     if (!catalog) return null
 
 
+    console.log(catalog)
     return (
         <div className='catalog wrapper'>
             <Header/>
@@ -107,28 +108,45 @@ export function CatalogPage({}: CatalogProps) {
                     ref={catalogContentRef}
                     className='catalog-content wrapper-content'
                 >
-                    {catalog.sections.map(s => (
-                        <section
-                            key={s.id} className='catalog-section'
-                            data-section-id={s.id}
-                        >
-                            <Title className='catalog-section-title'>{s.title}</Title>
-                            <div className='catalog-elements'>
-                                {catalog.getElements(s.items).map(e => (
-                                    <CatalogElement
-                                        key={e.id}
-                                        className='catalog-element'
-                                        item={e}
-                                        onClick={handleElementClick}
-                                    />
-                                ))}
-                            </div>
-                        </section>
-                    ))}
+
+                    {catalog._filter
+                        ? (
+                            <section className='catalog-section'>
+                                <Title className='catalog-section-title'>Результаты поиска</Title>
+                                <div className='catalog-elements'>
+                                    {catalog.getFilteredItems().map(e => (
+                                        <CatalogElement
+                                            key={e.id}
+                                            className='catalog-element'
+                                            item={e}
+                                            onClick={handleElementClick}
+                                        />
+                                    ))}
+                                </div>
+                            </section>
+                        ) : catalog.sections.map(s => (
+                            <section
+                                key={s.id} className='catalog-section'
+                                data-section-id={s.id}
+                            >
+                                <Title className='catalog-section-title'>{s.title}</Title>
+                                <div className='catalog-elements'>
+                                    {catalog.getElements(s.items).map(e => (
+                                        <CatalogElement
+                                            key={e.id}
+                                            className='catalog-element'
+                                            item={e}
+                                            onClick={handleElementClick}
+                                        />
+                                    ))}
+                                </div>
+                            </section>
+                        ))}
                 </div>
 
             </Container>
         </div>
-    );
+    )
+        ;
 }
 

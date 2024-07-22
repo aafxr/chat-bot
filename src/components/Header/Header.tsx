@@ -9,6 +9,7 @@ import Input from "../Input/Input";
 import {SearchIcon} from "../svg";
 
 import './Header.scss'
+import {CloseButton} from "react-bootstrap";
 
 
 export type HeaderProps = {
@@ -53,6 +54,11 @@ export function Header({onSelect, className}: HeaderProps) {
                         onChange={handleTextChange}
                         onKeyDown={handleKeyPress}
                     />
+                    {!!value && (
+                        <div className='header-clear' onClick={() => handleTextChange('')}>
+                            <CloseButton />
+                        </div>
+                    )}
                 </div>
             </Container>
         </header>

@@ -19,7 +19,8 @@
     justify-content: stretch;
   }
 
-  &-text {
+  &-card-subtitle {
+    color: var(--tg-theme-text-color);
     word-break: break-all;
   }
 

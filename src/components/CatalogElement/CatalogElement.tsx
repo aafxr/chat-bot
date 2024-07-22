@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React from 'react';
 
 import {Button, Card, ThemeProvider} from "react-bootstrap";
@@ -25,6 +24,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
     const prefixes = {
         "card": "product-card",
         "card-img-top": "product-card-img-top",
+        "card-subtitle": "product-card-subtitle",
         // "card-body": "product-card-body",
         // "btn": "product-btn"
     }
@@ -34,7 +34,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
             <Card className={className}>
                 <Card.Img variant="top" src={item.preview}/>
                 <Card.Body className='product-body'>
-                    <Card.Subtitle className='product-text mb-2'>{item.title}</Card.Subtitle>
+                    <Card.Subtitle className='mb-2'>{item.title}</Card.Subtitle>
                     <div className='product-footer'>
                         <span className='product-price '>
                             {formatter.format(+item.price)}
@@ -51,23 +51,5 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
             </Card>
         </ThemeProvider>
     )
-    // return (
-    //     <div className={clsx('element element-content', className)}>
-    //         <div className='element-img'>
-    //             <img
-    //                 alt={item.title}
-    //                 src={item.preview}
-    //             />
-    //         </div>
-    //         <div className='element-title'>{item.title}</div>
-    //         <div className='element-footer'>
-    //             <div className='element-price'>{formatter.format(+item.price)}</div>
-    //             <Button className='element-button' onClick={() => onClick?.(item)}>
-    //                 Подробно
-    //             </Button>
-    //         </div>
-    //
-    //     </div>
-    // );
 }
 
