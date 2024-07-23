@@ -1,20 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router";
 
-import {CatalogElement} from "../../components/CatalogElement/CatalogElement";
 import {CatalogSections} from "../../components/CatalogSections";
 import {CatalogSection} from "../../core/classes/CatalogSection";
+import {CatalogElement} from "../../components/CatalogElement";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
-import {Header} from "../../components/Header/Header";
 import {Container} from "../../components/Container";
+import {Spacer} from "../../components/Spacer";
+import {Header} from "../../components/Header";
+import {Title} from "../../components/Title";
 
 import './Catalog.scss'
-import {Title} from "../../components/Title";
-import {Spacer} from "../../components/Spacer";
-
-
-export type CatalogProps = {}
 
 
 type CatalogState = {
@@ -24,43 +21,12 @@ type CatalogState = {
 const defaultState: CatalogState = {}
 
 
-export function CatalogPage({}: CatalogProps) {
+export function CatalogPage() {
     const catalog = useCatalog()
     const navigate = useNavigate()
 
     const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
-
-
-    useEffect(() => {
-
-        const el = catalogContentRef.current
-        if (!el) return
-        let options = {
-            root: el,
-            rootMargin: "0px",
-            threshold: 0.1,
-        };
-
-        let callback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                // Each entry describes an intersection change for one observed
-                // target element:
-                //   entry.boundingClientRect
-                //   entry.intersectionRatio
-                //   entry.intersectionRect
-                //   entry.isIntersecting
-                //   entry.rootBounds
-                //   entry.target
-                //   entry.time
-                console.log(entry)
-            });
-        };
-
-        let observer = new IntersectionObserver(callback, options);
-        observer.observe(el.firstElementChild!)
-
-    }, []);
 
 
     useEffect(() => {
@@ -95,7 +61,6 @@ export function CatalogPage({}: CatalogProps) {
     if (!catalog) return null
 
 
-    console.log(catalog)
     return (
         <div className='catalog wrapper'>
             <Header/>

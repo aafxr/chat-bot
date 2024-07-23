@@ -12,11 +12,11 @@ import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
 import {Section} from "../../components/Section";
+import {Spacer} from "../../components/Spacer";
 import {Radio} from "../../components/Radio";
 import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
-import {Spacer} from "../../components/Spacer";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -118,13 +118,19 @@ export function ElementPage() {
 
                     </div>
                     <div className='itemDetails-inner h-100'>
+
                         {productDetails && (
                             <>
                                 <Title className='itemDetails-title'>{element.title}</Title>
+                                {total && productDetails &&
+                                    <AddOrder
+                                        product={element}
+                                        max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
+                                    />}
                                 <Tabs
                                     defaultActiveKey="price"
                                     id="uncontrolled-tab-example"
-                                    className="mt-2"
+                                    className="mt-1"
                                 >
                                     <Tab eventKey="price" title="Цена">
                                         <div className='itemDetails-tabContent'>
@@ -208,7 +214,7 @@ export function ElementPage() {
                                     <Tab eventKey="site" title="Сайт">
                                         <div className='itemDetails-tabContent'>
                                             <Section className='itemDetails-section'>
-                                                <a href={productDetails.LinkToSite}>Посмотреть на сайте</a>
+                                                <a className='link' href={productDetails.LinkToSite}>Посмотреть на сайте</a>
                                             </Section>
                                         </div>
                                     </Tab>
@@ -216,11 +222,7 @@ export function ElementPage() {
                                 {productDetails && <RelatedItems productDetails={productDetails}/>}
                             </>
                         )}
-                        {total && productDetails &&
-                            <AddOrder
-                                product={element}
-                                max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
-                            />}
+
                     </div>
                 </div>
                 <Spacer />

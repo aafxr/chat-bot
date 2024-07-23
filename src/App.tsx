@@ -1,26 +1,23 @@
 import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 
-import {CatalogService} from "./core/services/CatalogService";
-import {FooterMenu} from "./components/FooterMenu/FooterMenu";
-import {OrderComponent} from "./components/OrderComponent";
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
+import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
+import {CatalogService} from "./core/services/CatalogService";
 import {useCatalog} from "./redux/hooks/useCatalog";
+import {FooterMenu} from "./components/FooterMenu";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {Catalog} from "./core/classes/Catalog";
-import {useAppDispatch, useAppSelector} from "./redux/hooks";
+import {useAppDispatch} from "./redux/hooks";
+import {OrderPage} from "./Pages/OrderPage";
 
 import './css/App.css';
-import {hideOrder} from "./redux/slices/order-slice";
-import {OrderPage} from "./Pages/ORderPage";
-import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 
 
 function App() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const {orderShow} = useAppSelector(s => s.order)
     const catalog = useCatalog()
 
 
@@ -68,7 +65,6 @@ function App() {
                 <Route path={'*'} element={<Navigate to={'/'} />}/>
             </Routes>
             <FooterMenu />
-            <OrderComponent show={orderShow} onHide={() => dispatch(hideOrder())}/>
         </>
     );
 }

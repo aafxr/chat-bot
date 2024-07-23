@@ -62,3 +62,15 @@ a{
   width: 16px;
   height: 16px;
 }
+
+
+.app-btn{
+  color: var(--tg-theme-button-text-color);
+  background-color: var(--tg-theme-button-color);
+}
+
+.link{
+  color: var(--tg-theme-accent-text-color);
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import clsx from "clsx";
 import debounce from "lodash.debounce";
-
+import React, {useEffect, useState} from 'react';
 
 import './Counter.scss'
-import clsx from "clsx";
 
 
 export type CounterProps = {
@@ -17,11 +16,12 @@ export type CounterProps = {
 
 export function Counter({className, value, min, max, onChange}: CounterProps) {
     const [v, setV] = useState(0)
+    const [text, setText] = useState('')
 
 
     useEffect(() => {
         if (value !== undefined && value !== v) setV(value)
-    }, [value]);
+    }, []);
 
 
     function handleIncrease() {
@@ -40,10 +40,7 @@ export function Counter({className, value, min, max, onChange}: CounterProps) {
     const handleInputChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value
         const count = parseInt(text)
-        if (count !== v) {
-            setV(count)
-            onChange?.(count)
-        }
+        setV(count)
     }, 150, {trailing: true})
 
 
@@ -53,7 +50,8 @@ export function Counter({className, value, min, max, onChange}: CounterProps) {
                 className='counter-button'
                 onClick={handleDecrease}
                 disabled={(min && v <= min) || v <= 0}
-            >-</button>
+            >-
+            </button>
             <input
                 className='counter-input'
                 type="text"
@@ -66,7 +64,8 @@ export function Counter({className, value, min, max, onChange}: CounterProps) {
                 className='counter-button'
                 onClick={handleIncrease}
                 disabled={Boolean(max) && v >= max!}
-            >+</button>
+            >+
+            </button>
         </div>
     );
 }

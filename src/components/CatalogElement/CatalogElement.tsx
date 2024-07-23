@@ -11,14 +11,13 @@ import {PenIcon} from "../svg/PenIcon";
 import {HeartIcon} from "../svg";
 
 import './CatalogElement.scss'
+import {useFormatter} from "../../hooks/useFormatter";
 
 
 export type CatalogElementProps = {
     className?: string
     item: CatalogItem
     onClick?: (item: CatalogItem) => unknown
-    favorite?: boolean
-    onFavorite?: (v: boolean) => unknown
 
 }
 
@@ -28,12 +27,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
     const {addFavorite, removeFavorite} = useFavoriteHandlers()
     const isFavorite = !!favorite[item.id]
 
-    const formatter = new Intl.NumberFormat(navigator.language, {
-        style: 'currency',
-        currency: item.currency,
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2
-    })
+    const formatter = useFormatter(item.currency)
 
     const prefixes = {
         "card": "product-card",

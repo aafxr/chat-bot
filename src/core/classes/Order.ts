@@ -34,6 +34,11 @@ export class Order{
         }
     }
 
+    delete(p:CatalogItem){
+        delete this.orders[p.id]
+    }
+
+
     entries(): [CatalogItem, number][]{
         return Object.values(this.orders).map(v => [v.product,v.quantity])
     }
