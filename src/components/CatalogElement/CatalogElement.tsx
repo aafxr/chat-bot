@@ -2,16 +2,15 @@ import clsx from "clsx";
 import React from 'react';
 
 
+import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {Button, Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
-import {useCatalog} from "../../redux/hooks/useCatalog";
+import {useAppSelector} from "../../redux/hooks";
 import {IconButton} from "../IconButton";
 import {PenIcon} from "../svg/PenIcon";
 import {HeartIcon} from "../svg";
 
 import './CatalogElement.scss'
-import {useAppSelector} from "../../redux/hooks";
-import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 
 
 export type CatalogElementProps = {

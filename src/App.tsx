@@ -4,7 +4,7 @@ import {Navigate, Route, Routes, useNavigate} from "react-router";
 import {CatalogService} from "./core/services/CatalogService";
 import {FooterMenu} from "./components/FooterMenu/FooterMenu";
 import {OrderComponent} from "./components/OrderComponent";
-import {setCatalog} from './redux/slices/catalog-slice'
+import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
@@ -41,6 +41,13 @@ function App() {
             .getCatalog(handleService)
             .catch(console.error)
     }, [dispatch]);
+
+
+    useEffect(() => {
+        CatalogService.getFavorites()
+            .then(f => dispatch(setFavorite(f)))
+            .catch(console.error)
+    }, []);
 
 
     useEffect(() => {
