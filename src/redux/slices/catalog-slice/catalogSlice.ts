@@ -32,6 +32,8 @@ export const catalogSlice = createSlice({
     },
 })
 
-export const { setCatalog, setCatalogFilter, setFavorite } = catalogSlice.actions
+export const {
+    setCatalog,
+    setCatalogFilter, setFavorite } = catalogSlice.actions
 
 export const catalogReducer = catalogSlice.reducer

@@ -11,6 +11,7 @@ import {Container} from "../../components/Container";
 
 import './Catalog.scss'
 import {Title} from "../../components/Title";
+import {Spacer} from "../../components/Spacer";
 
 
 export type CatalogProps = {}
@@ -103,11 +104,11 @@ export function CatalogPage({}: CatalogProps) {
                 selected={state.section}
                 onSelect={handleSectionSelect}
             />
-            <Container>
-                <div
-                    ref={catalogContentRef}
-                    className='catalog-content wrapper-content'
-                >
+            <div
+                ref={catalogContentRef}
+                className='catalog-content wrapper-content'
+            >
+                <Container>
 
                     {catalog._filter
                         ? (
@@ -142,9 +143,10 @@ export function CatalogPage({}: CatalogProps) {
                                 </div>
                             </section>
                         ))}
-                </div>
+                    <Spacer/>
 
-            </Container>
+                </Container>
+            </div>
         </div>
     )
         ;

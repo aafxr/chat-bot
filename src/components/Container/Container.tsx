@@ -12,7 +12,7 @@ export type ComponentProps = {
 
 export function Container({children, className}: ComponentProps) {
     return (
-        <div className={clsx('container', className)}>
+        <div className={clsx('app-container', className)}>
             {children}
         </div>
     );

@@ -10,7 +10,7 @@ export function OrderPage() {
         <div className='order wrapper'>
             <div className='wrapper-header'>
                 <Container>
-                    <Title>Заказы</Title>
+                    <Title className='pt-2'>Заказы</Title>
                 </Container>
             </div>
             <div className='wrapper-content mt-4'>

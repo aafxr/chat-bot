@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Route, Routes, useNavigate} from "react-router";
+import {Navigate, Route, Routes, useNavigate} from "react-router";
 
 import {CatalogService} from "./core/services/CatalogService";
 import {FooterMenu} from "./components/FooterMenu/FooterMenu";
@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from "./redux/hooks";
 import './css/App.css';
 import {hideOrder} from "./redux/slices/order-slice";
 import {OrderPage} from "./Pages/ORderPage";
+import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 
 
 function App() {
@@ -56,6 +57,8 @@ function App() {
                 <Route path={'/'} element={<CatalogPage/>}/>
                 <Route path={'/:detailId/'} element={<ElementPage/>}/>
                 <Route path={'/order'} element={<OrderPage />}/>
+                <Route path={'/favorite'} element={<FavoritePage />}/>
+                <Route path={'*'} element={<Navigate to={'/'} />}/>
             </Routes>
             <FooterMenu />
             <OrderComponent show={orderShow} onHide={() => dispatch(hideOrder())}/>

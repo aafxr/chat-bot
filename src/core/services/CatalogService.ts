@@ -9,9 +9,11 @@ import {fetchCatalog} from "../../api/fetchCatalog";
 import {ProductDetails} from "../classes/ProductDetails";
 import {fetchElementDetail} from "../../api/fetchElementDetail";
 import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
+import {FavoriteType} from "../../types/FavoriteType";
 
 
 const ARTICLES_KEY = 'articles'
+const FAVORITE_KEY = 'favorites'
 
 
 export class CatalogService {
@@ -25,7 +27,7 @@ export class CatalogService {
 
         this._loadCatalog()
             .then(c => {
-                if(c) {
+                if (c) {
                     isLoad = true
                     cb(undefined, c)
                 }
@@ -74,33 +76,54 @@ export class CatalogService {
     }
 
 
-    static async getProductDetails(item: CatalogItem, cb: CbWithErrorType<ProductDetails>){
+    static async getProductDetails(item: CatalogItem, cb: CbWithErrorType<ProductDetails>) {
         DB.getOne<ProductDetails>(StoreName.PRODUCT_DETAILS, item.id)
-            .then(pd => cb(undefined, pd? new ProductDetails(pd) : undefined))
+            .then(pd => cb(undefined, pd ? new ProductDetails(pd) : undefined))
             .catch(e => cb(e))
 
         fetchElementDetail(item)
             .then(pd => {
-                if(pd){
+                if (pd) {
                     pd = new ProductDetails(pd)
                     pd.id = item.id
                     DB.update(StoreName.PRODUCT_DETAILS, pd)
-                    cb(undefined, pd )
+                    cb(undefined, pd)
                 }
             })
             .catch(e => cb(e))
     }
 
 
-    static async relatedProducts(pd: ProductDetails, cb: CbWithErrorType<ProductDetails[]>){
+    static async relatedProducts(pd: ProductDetails, cb: CbWithErrorType<ProductDetails[]>) {
         fetchRelatedProducts(pd)
             .then(p => {
-                if(!p) return
+                if (!p) return
                 p = p.map(e => new ProductDetails(e))
                 cb(undefined, p)
 
             })
             .catch(e => cb(e))
+    }
+
+
+    static async addFavorite(el: CatalogItem) {
+        const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
+        fav[el.id] = el.id
+        await DB.setStoreItem(FAVORITE_KEY, fav)
+    }
+
+
+    static async removeFavorite(el: CatalogItem) {
+        const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY)
+        if (fav) {
+            delete fav[el.id]
+            await DB.setStoreItem(FAVORITE_KEY, fav)
+        }
+    }
+
+
+    static async getFavorites() {
+        return await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
     }
 
 

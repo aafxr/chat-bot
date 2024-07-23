@@ -1,13 +1,17 @@
+import clsx from "clsx";
 import React from 'react';
+
 
 import {Button, Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
-
+import {useCatalog} from "../../redux/hooks/useCatalog";
 import {IconButton} from "../IconButton";
 import {PenIcon} from "../svg/PenIcon";
 import {HeartIcon} from "../svg";
 
 import './CatalogElement.scss'
+import {useAppSelector} from "../../redux/hooks";
+import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 
 
 export type CatalogElementProps = {
@@ -15,12 +19,16 @@ export type CatalogElementProps = {
     item: CatalogItem
     onClick?: (item: CatalogItem) => unknown
     favorite?: boolean
-    onFavorite?: (v : boolean) => unknown
+    onFavorite?: (v: boolean) => unknown
 
 }
 
 
 export function CatalogElement({item, className, onClick}: CatalogElementProps) {
+    const {favorite} = useAppSelector(s => s.catalog)
+    const {addFavorite, removeFavorite} = useFavoriteHandlers()
+    const isFavorite = !!favorite[item.id]
+
     const formatter = new Intl.NumberFormat(navigator.language, {
         style: 'currency',
         currency: item.currency,
@@ -40,11 +48,14 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
         <ThemeProvider prefixes={prefixes}>
             <Card className={className}>
                 <div className='product-buttons'>
-                    <IconButton className='product-topBtn'>
-                        <HeartIcon className='icon-16' />
+                    <IconButton
+                        className={clsx('product-topBtn', {active: isFavorite})}
+                        onClick={() => isFavorite ? removeFavorite(item) : addFavorite(item)}
+                    >
+                        <HeartIcon className='icon-16'/>
                     </IconButton>
                     <IconButton className='product-topBtn'>
-                        <PenIcon className='icon-16' />
+                        <PenIcon className='icon-16'/>
                     </IconButton>
                 </div>
                 <Card.Img variant="top" src={item.preview}/>
