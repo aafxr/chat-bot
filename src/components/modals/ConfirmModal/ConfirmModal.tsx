@@ -1,8 +1,11 @@
+import clsx from "clsx";
 import React from 'react';
 import {Button, Modal, ModalProps} from "react-bootstrap";
 
+import './ConfirmModal.scss'
 
-export interface ConfirmModal extends ModalProps {
+
+export interface ConfirmModalProps extends ModalProps {
     titleText: string
     body: string
     confirmText: string
@@ -20,9 +23,9 @@ export function ConfirmModal({
                                  onCancel,
                                  onConfirm,
                                  ...props
-                             }: ConfirmModal) {
+                             }: ConfirmModalProps) {
     return (
-        <Modal {...props}>
+        <Modal {...props} className={clsx('confirmModal', props.className)}>
             <Modal.Header closeButton>
                 <Modal.Title>{titleText}</Modal.Title>
             </Modal.Header>
