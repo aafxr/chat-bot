@@ -12,6 +12,8 @@
   &-input{
     padding: 0 4px;
     text-align: center;
+    color: var(--tg-theme-text-color);
+    font-weight: 700;
     background-color: var(--tg-theme-bg-color);
     border: none;
   }
@@ -19,11 +21,11 @@
   &-button{
     width: 32px;
     height: 32px;
-    border: none;
-    color: var(--tg-theme-button-text-color);
+    color: var(--tg-theme-text-color);
     font-size: inherit;
     font-weight: inherit;
-    background-color: var(--tg-theme-accent-text-color);
+    background-color: var(--tg-theme-bg-color);
+    border: 1px solid var(--tg-theme-accent-text-color);
     border-radius: 4px;
     cursor: pointer;
   }

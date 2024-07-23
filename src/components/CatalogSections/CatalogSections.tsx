@@ -31,10 +31,22 @@ export function CatalogSections({catalog, className, selected, onSelect}: Catalo
     }, [selected]);
 
 
+    // function handleWheel(e: React.WheelEvent<HTMLDivElement>){
+    //     const el = e.currentTarget
+    //     const {deltaY} = e
+    //     el.scrollLeft = el.scrollLeft + deltaY * 2
+    // }
+
+
+
     return (
         <div className={clsx('sections', className)}>
             <div className='sections-container'>
-                <div ref={sectionsListRef} className='sections-list'>
+                <div
+                    ref={sectionsListRef}
+                    className='sections-list'
+                    // onWheel={handleWheel}
+                >
                     {catalog.sections.map(s => (
                         <Button
                             key={s.id}

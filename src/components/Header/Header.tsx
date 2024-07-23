@@ -10,6 +10,7 @@ import {SearchIcon} from "../svg";
 
 import './Header.scss'
 import {CloseButton} from "react-bootstrap";
+import {CloseIcon} from "../svg/CloseIcon";
 
 
 export type HeaderProps = {
@@ -61,7 +62,7 @@ export function Header({onSelect, className}: HeaderProps) {
                     />
                     {!!value && (
                         <div className='header-clear' onClick={resetFilter}>
-                            <CloseButton />
+                            <CloseIcon className='icon-16' />
                         </div>
                     )}
                 </div>

@@ -13,12 +13,21 @@
     align-items: stretch;
   }
 
+  &-button{
+    color: var(--tg-theme-button-text-color);
+    fill: var(--tg-theme-button-text-color);
+    background-color: var(--tg-theme-button-color);
+  }
+
   &-input{
     flex: 1;
     text-align: center;
     border-left: none;
     border-right: none;
+    border-top: none;
+    color: var(--tg-theme-text-color);
     border-color: var(--bs-border-color);
+    background-color: var(--tg-theme-bg-color);
   }
 
   &-button-add{
@@ -30,5 +39,9 @@
     justify-content: center;
     align-items: center;
     margin-left: 8px;
+    cursor: pointer;
+  }
+
+  &-icon{
   }
 }

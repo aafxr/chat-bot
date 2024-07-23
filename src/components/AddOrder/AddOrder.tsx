@@ -9,6 +9,7 @@ import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
 
 import './AddOrder.scss'
+import {CloseIcon} from "../svg/CloseIcon";
 
 
 export type AddOrderProps = {
@@ -58,7 +59,7 @@ export function AddOrder({product, max, className}: AddOrderProps) {
 
     function handleBlur() {
         let v = text.trim()
-        if (+v == orderItem?.quantity) return
+        if (+v === orderItem?.quantity) return
         const c = Number(v)
         if (Number.isNaN(c)) {
             setText(orderItem?.quantity.toString() || '1')
@@ -99,7 +100,7 @@ export function AddOrder({product, max, className}: AddOrderProps) {
                                 className='addOrder-remove'
                                 onClick={() => dispatch(removeProduct(product))}
                             >
-                                <CloseButton/>
+                                <CloseIcon className='addOrder-icon icon-16'/>
 
                             </div>
                         </div>
