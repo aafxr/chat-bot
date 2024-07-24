@@ -13,6 +13,8 @@ import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 
 import './css/App.css';
+import {OrderService} from "./core/services/OrderService";
+import {setOrder} from "./redux/slices/order-slice";
 
 
 function App() {
@@ -43,6 +45,13 @@ function App() {
     useEffect(() => {
         CatalogService.getFavorites()
             .then(f => dispatch(setFavorite(f)))
+            .catch(console.error)
+    }, []);
+
+
+    useEffect(() => {
+        OrderService.loadOrder()
+            .then(o => o && dispatch(setOrder(o)))
             .catch(console.error)
     }, []);
 

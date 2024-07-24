@@ -7,6 +7,10 @@ export class Order{
 
     constructor(o: Partial<Order> = {}) {
         this.id = o.id || 1
+        if(o.orders){
+            Object.entries(o.orders)
+                .forEach(([k, v]) => o.orders![k] = new OrderItem(v))
+        }
         this.orders = o.orders ? o.orders : {}
     }
 

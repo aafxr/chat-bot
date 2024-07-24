@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
+
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
 import {OrderItemCard} from "../../components/OrderItemCard";
 import {setOrder} from "../../redux/slices/order-slice";
 import {OrderItem} from "../../core/classes/OrderItem";
+import {useFormatter} from "../../hooks/useFormatter";
 import {Container} from "../../components/Container";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
 import {Order} from "../../core/classes/Order";
+import {Spacer} from "../../components/Spacer";
 import {Title} from "../../components/Title";
 import {Button} from "react-bootstrap";
 
 import './OrderPage.scss'
-import {Link} from "react-router-dom";
-import {Spacer} from "../../components/Spacer";
-import {useFormatter} from "../../hooks/useFormatter";
 
 
 export function OrderPage() {
@@ -43,20 +44,24 @@ export function OrderPage() {
 
     return (
         <div className='order wrapper'>
-            <div className='wrapper-header'>
+            <div className='wrapper-header pb-2'>
                 <Container>
                     <Title className='pt-2'>Заказы</Title>
+                    {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                 </Container>
             </div>
-            <div className='wrapper-content mt-4'>
+            <div className='wrapper-content'>
                 <Container>
-                    {!!items.length && <Button className='order-button'>Оформить заказ</Button>}
-                    <div className='order-list m-0'>
+                    <div className='order-list'>
                         {items.length
                             ? (
                                 items.map((o) => (
-                                    <OrderItemCard key={o.product.id} className='mt-4' orderItem={o}
-                                                   onRemove={setRemoveITem}/>
+                                    <OrderItemCard
+                                        key={o.product.id}
+                                        className='mt-2'
+                                        orderItem={o}
+                                        onRemove={setRemoveITem}
+                                    />
                                 ))
                             ) : (
                                 <div>

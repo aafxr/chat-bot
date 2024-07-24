@@ -5,13 +5,14 @@ import React from 'react';
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {Button, Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
+import {OrderItem} from "../../core/classes/OrderItem";
+import {useFormatter} from "../../hooks/useFormatter";
+import {CartIcon, HeartIcon, PenIcon} from "../svg";
+import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
 import {IconButton} from "../IconButton";
-import {PenIcon} from "../svg/PenIcon";
-import {HeartIcon} from "../svg";
 
 import './CatalogElement.scss'
-import {useFormatter} from "../../hooks/useFormatter";
 
 
 export type CatalogElementProps = {
@@ -21,11 +22,13 @@ export type CatalogElementProps = {
 
 }
 
-
 export function CatalogElement({item, className, onClick}: CatalogElementProps) {
+    const order = useOrder()
     const {favorite} = useAppSelector(s => s.catalog)
     const {addFavorite, removeFavorite} = useFavoriteHandlers()
     const isFavorite = !!favorite[item.id]
+
+    const orderItem: OrderItem | undefined = order.orders[item.id]
 
     const formatter = useFormatter(item.currency)
 
@@ -63,7 +66,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                             variant="primary"
                             onClick={() => onClick?.(item)}
                         >
-                            Подробно
+                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16' /> : '' }
                         </Button>
                     </div>
                 </Card.Body>

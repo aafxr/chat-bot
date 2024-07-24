@@ -268,8 +268,14 @@ export function ElementPage() {
                                     <Tab eventKey="site" title="Сайт">
                                         <div className='itemDetails-tabContent'>
                                             <Section className='itemDetails-section'>
-                                                <a className='link' href={productDetails.LinkToSite}>Посмотреть на
-                                                    сайте</a>
+                                                <a
+                                                    className='link'
+                                                    href={productDetails.LinkToSite}
+                                                    target='_blank'
+                                                    rel="noreferrer"
+                                                >
+                                                    Посмотреть на сайте
+                                                </a>
                                             </Section>
                                         </div>
                                     </Tab>
