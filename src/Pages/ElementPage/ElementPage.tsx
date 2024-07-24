@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
-import {Carousel, Tab, Tabs} from "react-bootstrap";
+import {Button, Carousel, Tab, Tabs} from "react-bootstrap";
 
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
@@ -8,6 +8,8 @@ import {ProductDetails} from "../../core/classes/ProductDetails";
 import {ElementProperty} from "../../components/ElementProperty";
 import {ElementBalance} from "../../components/ElementBalance";
 import {RelatedItems} from "../../components/RelatedItems";
+import {CatalogItem} from "../../core/classes/CatalogItem";
+import {useCatalog} from "../../redux/hooks/useCatalog";
 import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
@@ -24,17 +26,30 @@ type ElementPageState = {
     productDetailsRequested: boolean
 
     balance?: Balance
+
+    relatedItems: CatalogItem[]
+    relatedLoading: boolean
+    relatedRequested: boolean
+
+    showRelated: boolean
 }
 
 const defaultState: ElementPageState = {
     productDetailsLoading: false,
     productDetailsRequested: false,
+
+    relatedItems: [],
+    relatedLoading: false,
+    relatedRequested: false,
+
+    showRelated: false
 }
 
 
 export function ElementPage() {
     const navigate = useNavigate()
     const {detailId} = useParams()
+    const catalog = useCatalog()
     const element = useCatalogElement(detailId)
     const [state, setState] = useState({...defaultState})
 
@@ -64,6 +79,26 @@ export function ElementPage() {
 
 
     useEffect(() => {
+        const {productDetails, relatedRequested, relatedLoading} = state
+        if (!catalog || !productDetails || relatedRequested || relatedLoading) return
+
+        setState(p => ({...p, relatedLoading: true, relatedRequested: true}))
+        CatalogService.relatedProducts(
+            productDetails,
+            (e?: Error, p?: ProductDetails[]) => {
+                if (e) console.error(e)
+                if (p) {
+                    const relatedItems = p.map(r => catalog.getElementByArticle(r.ProductArticleForChatBot)) || []
+                    setState(prev => ({...prev, relatedItems}))
+                }
+            })
+            .catch(console.error)
+            .finally(() => setState(p => ({...p, relatedLoading: false})))
+
+    }, [state, catalog]);
+
+
+    useEffect(() => {
         // @ts-ignore
         const tg = window.Telegram.WebApp
         tg.BackButton.show()
@@ -71,6 +106,13 @@ export function ElementPage() {
             tg.BackButton.hide()
         }
     }, []);
+
+
+
+    function toggleRelatedShow(){
+        setState(p => ({...p, showRelated: !p.showRelated}))
+    }
+
 
 
     if (!element) {
@@ -114,19 +156,31 @@ export function ElementPage() {
                                 />
                             )
                         }
-
-
                     </div>
                     <div className='itemDetails-inner h-100'>
-
                         {productDetails && (
                             <>
                                 <Title className='itemDetails-title'>{element.title}</Title>
                                 {total && productDetails &&
-                                    <AddOrder
-                                        product={element}
-                                        max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
-                                    />}
+                                    <div className='row mt-2'>
+                                        <div className='col-4'>
+                                            <Button
+                                                className='app-btn w-100'
+                                                onClick={toggleRelatedShow}
+                                                disabled={!state.relatedItems.length}
+                                            >
+                                                еще
+                                            </Button>
+                                        </div>
+                                        <div className='col-8'>
+                                            <AddOrder
+                                                product={element}
+                                                max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
+                                            />
+                                        </div>
+
+                                    </div>
+                                }
                                 <Tabs
                                     defaultActiveKey="price"
                                     id="uncontrolled-tab-example"
@@ -214,18 +268,22 @@ export function ElementPage() {
                                     <Tab eventKey="site" title="Сайт">
                                         <div className='itemDetails-tabContent'>
                                             <Section className='itemDetails-section'>
-                                                <a className='link' href={productDetails.LinkToSite}>Посмотреть на сайте</a>
+                                                <a className='link' href={productDetails.LinkToSite}>Посмотреть на
+                                                    сайте</a>
                                             </Section>
                                         </div>
                                     </Tab>
                                 </Tabs>
-                                {productDetails && <RelatedItems productDetails={productDetails}/>}
+                                <RelatedItems
+                                    items={state.relatedItems}
+                                    show={state.showRelated}
+                                    onHide={toggleRelatedShow}
+                                />
                             </>
                         )}
-
                     </div>
                 </div>
-                <Spacer />
+                <Spacer/>
             </div>
         </div>
     );

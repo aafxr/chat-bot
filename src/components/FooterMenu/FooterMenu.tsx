@@ -20,7 +20,7 @@ export function FooterMenu({}: FooterButtonsProps) {
             <div className='footerMenu-item'>
                 <NavLink to='/' className={navLinkClassName}>
                     <HomeIcon className='footerMenu-icon'/>
-                    <div className='footerMenu-text'>Главная</div>
+                    <div className='footerMenu-text'>Каталог</div>
                 </NavLink>
             </div>
             <div className='footerMenu-item'>

@@ -12,12 +12,16 @@ import {Button} from "react-bootstrap";
 
 import './OrderPage.scss'
 import {Link} from "react-router-dom";
+import {Spacer} from "../../components/Spacer";
+import {useFormatter} from "../../hooks/useFormatter";
 
 
 export function OrderPage() {
     const dispatch = useAppDispatch()
     const order = useOrder()
     const items = Object.values(order.orders)
+    const total = items.reduce((a, e) => a + e.getTotal(), 0)
+    const formatter = useFormatter(items[0]?.product.currency || 'RUB')
 
     const [removeItem, setRemoveITem] = useState<OrderItem>()
 
@@ -57,11 +61,23 @@ export function OrderPage() {
                             ) : (
                                 <div>
                                     Вернуться&nbsp;
-                                    <Link className='link' to={'/'}>на главную</Link>
+                                    <Link className='link' to={'/'}>в каталог</Link>
                                 </div>
                             )
                         }
                     </div>
+                </Container>
+            </div>
+            <div className='wrapper-footer'>
+                <Container>
+
+                    <div className='order-summary'>
+                        Итого:
+                        <div className='order-total'>
+                            {formatter.format(total)}
+                        </div>
+                    </div>
+                    <Spacer/>
                 </Container>
             </div>
             <ConfirmModal

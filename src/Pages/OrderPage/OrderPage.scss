@@ -2,4 +2,18 @@
   &-button{
     width: 100%;
   }
+
+  &-summary{
+    padding-top: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--tg-theme-text-color);
+    font-size: 1.125rem;
+  }
+
+  &-total{
+    margin-left: 0.5rem;
+    font-weight: 600;
+  }
 }

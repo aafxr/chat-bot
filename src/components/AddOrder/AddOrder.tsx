@@ -7,9 +7,9 @@ import {CatalogItem} from "../../core/classes/CatalogItem";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
+import {CloseIcon} from "../svg/CloseIcon";
 
 import './AddOrder.scss'
-import {CloseIcon} from "../svg/CloseIcon";
 
 
 export type AddOrderProps = {

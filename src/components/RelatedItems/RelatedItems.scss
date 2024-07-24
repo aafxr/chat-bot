@@ -10,9 +10,11 @@
     transition: opacity .3s;
   }
 
-  &-offcanvas{
-    height: auto!important;
-    max-height: 100%!important;
+  &-offcanvas.offcanvas{
+    height: auto;
+    max-height: 100%;
+    color: var(--tg-theme-text-color);
+    background-color: var(--tg-theme-bg-color);
   }
 
   &-container{
@@ -29,13 +31,10 @@
   &-item{
     flex: none;
     width: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
   }
 
 }
 
-.productDetails.open {
-  .productDetails-buttonContainer {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-}
