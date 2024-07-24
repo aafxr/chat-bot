@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
@@ -31,9 +31,19 @@ export function OrderPage() {
 
     const [removeItem, setRemoveITem] = useState<OrderItem>()
 
+    const contentRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
+        const el = contentRef.current
+        if (!el) return
 
+        try {
+            const pos = JSON.parse(localStorage.getItem(ORDER_CONTENT_SCROLL)!)
+            el.scrollTop = pos.scrollTop
+            el.scrollLeft = pos.scrollLeft
+        } catch (e) {
+        }
     }, []);
 
 
@@ -54,13 +64,13 @@ export function OrderPage() {
 
     return (
         <div className='order wrapper'>
-            <div className='wrapper-header pb-2' >
+            <div className='wrapper-header pb-2'>
                 <Container>
                     <Title className='pt-2'>Заказы</Title>
                     {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                 </Container>
             </div>
-            <div className='wrapper-content' {...scrollHandlers}>
+            <div ref={contentRef} className='wrapper-content' {...scrollHandlers}>
                 <Container>
                     <div className='order-list'>
                         {items.length
