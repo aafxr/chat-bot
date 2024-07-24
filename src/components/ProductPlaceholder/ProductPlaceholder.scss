@@ -1,0 +1,16 @@
+.productPlaceholder {
+
+  &-card {
+    border-radius: var(--br-main);
+
+    .card-img-top {
+      border-radius: var(--br-main);
+      overflow: hidden;
+    }
+  }
+
+  &-btn{
+    background-color: var(--tg-theme-bg-color);
+  }
+
+}

@@ -1,0 +1,13 @@
+.profile{
+  &-content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &-image{
+    flex: none;
+    width: 240px;
+    aspect-ratio: 1/1;
+  }
+}

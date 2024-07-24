@@ -15,6 +15,9 @@ import {OrderPage} from "./Pages/OrderPage";
 import './css/App.css';
 import {OrderService} from "./core/services/OrderService";
 import {setOrder} from "./redux/slices/order-slice";
+import {TgService} from "./core/services/TgService";
+import {setUser} from "./redux/slices/user-slice";
+import {ProfilePage} from "./Pages/ProfilePage/ProfilePage";
 
 
 function App() {
@@ -46,14 +49,20 @@ function App() {
         CatalogService.getFavorites()
             .then(f => dispatch(setFavorite(f)))
             .catch(console.error)
-    }, []);
+    }, [dispatch]);
 
 
     useEffect(() => {
         OrderService.loadOrder()
             .then(o => o && dispatch(setOrder(o)))
             .catch(console.error)
-    }, []);
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        const u = TgService.getUser()
+        if(u) dispatch(setUser(u))
+    }, [dispatch]);
 
 
     useEffect(() => {
@@ -71,6 +80,7 @@ function App() {
                 <Route path={'/:detailId/'} element={<ElementPage/>}/>
                 <Route path={'/order'} element={<OrderPage />}/>
                 <Route path={'/favorite'} element={<FavoritePage />}/>
+                <Route path={'/profile'} element={<ProfilePage />}/>
                 <Route path={'*'} element={<Navigate to={'/'} />}/>
             </Routes>
             <FooterMenu />

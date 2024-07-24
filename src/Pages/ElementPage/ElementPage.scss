@@ -4,6 +4,7 @@
   }
 
   &-slider {
+    max-width: 480px;
     aspect-ratio: 1/1;
     border-radius: var(--br-main);
     overflow: hidden;
@@ -95,6 +96,16 @@
     &-item{
       flex: none;
       width: 150px;
+    }
+  }
+}
+
+@media(min-width: 768px) {
+  .itemDetails{
+    &-container{
+      flex-direction: row;
+      gap: var(--offset-main);
+      flex-wrap: wrap;
     }
   }
 }

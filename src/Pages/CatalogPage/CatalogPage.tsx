@@ -12,6 +12,7 @@ import {Header} from "../../components/Header";
 import {Title} from "../../components/Title";
 
 import './Catalog.scss'
+import {ProductPlaceholder} from "../../components/ProductPlaceholder/ProductPlaceholder";
 
 
 type CatalogState = {
@@ -58,56 +59,68 @@ export function CatalogPage() {
     }
 
 
-    if (!catalog) return null
+    // if (!catalog) return null
 
 
     return (
         <div className='catalog wrapper'>
             <Header/>
-            <CatalogSections
+            {!!catalog && <CatalogSections
                 catalog={catalog}
                 selected={state.section}
                 onSelect={handleSectionSelect}
-            />
+            />}
             <div
                 ref={catalogContentRef}
                 className='catalog-content wrapper-content'
             >
                 <Container>
 
-                    {catalog._filter
-                        ? (
-                            <section className='catalog-section'>
-                                <Title className='catalog-section-title'>Результаты поиска</Title>
+                    {catalog
+                        ? (catalog._filter
+                                ? (
+                                    <section className='catalog-section'>
+                                        <Spacer/>
+                                        <Title className='catalog-section-title'>Результаты поиска</Title>
+                                        <div className='catalog-elements'>
+                                            {catalog.getFilteredItems().map(e => (
+                                                <CatalogElement
+                                                    key={e.id}
+                                                    className='catalog-element'
+                                                    item={e}
+                                                    onClick={handleElementClick}
+                                                />
+                                            ))}
+                                        </div>
+                                    </section>
+                                ) : catalog.sections.map(s => (
+                                    <section
+                                        key={s.id} className='catalog-section'
+                                        data-section-id={s.id}
+                                    >
+                                        <Title className='catalog-section-title'>{s.title}</Title>
+                                        <div className='catalog-elements'>
+                                            {catalog.getElements(s.items).map(e => (
+                                                <CatalogElement
+                                                    key={e.id}
+                                                    className='catalog-element'
+                                                    item={e}
+                                                    onClick={handleElementClick}
+                                                />
+                                            ))}
+                                        </div>
+                                    </section>
+                                ))
+                        ) : (
+                            <Container>
                                 <div className='catalog-elements'>
-                                    {catalog.getFilteredItems().map(e => (
-                                        <CatalogElement
-                                            key={e.id}
-                                            className='catalog-element'
-                                            item={e}
-                                            onClick={handleElementClick}
-                                        />
-                                    ))}
+                                    {Array.from({length: 8})
+                                        .map((_, idx) => <ProductPlaceholder key={idx}/>)
+                                    }
                                 </div>
-                            </section>
-                        ) : catalog.sections.map(s => (
-                            <section
-                                key={s.id} className='catalog-section'
-                                data-section-id={s.id}
-                            >
-                                <Title className='catalog-section-title'>{s.title}</Title>
-                                <div className='catalog-elements'>
-                                    {catalog.getElements(s.items).map(e => (
-                                        <CatalogElement
-                                            key={e.id}
-                                            className='catalog-element'
-                                            item={e}
-                                            onClick={handleElementClick}
-                                        />
-                                    ))}
-                                </div>
-                            </section>
-                        ))}
+                            </Container>
+                        )
+                    }
                     <Spacer/>
 
                 </Container>
