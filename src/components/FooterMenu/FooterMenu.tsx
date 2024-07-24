@@ -35,12 +35,12 @@ export function FooterMenu({}: FooterButtonsProps) {
                     <div className='footerMenu-text'>Избранное</div>
                 </NavLink>
             </div>
-            <div className='footerMenu-item'>
-                <NavLink to='/profile' className={navLinkClassName}>
-                    <UserIcon className='footerMenu-icon'/>
-                    <div className='footerMenu-text'>Профиль</div>
-                </NavLink>
-            </div>
+            {/*<div className='footerMenu-item'>*/}
+            {/*    <NavLink to='/profile' className={navLinkClassName}>*/}
+            {/*        <UserIcon className='footerMenu-icon'/>*/}
+            {/*        <div className='footerMenu-text'>Профиль</div>*/}
+            {/*    </NavLink>*/}
+            {/*</div>*/}
         </div>
     );
 }
