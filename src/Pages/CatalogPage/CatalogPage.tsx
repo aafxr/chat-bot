@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router";
 
+import {ProductPlaceholder} from "../../components/ProductPlaceholder";
 import {CatalogSections} from "../../components/CatalogSections";
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {CatalogElement} from "../../components/CatalogElement";
@@ -12,7 +13,6 @@ import {Header} from "../../components/Header";
 import {Title} from "../../components/Title";
 
 import './Catalog.scss'
-import {ProductPlaceholder} from "../../components/ProductPlaceholder/ProductPlaceholder";
 
 
 type CatalogState = {
@@ -127,6 +127,4 @@ export function CatalogPage() {
             </div>
         </div>
     )
-        ;
 }
-

@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
 import {OrderItemCard} from "../../components/OrderItemCard";
 import {setOrder} from "../../redux/slices/order-slice";
+import {useMemoScroll} from "../../hooks/useMemoScroll";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
 import {Container} from "../../components/Container";
@@ -17,14 +18,23 @@ import {Button} from "react-bootstrap";
 import './OrderPage.scss'
 
 
+const ORDER_CONTENT_SCROLL = 'order_content_scroll'
+
+
 export function OrderPage() {
     const dispatch = useAppDispatch()
+    const scrollHandlers = useMemoScroll<HTMLDivElement>(ORDER_CONTENT_SCROLL)
     const order = useOrder()
     const items = Object.values(order.orders)
     const total = items.reduce((a, e) => a + e.getTotal(), 0)
     const formatter = useFormatter(items[0]?.product.currency || 'RUB')
 
     const [removeItem, setRemoveITem] = useState<OrderItem>()
+
+
+    useEffect(() => {
+
+    }, []);
 
 
     function confirmRemove() {
@@ -44,13 +54,13 @@ export function OrderPage() {
 
     return (
         <div className='order wrapper'>
-            <div className='wrapper-header pb-2'>
+            <div className='wrapper-header pb-2' >
                 <Container>
                     <Title className='pt-2'>Заказы</Title>
                     {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                 </Container>
             </div>
-            <div className='wrapper-content'>
+            <div className='wrapper-content' {...scrollHandlers}>
                 <Container>
                     <div className='order-list'>
                         {items.length

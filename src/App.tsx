@@ -4,8 +4,13 @@ import {Navigate, Route, Routes, useNavigate} from "react-router";
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
+import {OrderService} from "./core/services/OrderService";
+import {setOrder} from "./redux/slices/order-slice";
+import {TgService} from "./core/services/TgService";
+import {setTgUser} from "./redux/slices/user-slice";
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {FooterMenu} from "./components/FooterMenu";
+import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {Catalog} from "./core/classes/Catalog";
@@ -13,11 +18,6 @@ import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 
 import './css/App.css';
-import {OrderService} from "./core/services/OrderService";
-import {setOrder} from "./redux/slices/order-slice";
-import {TgService} from "./core/services/TgService";
-import {setUser} from "./redux/slices/user-slice";
-import {ProfilePage} from "./Pages/ProfilePage/ProfilePage";
 
 
 function App() {
@@ -61,7 +61,7 @@ function App() {
 
     useEffect(() => {
         const u = TgService.getUser()
-        if(u) dispatch(setUser(u))
+        if(u) dispatch(setTgUser(u))
     }, [dispatch]);
 
 

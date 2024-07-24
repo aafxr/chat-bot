@@ -1,14 +1,13 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-import {CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
+import {CartIcon, HeartIcon, HomeIcon} from "../svg";
 
 import './FooterMenu.scss'
 
 
-export type FooterButtonsProps = {}
 
-export function FooterMenu({}: FooterButtonsProps) {
+export function FooterMenu() {
     const navLinkClassName = ({isActive, isPending}: {
         isActive: boolean,
         isPending: boolean

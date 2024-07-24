@@ -1,9 +1,9 @@
-import {User} from "../classes/User";
+import {TgUser} from "../classes/TgUser";
 
 export class TgService{
     static getUser(){
         if(Telegram.WebApp.initDataUnsafe.user)
-            return new User(Telegram.WebApp.initDataUnsafe.user)
+            return new TgUser(Telegram.WebApp.initDataUnsafe.user)
     }
 
     static getInitParam(){

@@ -1,8 +1,8 @@
 import React from 'react';
 
+import {useTgUser} from "../../redux/hooks/useTgUser";
 import {Container} from "../../components/Container";
 import {Subtitle} from "../../components/Subtitle";
-import {useUser} from "../../redux/hooks/useUser";
 import {Spacer} from "../../components/Spacer";
 import {Title} from "../../components/Title";
 import {Image} from "react-bootstrap";
@@ -10,7 +10,7 @@ import {Image} from "react-bootstrap";
 import './ProfilePage.scss'
 
 export function ProfilePage() {
-    const user = useUser()
+    const user = useTgUser()
 
 
     return (
