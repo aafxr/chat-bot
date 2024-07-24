@@ -27,9 +27,9 @@ export function ProfilePage() {
                             <Container>
                                 <div className='profile-content'>
                                     <div className='profile-image mt-2'>
-                                        <Image src={user.photo_url} alt={user.fullName} roundedCircle/>
+                                        <Image src={user.photo_url || '/placeholder_image.png'} alt={user.fullName} roundedCircle/>
                                     </div>
-                                    <Subtitle className='mt-2'>{user.fullName}</Subtitle>
+                                    <Subtitle className='align-content-center mt-2'>{user.fullName}</Subtitle>
                                 </div>
                             </Container>
                             <Spacer/>
