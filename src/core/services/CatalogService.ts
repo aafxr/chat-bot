@@ -10,6 +10,7 @@ import {ProductDetails} from "../classes/ProductDetails";
 import {fetchElementDetail} from "../../api/fetchElementDetail";
 import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 import {FavoriteType} from "../../types/FavoriteType";
+import {TgService} from "./TgService";
 
 
 const ARTICLES_KEY = 'articles'
@@ -109,6 +110,7 @@ export class CatalogService {
     static async addFavorite(el: CatalogItem) {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
         fav[el.id] = el.id
+        TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(console.error)
         await DB.setStoreItem(FAVORITE_KEY, fav)
     }
 
@@ -117,12 +119,17 @@ export class CatalogService {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY)
         if (fav) {
             delete fav[el.id]
+            TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(console.error)
             await DB.setStoreItem(FAVORITE_KEY, fav)
         }
     }
 
 
     static async getFavorites() {
+        TgService.getCloudItem<FavoriteType>(FAVORITE_KEY)
+            .then((f) => f && DB.setStoreItem(FAVORITE_KEY, f))
+            .catch(console.error)
+
         return await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
     }
 
