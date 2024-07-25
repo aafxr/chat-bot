@@ -60,8 +60,4 @@ export class Catalog {
         if(!this._filter) return []
         return Object.values(this.filteredItems)
     }
-
-    isFavorite(item: CatalogItem){
-        return Boolean(this.elements[item.id])
-    }
 }

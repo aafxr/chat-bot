@@ -62,4 +62,35 @@ export class TgService {
     }
 
 
+    static async getCloudItem<T>(key: string): Promise<T> {
+        return new Promise((res, rej) => {
+            Telegram.WebApp.CloudStorage.getItem(
+                key,
+                (e: Error | null, v) => e ? rej(e) : res(JSON.parse(v) as T)
+            )
+        })
+    }
+
+
+    static async setCloudItem<T>(k: string, v: T): Promise<boolean> {
+        return new Promise((res, rej) => {
+            Telegram.WebApp.CloudStorage.setItem(
+                k,
+                JSON.stringify(v),
+                (e: Error | null, v) => e ? rej(e) : res(v)
+            )
+        })
+    }
+
+
+    static async removeCloudItem(k: string): Promise<boolean> {
+        return new Promise((res, rej) => {
+            Telegram.WebApp.CloudStorage.removeItem(
+                k,
+                (e: Error | null, v) => e ? rej(e) : res(v)
+            )
+        })
+    }
+
+
 }

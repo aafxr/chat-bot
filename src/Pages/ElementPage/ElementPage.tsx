@@ -157,7 +157,7 @@ export function ElementPage() {
                             )
                         }
                     </div>
-                    <div className='itemDetails-inner h-100'>
+                    <div className='itemDetails-inner'>
                         {productDetails && (
                             <>
                                 <Title className='itemDetails-title'>{element.title}</Title>
