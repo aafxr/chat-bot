@@ -36,7 +36,7 @@ export const orderSlice = createSlice({
         removeProduct(state, action: PayloadAction<CatalogItem>) {
             delete state.order.orders[action.payload.id]
             state.order = new Order(state.order)
-            OrderService.saveOrder(state.order).catch(console.error)
+            OrderService.removeOrder().catch(console.error)
         },
         resetOrder(state) {
             state.order = new Order()

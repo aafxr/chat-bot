@@ -46,9 +46,12 @@ export class Catalog {
             return
         }
 
+        const words = text.split(/\s+/)
+
         this.filteredItems = Object.values(this.elements)
             .reduce<Record<CatalogItem['id'], CatalogItem>>((a, e) => {
-                if (e.title.toLowerCase().includes(this._filter)) a[e.id] = e
+                const v = e.title.toLowerCase()
+                if (words.every(k => v.includes(k))) a[e.id] = e
                 return a
             }, {})
     }

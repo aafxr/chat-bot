@@ -1,5 +1,6 @@
 import {Order} from "../classes/Order";
 import {DB} from "../db/DB";
+import {TgService} from "./TgService";
 
 
 const ORDER_KEY = 'order'
@@ -7,6 +8,12 @@ const ORDER_KEY = 'order'
 export class OrderService{
     static async saveOrder(o: Order){
         await DB.setStoreItem(ORDER_KEY, o)
+        TgService.saveCurrentOrder(o).catch(console.error)
+    }
+
+    static async removeOrder(){
+        await DB.deleteStoreItem(ORDER_KEY)
+        TgService.removeCurrentOrder().catch(console.error)
     }
 
     static async loadOrder(){
