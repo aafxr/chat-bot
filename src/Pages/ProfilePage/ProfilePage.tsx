@@ -28,10 +28,42 @@ export function ProfilePage() {
                         <>
                             <Container>
                                 <div className='profile-content'>
-                                    <div className='profile-image mt-2'>
+                                    <div className='profile-image'>
                                         <Image className='img-abs' src={user.tgUser?.photo_url || '/placeholder_image.png'} alt={user.tgUser?.fullName} roundedCircle/>
                                     </div>
-                                    <Subtitle className='align-content-center mt-2'>{user.tgUser?.fullName}</Subtitle>
+                                    <div className='profile-inner'>
+                                        <Subtitle className='profile-name'>{user.tgUser?.fullName}</Subtitle>
+                                        <dl>
+                                            <dt>Имя</dt>
+                                            <dd>{user.first_name}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Никнейм</dt>
+                                            <dd>{user.username}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Телефон</dt>
+                                            <dd>{user.phone}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Страна</dt>
+                                            <dd>{user.country}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Город</dt>
+                                            <dd>{user.city}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Организация</dt>
+                                            <dd>{user.org}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Манаджер</dt>
+                                            <dd>{user.manager}</dd>
+                                        </dl>
+
+
+                                    </div>
                                 </div>
                             </Container>
                             <Spacer/>

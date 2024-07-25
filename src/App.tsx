@@ -29,7 +29,8 @@ const appUserDefault = new AppUser({
     phone: 79998882211,
     manager: 42,
     telegram_id: '123456789',
-    username: 'nickname'
+    username: 'nickname',
+
 })
 
 
@@ -74,7 +75,13 @@ function App() {
 
     useEffect(() => {
         const u = TgService.getUser()
-        if(u) dispatch(setTgUser(u))
+        if(u) {
+            dispatch(setTgUser(u))
+            appUserDefault.telegram_id = u.id + ''
+            appUserDefault.tgUser = u
+            appUserDefault.first_name = u.first_name
+            appUserDefault.username = u.username
+        }
         dispatch(setAppUser(appUserDefault))
     }, [dispatch]);
 
