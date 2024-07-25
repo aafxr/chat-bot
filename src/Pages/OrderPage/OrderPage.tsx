@@ -12,7 +12,7 @@ import {useAppDispatch} from "../../redux/hooks";
 import {Order} from "../../core/classes/Order";
 import {Spacer} from "../../components/Spacer";
 import {Title} from "../../components/Title";
-import {Button} from "react-bootstrap";
+import {Button, Tab, Tabs} from "react-bootstrap";
 
 import './OrderPage.scss'
 
@@ -25,10 +25,6 @@ export function OrderPage() {
     const formatter = useFormatter(items[0]?.product.currency || 'RUB')
 
     const [removeItem, setRemoveITem] = useState<OrderItem>()
-
-
-
-
 
 
     function confirmRemove() {
@@ -54,28 +50,39 @@ export function OrderPage() {
                     {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                 </Container>
             </div>
-            <div className='wrapper-content' >
+            <div className='wrapper-content'>
                 <Container>
-                    <div className='order-list'>
-                        {items.length
-                            ? (
-                                items.map((o) => (
-                                    <OrderItemCard
-                                        key={o.product.id}
-                                        className='mt-2'
-                                        orderItem={o}
-                                        onRemove={setRemoveITem}
-                                    />
-                                ))
-                            ) : (
-                                <div>
-                                    Вернуться&nbsp;
-                                    <Link className='link' to={'/'}>в каталог</Link>
-                                </div>
-                            )
-                        }
-                    </div>
+                    <Tabs
+                        defaultActiveKey="current"
+                        className="order-tabs"
+                    >
+                        <Tab eventKey="current" title="Текущий">
+                            <div className='order-list'>
+                                {items.length
+                                    ? (
+                                        items.map((o) => (
+                                            <OrderItemCard
+                                                key={o.product.id}
+                                                className='mt-2'
+                                                orderItem={o}
+                                                onRemove={setRemoveITem}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div>
+                                            Вернуться&nbsp;
+                                            <Link className='link' to={'/'}>в каталог</Link>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </Tab>
+                        <Tab eventKey="all" title="Все">
+                            <p>Все заказы</p>
+                        </Tab>
+                    </Tabs>
                 </Container>
+
             </div>
             <div className='wrapper-footer'>
                 <Container>
@@ -100,5 +107,6 @@ export function OrderPage() {
                 onConfirm={confirmRemove}
             />
         </div>
-    );
+    )
+        ;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useTgUser} from "../../redux/hooks/useTgUser";
+import {useAppUser} from "../../redux/hooks/useAppUser";
 import {Container} from "../../components/Container";
 import {Subtitle} from "../../components/Subtitle";
 import {Spacer} from "../../components/Spacer";
@@ -9,8 +9,10 @@ import {Image} from "react-bootstrap";
 
 import './ProfilePage.scss'
 
+
+
 export function ProfilePage() {
-    const user = useTgUser()
+    const user = useAppUser()
 
 
     return (
@@ -27,9 +29,9 @@ export function ProfilePage() {
                             <Container>
                                 <div className='profile-content'>
                                     <div className='profile-image mt-2'>
-                                        <Image className='img-abs' src={user.photo_url || '/placeholder_image.png'} alt={user.fullName} roundedCircle/>
+                                        <Image className='img-abs' src={user.tgUser?.photo_url || '/placeholder_image.png'} alt={user.tgUser?.fullName} roundedCircle/>
                                     </div>
-                                    <Subtitle className='align-content-center mt-2'>{user.fullName}</Subtitle>
+                                    <Subtitle className='align-content-center mt-2'>{user.tgUser?.fullName}</Subtitle>
                                 </div>
                             </Container>
                             <Spacer/>

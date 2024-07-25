@@ -2,22 +2,35 @@ import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
+import {setAppUser, setTgUser} from "./redux/slices/user-slice";
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
 import {OrderService} from "./core/services/OrderService";
 import {setOrder} from "./redux/slices/order-slice";
 import {TgService} from "./core/services/TgService";
-import {setTgUser} from "./redux/slices/user-slice";
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {FooterMenu} from "./components/FooterMenu";
 import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {Catalog} from "./core/classes/Catalog";
+import {AppUser} from "./core/classes/AppUser";
 import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 
 import './css/App.css';
+
+const appUserDefault = new AppUser({
+    id: 42,
+    country: 'Россия',
+    city: 'Новосибирск',
+    org: 'refloor',
+    first_name: 'Иван',
+    phone: 79998882211,
+    manager: 42,
+    telegram_id: '123456789',
+    username: 'nickname'
+})
 
 
 function App() {
@@ -62,6 +75,7 @@ function App() {
     useEffect(() => {
         const u = TgService.getUser()
         if(u) dispatch(setTgUser(u))
+        dispatch(setAppUser(appUserDefault))
     }, [dispatch]);
 
 

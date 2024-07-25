@@ -1,3 +1,5 @@
+import {TgUser} from "./TgUser";
+
 export class AppUser {
     id: number
     telegram_id: string
@@ -20,6 +22,7 @@ export class AppUser {
     request: number
     phone: number
     country: string
+    tgUser: TgUser | null
 
 
     constructor(u: Partial<AppUser> = {}) {
@@ -44,5 +47,6 @@ export class AppUser {
         this.request = u.request !== undefined ? u.request : -1
         this.phone = u.phone !== undefined ? u.phone : -1
         this.country = u.country !== undefined ? u.country : ''
+        this.tgUser = u.tgUser !== undefined ? u.tgUser : null
     }
 }

@@ -238,6 +238,7 @@ export function ElementPage() {
                                                         .map(b => (
                                                             (
                                                                 <Radio
+                                                                    key={b.TradeArea_Id}
                                                                     className='itemDetails-balance'
                                                                     name='tranzit'
                                                                     value={b.TradeArea_Name}

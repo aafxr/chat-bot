@@ -15,7 +15,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers:{
-        setUser(state, action: PayloadAction<AppUser>){
+        setAppUser(state, action: PayloadAction<AppUser>){
             state.app_user = action.payload
         },
         setTgUser(state, action: PayloadAction<TgUser>){
@@ -25,5 +25,5 @@ const userSlice = createSlice({
 })
 
 
-export const {setUser, setTgUser} = userSlice.actions
+export const {setAppUser, setTgUser} = userSlice.actions
 export const userReducer = userSlice.reducer

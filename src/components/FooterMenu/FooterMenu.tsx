@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-import {CartIcon, HeartIcon, HomeIcon} from "../svg";
+import {CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
 
 import './FooterMenu.scss'
 
@@ -34,12 +34,12 @@ export function FooterMenu() {
                     <div className='footerMenu-text'>Избранное</div>
                 </NavLink>
             </div>
-            {/*<div className='footerMenu-item'>*/}
-            {/*    <NavLink to='/profile' className={navLinkClassName}>*/}
-            {/*        <UserIcon className='footerMenu-icon'/>*/}
-            {/*        <div className='footerMenu-text'>Профиль</div>*/}
-            {/*    </NavLink>*/}
-            {/*</div>*/}
+            <div className='footerMenu-item'>
+                <NavLink to='/profile' className={navLinkClassName}>
+                    <UserIcon className='footerMenu-icon'/>
+                    <div className='footerMenu-text'>Профиль</div>
+                </NavLink>
+            </div>
         </div>
     );
 }
