@@ -54,7 +54,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                         <PenIcon className='icon-16'/>
                     </IconButton>
                 </div>
-                <Card.Img variant="top" src={item.preview}/>
+                <Card.Img variant="top" src={item.preview} loading='lazy'/>
                 <Card.Body className='product-card-body'>
                     <Card.Subtitle className='mb-2'>{item.title}</Card.Subtitle>
                     <div className='product-footer'>

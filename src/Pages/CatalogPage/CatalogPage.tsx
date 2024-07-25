@@ -80,7 +80,6 @@ export function CatalogPage() {
                         ? (catalog._filter
                                 ? (
                                     <section className='catalog-section'>
-                                        <Spacer/>
                                         <Title className='catalog-section-title'>Результаты поиска</Title>
                                         <div className='catalog-elements'>
                                             {catalog.getFilteredItems().map(e => (
