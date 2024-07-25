@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
 import {OrderItemCard} from "../../components/OrderItemCard";
 import {setOrder} from "../../redux/slices/order-slice";
-import {useMemoScroll} from "../../hooks/useMemoScroll";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
 import {Container} from "../../components/Container";
@@ -18,12 +17,8 @@ import {Button} from "react-bootstrap";
 import './OrderPage.scss'
 
 
-const ORDER_CONTENT_SCROLL = 'order_content_scroll'
-
-
 export function OrderPage() {
     const dispatch = useAppDispatch()
-    const scrollHandlers = useMemoScroll<HTMLDivElement>(ORDER_CONTENT_SCROLL)
     const order = useOrder()
     const items = Object.values(order.orders)
     const total = items.reduce((a, e) => a + e.getTotal(), 0)
@@ -31,20 +26,9 @@ export function OrderPage() {
 
     const [removeItem, setRemoveITem] = useState<OrderItem>()
 
-    const contentRef = useRef<HTMLDivElement>(null);
 
 
-    useEffect(() => {
-        const el = contentRef.current
-        if (!el) return
 
-        try {
-            const pos = JSON.parse(localStorage.getItem(ORDER_CONTENT_SCROLL)!)
-            el.scrollTop = pos.scrollTop
-            el.scrollLeft = pos.scrollLeft
-        } catch (e) {
-        }
-    }, []);
 
 
     function confirmRemove() {
@@ -70,7 +54,7 @@ export function OrderPage() {
                     {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                 </Container>
             </div>
-            <div ref={contentRef} className='wrapper-content' {...scrollHandlers}>
+            <div className='wrapper-content' >
                 <Container>
                     <div className='order-list'>
                         {items.length

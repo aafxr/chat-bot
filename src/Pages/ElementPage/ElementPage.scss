@@ -3,6 +3,7 @@
     margin: var(--margin-main) var(--margin-main) 0;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
     @media(min-width: 760px){
       flex-direction: row;
       justify-content: stretch;

@@ -1,4 +1,11 @@
 .order{
+
+  &-list{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(300px, 760px));
+    grid-gap: calc(var(--offset-main) / 2) ;
+  }
+
   &-button{
     width: 100%;
   }

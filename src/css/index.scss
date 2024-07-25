@@ -23,6 +23,17 @@ a{
   color: inherit;
 }
 
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: var(--tg-theme-bg-color);
+}
+
+*::-webkit-scrollbar-thumb{
+  background-color: var(--bg-scroll);
+  border-radius: 13px;
+}
+
 #root{
   height: 100vh;
 }

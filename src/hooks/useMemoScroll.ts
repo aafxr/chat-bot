@@ -1,15 +1,20 @@
-import React, {useCallback} from "react";
+import React from "react";
+import debounce from "lodash.debounce";
 
 export function useMemoScroll<T extends Element>(key: string){
-    const onScroll = useCallback((e: React.MouseEvent<T>) => {
-        const {scrollLeft, scrollTop} = e.currentTarget
-        localStorage.setItem(key, JSON.stringify({scrollLeft, scrollTop}))
-    }, [key])
 
-    const onTouchEnd = useCallback((e: React.TouchEvent<T>) => {
-        const {scrollLeft, scrollTop} = e.currentTarget
+
+    const onScroll = debounce((e: React.MouseEvent<T>) => {
+        const {scrollLeft, scrollTop} = e.target as T
         localStorage.setItem(key, JSON.stringify({scrollLeft, scrollTop}))
-    }, [key])
+    }, 150, {trailing: true})
+
+
+    const onTouchEnd = debounce((e: React.TouchEvent<T>) => {
+        const {scrollLeft, scrollTop} = e.target as T
+        localStorage.setItem(key, JSON.stringify({scrollLeft, scrollTop}))
+    }, 150, {trailing:true})
+
 
     return {onScroll, onTouchEnd}
 }

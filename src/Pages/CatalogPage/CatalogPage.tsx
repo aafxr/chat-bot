@@ -7,6 +7,7 @@ import {CatalogSection} from "../../core/classes/CatalogSection";
 import {CatalogElement} from "../../components/CatalogElement";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
+import {useMemoScroll} from "../../hooks/useMemoScroll";
 import {Container} from "../../components/Container";
 import {Spacer} from "../../components/Spacer";
 import {Header} from "../../components/Header";
@@ -17,9 +18,15 @@ import './Catalog.scss'
 
 type CatalogState = {
     section?: CatalogSection
+    scrollPrevPos: boolean
 }
 
-const defaultState: CatalogState = {}
+const defaultState: CatalogState = {
+    scrollPrevPos: false
+}
+
+
+const CATALOG_CONTENT_SCROLL = 'catalog_content_scroll'
 
 
 export function CatalogPage() {
@@ -28,6 +35,19 @@ export function CatalogPage() {
 
     const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
+    const handlers = useMemoScroll<HTMLDivElement>(CATALOG_CONTENT_SCROLL)
+
+
+    useEffect(() => {
+        const el = catalogContentRef.current
+        if (!el || !catalog || state.scrollPrevPos) return
+        setState(p => ({...p, scrollPrevPos: true}))
+
+        try {
+            const pos = JSON.parse(localStorage.getItem(CATALOG_CONTENT_SCROLL)!)
+            el.scrollTo({left: +pos.scrollTop, top: +pos.scrollLeft})
+        } catch (e) {}
+    }, [catalog, state]);
 
 
     useEffect(() => {
@@ -59,9 +79,6 @@ export function CatalogPage() {
     }
 
 
-    // if (!catalog) return null
-
-
     return (
         <div className='catalog wrapper'>
             <Header/>
@@ -73,9 +90,9 @@ export function CatalogPage() {
             <div
                 ref={catalogContentRef}
                 className='catalog-content wrapper-content'
+                {...handlers}
             >
                 <Container>
-
                     {catalog
                         ? (catalog._filter
                                 ? (
