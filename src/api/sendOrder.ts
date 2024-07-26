@@ -1,7 +1,8 @@
 import axios from "axios";
-import {TgUser} from "../core/classes/TgUser";
+import {ApiResponse} from "../types/ApiRespponse";
+import {AppUser} from "../core/classes/AppUser";
 
-export async function sendOrder(orderItems: any, user: TgUser){
+export async function sendOrder(orderItems: any, user: AppUser){
     const payload = {
         OrderItems : orderItems,
         'Client' : {
@@ -13,5 +14,8 @@ export async function sendOrder(orderItems: any, user: TgUser){
         'OrderNumber' : 'tg-pwa-'+Date.now()
     }
 
-    const response = await axios.post('https://refloor-bot.ru/api/sendOrder', payload)
+    const res = await axios.post<ApiResponse<any>>('https://refloor-bot.ru/api/sendOrder', payload)
+    if(res.status > 199 && res.status < 300){
+        return res.data
+    }
 }

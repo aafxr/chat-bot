@@ -9,7 +9,6 @@
 // service worker, and the Workbox build step will be skipped.
 
 import { clientsClaim } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import {CacheFirst, NetworkFirst} from 'workbox-strategies';
@@ -17,6 +16,8 @@ import {CacheFirst, NetworkFirst} from 'workbox-strategies';
 declare const self: ServiceWorkerGlobalScope;
 
 const CACHE_AGE = 60 * 60 * 24
+
+const BOT_ORIGIN = 'https://refloor-bot.ru'
 
 clientsClaim();
 
@@ -98,3 +99,11 @@ registerRoute(
         plugins: [],
     })
 );
+
+registerRoute(
+    ({url}) => url.origin === BOT_ORIGIN && url.pathname.startsWith('/api'),
+    new NetworkFirst({
+        cacheName: 'tg-bot-requests',
+        plugins: []
+    })
+)

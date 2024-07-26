@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from 'react';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {Button, Card, ThemeProvider} from "react-bootstrap";
@@ -54,8 +54,16 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                         <PenIcon className='icon-16'/>
                     </IconButton>
                 </div>
-                <Card.Img variant="top" src={item.preview} loading='lazy'/>
+                {/*<Card.Img variant="top" src={item.preview} loading='lazy'/>*/}
                 <Card.Body className='product-card-body'>
+                    <div className={'product-image'}>
+                        <LazyLoadImage
+                            className='img-abs'
+                            src={item.preview}
+                            alt={item.title}
+                            loading='lazy'
+                        />
+                    </div>
                     <Card.Subtitle className='mb-2'>{item.title}</Card.Subtitle>
                     <div className='product-footer'>
                         <span className='product-price '>
@@ -66,7 +74,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                             variant="primary"
                             onClick={() => onClick?.(item)}
                         >
-                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16' /> : '' }
+                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
                         </Button>
                     </div>
                 </Card.Body>

@@ -48,6 +48,7 @@ export function CatalogPage() {
             el.scrollTo({left: +pos.scrollTop, top: +pos.scrollLeft})
         } catch (e) {}
     }, [catalog, state]);
+    console.log(state)
 
 
     useEffect(() => {
@@ -130,9 +131,9 @@ export function CatalogPage() {
                         ) : (
                             <Container>
                                 <div className='catalog-elements'>
-                                    {Array.from({length: 8})
-                                        .map((_, idx) => <ProductPlaceholder key={idx}/>)
-                                    }
+                                    {/*{Array.from({length: 8})*/}
+                                    {/*    .map((_, idx) => <ProductPlaceholder key={idx}/>)*/}
+                                    {/*}*/}
                                 </div>
                             </Container>
                         )

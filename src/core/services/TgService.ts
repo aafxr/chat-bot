@@ -8,7 +8,10 @@ const CURRENT_ORDER_KEY = 'currentOrder'
 export class TgService {
     static getUser() {
         if (Telegram.WebApp.initDataUnsafe.user)
-            return new TgUser(Telegram.WebApp.initDataUnsafe.user)
+            return new TgUser({
+                ...Telegram.WebApp.initDataUnsafe.user,
+                id: '' + Telegram.WebApp.initDataUnsafe.user.id
+            })
     }
 
     static getInitParam() {
