@@ -1,16 +1,15 @@
 import clsx from "clsx";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import debounce from "lodash.debounce";
 
 import {setCatalogFilter} from "../../redux/slices/catalog-slice";
 import {useAppDispatch} from "../../redux/hooks";
+import {SearchIcon, CloseIcon} from "../svg";
 import {Container} from "../Container";
 import Input from "../Input/Input";
-import {SearchIcon} from "../svg";
 
 import './Header.scss'
-import {CloseButton} from "react-bootstrap";
-import {CloseIcon} from "../svg/CloseIcon";
+import {useCatalog} from "../../redux/hooks/useCatalog";
 
 
 export type HeaderProps = {
@@ -22,6 +21,13 @@ export type HeaderProps = {
 export function Header({onSelect, className}: HeaderProps) {
     const [value, setValue] = useState('')
     const dispatch = useAppDispatch()
+    const catalog = useCatalog()
+
+
+    useEffect(() => {
+        if(!catalog) return
+        if (catalog._filter) setValue(catalog._filter)
+    }, []);
 
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -42,6 +42,11 @@ export class TgService {
     }
 
 
+    static async loadCurrentOrder(){
+        return this.getCloudItem<Order>(CURRENT_ORDER_KEY)
+    }
+
+
     static async saveCurrentOrder(o: Order) {
         return new Promise((res, rej) => {
             const value = JSON.stringify(o)

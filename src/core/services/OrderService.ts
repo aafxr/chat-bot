@@ -17,7 +17,10 @@ export class OrderService{
     }
 
     static async loadOrder(){
-        const order = await DB.getStoreItem<Order>(ORDER_KEY)
+        let order: Order | undefined = await TgService.loadCurrentOrder()
+        if(!order){
+            order = await DB.getStoreItem<Order>(ORDER_KEY)
+        }
         if(order) return new Order(order)
     }
 }

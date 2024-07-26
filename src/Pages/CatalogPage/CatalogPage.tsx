@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router";
 
-import {ProductPlaceholder} from "../../components/ProductPlaceholder";
 import {CatalogSections} from "../../components/CatalogSections";
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {CatalogElement} from "../../components/CatalogElement";
@@ -46,7 +45,8 @@ export function CatalogPage() {
         try {
             const pos = JSON.parse(localStorage.getItem(CATALOG_CONTENT_SCROLL)!)
             el.scrollTo({left: +pos.scrollTop, top: +pos.scrollLeft})
-        } catch (e) {}
+        } catch (e) {
+        }
     }, [catalog, state]);
     console.log(state)
 
@@ -94,52 +94,41 @@ export function CatalogPage() {
                 {...handlers}
             >
                 <Container>
-                    {catalog
-                        ? (catalog._filter
-                                ? (
-                                    <section className='catalog-section'>
-                                        <Title className='catalog-section-title'>Результаты поиска</Title>
-                                        <div className='catalog-elements'>
-                                            {catalog.getFilteredItems().map(e => (
-                                                <CatalogElement
-                                                    key={e.id}
-                                                    className='catalog-element'
-                                                    item={e}
-                                                    onClick={handleElementClick}
-                                                />
-                                            ))}
-                                        </div>
-                                    </section>
-                                ) : catalog.sections.map(s => (
-                                    <section
-                                        key={s.id} className='catalog-section'
-                                        data-section-id={s.id}
-                                    >
-                                        <Title className='catalog-section-title'>{s.title}</Title>
-                                        <div className='catalog-elements'>
-                                            {catalog.getElements(s.items).map(e => (
-                                                <CatalogElement
-                                                    key={e.id}
-                                                    className='catalog-element'
-                                                    item={e}
-                                                    onClick={handleElementClick}
-                                                />
-                                            ))}
-                                        </div>
-                                    </section>
-                                ))
-                        ) : (
-                            <Container>
-                                <div className='catalog-elements'>
-                                    {/*{Array.from({length: 8})*/}
-                                    {/*    .map((_, idx) => <ProductPlaceholder key={idx}/>)*/}
-                                    {/*}*/}
-                                </div>
-                            </Container>
-                        )
-                    }
+                    {catalog && (catalog._filter
+                            ? (
+                                <section className='catalog-section'>
+                                    <Title className='catalog-section-title'>Результаты поиска</Title>
+                                    <div className='catalog-elements'>
+                                        {catalog.getFilteredItems().map(e => (
+                                            <CatalogElement
+                                                key={e.id}
+                                                className='catalog-element'
+                                                item={e}
+                                                onClick={handleElementClick}
+                                            />
+                                        ))}
+                                    </div>
+                                </section>
+                            ) : catalog.sections.map(s => (
+                                <section
+                                    key={s.id} className='catalog-section'
+                                    data-section-id={s.id}
+                                >
+                                    <Title className='catalog-section-title'>{s.title}</Title>
+                                    <div className='catalog-elements'>
+                                        {catalog.getElements(s.items).map(e => (
+                                            <CatalogElement
+                                                key={e.id}
+                                                className='catalog-element'
+                                                item={e}
+                                                onClick={handleElementClick}
+                                            />
+                                        ))}
+                                    </div>
+                                </section>
+                            ))
+                    )}
                     <Spacer/>
-
                 </Container>
             </div>
         </div>

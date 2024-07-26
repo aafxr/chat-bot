@@ -31,10 +31,12 @@ export function OrderItemCard({orderItem, className, onRemove}: OrderItemCardPro
     function handleQuantityChange(n: number) {
         const newOrder = new Order(order)
         const updOrderItem = new OrderItem(orderItem)
-        updOrderItem.quantity = n
+
         if (n <= 0) {
-            newOrder.delete(updOrderItem.product)
+            onRemove?.(orderItem)
+            return
         } else {
+            updOrderItem.quantity = n
             newOrder.set(updOrderItem)
         }
         dispatch(setOrder(newOrder))
@@ -58,8 +60,9 @@ export function OrderItemCard({orderItem, className, onRemove}: OrderItemCardPro
                     <div className='orderItem-summery'>
                         <span>{formatter.format(orderItem.getTotal())}</span>
                         <Counter
+                            min={1}
                             className='orderItem-counter'
-                            value={orderItem.quantity}
+                            initValue={orderItem.quantity}
                             onChange={handleQuantityChange}
                         />
                     </div>

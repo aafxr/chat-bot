@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import React, {useEffect, useState} from 'react';
-import {Button, CloseButton} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 import {addProduct, removeProduct, setProduct} from "../../redux/slices/order-slice";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
-import {CloseIcon} from "../svg/CloseIcon";
+import {CloseIcon} from "../svg";
 
 import './AddOrder.scss'
 
@@ -110,10 +110,7 @@ export function AddOrder({product, max, className}: AddOrderProps) {
                             onClick={handleAddOrder}
                         >Добавить в заказ</Button>)
                 }
-
-
             </div>
-
         </div>
     );
 }
