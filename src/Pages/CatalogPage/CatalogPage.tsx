@@ -94,20 +94,36 @@ export function CatalogPage() {
                 {...handlers}
             >
                 <Container>
-                    {catalog && (catalog._filter
+                    {catalog && (
+                        catalog._filter
                             ? (
                                 <section className='catalog-section'>
                                     <Title className='catalog-section-title'>Результаты поиска</Title>
-                                    <div className='catalog-elements'>
-                                        {catalog.getFilteredItems().map(e => (
-                                            <CatalogElement
-                                                key={e.id}
-                                                className='catalog-element'
-                                                item={e}
-                                                onClick={handleElementClick}
-                                            />
-                                        ))}
-                                    </div>
+                                    {
+                                        (() => {
+                                            const items = catalog.getFilteredItems()
+                                            return items.length ? (
+                                                <div className='catalog-elements'>
+                                                    {
+                                                        items.map(e => (
+
+                                                            <CatalogElement
+                                                                key={e.id}
+                                                                className='catalog-element'
+                                                                item={e}
+                                                                onClick={handleElementClick}
+                                                            />
+                                                        ))
+                                                    }
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <p><b>{catalog._filter}</b>:&nbsp;по данному запросу товар не
+                                                        найден, попробуйте изменить форму запрос</p>
+                                                </div>
+                                            )
+                                        })()
+                                    }
                                 </section>
                             ) : catalog.sections.map(s => (
                                 <section
