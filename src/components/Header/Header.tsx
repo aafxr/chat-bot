@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import React, {useEffect, useState} from 'react';
-import debounce from "lodash.debounce";
 
 import {setCatalogFilter} from "../../redux/slices/catalog-slice";
 import {useCatalog} from "../../redux/hooks/useCatalog";
@@ -65,6 +64,7 @@ export function Header({onSelect, className}: HeaderProps) {
                         placeholder={'Поиск по артикулу/названию'}
                         onChange={handleTextChange}
                         onKeyDown={handleKeyPress}
+                        autoCapitalize='off'
                     />
                     {!!value && (
                         <div className='header-clear' onClick={resetFilter}>
