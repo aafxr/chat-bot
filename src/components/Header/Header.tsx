@@ -38,10 +38,10 @@ export function Header({onSelect, className}: HeaderProps) {
     }
 
 
-    const handleTextChange = debounce((value: string) => {
+    const handleTextChange = (value: string) => {
         setValue(value)
         dispatch(setCatalogFilter(value))
-    }, 300, {trailing: true})
+    }
 
     const resetFilter = () => {
         setValue('')
