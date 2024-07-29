@@ -97,7 +97,7 @@ export function AddOrder({product, max, className}: AddOrderProps) {
                             >+</Button>
 
                             <div
-                                className='addOrder-remove'
+                                className='addOrder-remove remove-btn'
                                 onClick={() => dispatch(removeProduct(product))}
                             >
                                 <CloseIcon className='addOrder-icon icon-16'/>

@@ -95,3 +95,8 @@ a{
   height: 100%;
   object-fit: cover;
 }
+
+.remove-btn{
+  color: var(--tg-theme-destructive-text-color);
+  fill: var(--tg-theme-destructive-text-color);
+}

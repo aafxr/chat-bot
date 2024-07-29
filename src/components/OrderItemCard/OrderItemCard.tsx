@@ -66,7 +66,7 @@ export function OrderItemCard({orderItem, className, onRemove}: OrderItemCardPro
                             onChange={handleQuantityChange}
                         />
                     </div>
-                    <button className='orderItem-remove' onClick={() => onRemove?.(orderItem)}>
+                    <button className='orderItem-remove remove-btn' onClick={() => onRemove?.(orderItem)}>
                         <CloseIcon className='icon-16'/>
                     </button>
                 </div>

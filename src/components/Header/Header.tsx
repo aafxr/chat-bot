@@ -67,7 +67,7 @@ export function Header({onSelect, className}: HeaderProps) {
                         autoCapitalize='off'
                     />
                     {!!value && (
-                        <div className='header-clear' onClick={resetFilter}>
+                        <div className='header-clear remove-btn' onClick={resetFilter}>
                             <CloseIcon className='icon-16' />
                         </div>
                     )}
