@@ -23,7 +23,8 @@ a{
   color: inherit;
 }
 
-*::-webkit-scrollbar {
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-button{
   width: 8px;
   height: 8px;
   background-color: var(--tg-theme-bg-color);

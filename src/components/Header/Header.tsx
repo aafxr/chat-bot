@@ -3,13 +3,13 @@ import React, {useEffect, useState} from 'react';
 import debounce from "lodash.debounce";
 
 import {setCatalogFilter} from "../../redux/slices/catalog-slice";
+import {useCatalog} from "../../redux/hooks/useCatalog";
 import {useAppDispatch} from "../../redux/hooks";
 import {SearchIcon, CloseIcon} from "../svg";
 import {Container} from "../Container";
 import Input from "../Input/Input";
 
 import './Header.scss'
-import {useCatalog} from "../../redux/hooks/useCatalog";
 
 
 export type HeaderProps = {
