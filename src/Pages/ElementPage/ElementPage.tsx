@@ -196,7 +196,6 @@ export function ElementPage() {
                                                         {productDetails.Price_MRC.Value}&nbsp;{productDetails.Price_MRC.UnitOfMeasure}
                                                     </div>
                                                 </div>
-                                                <div className='itemDetails-separator'/>
                                                 <div className='itemDetails-prop'>
                                                     <div
                                                         className='itemDetails-propName'>{productDetails.Price_RRC.Name}</div>
@@ -204,7 +203,6 @@ export function ElementPage() {
                                                         {productDetails.Price_RRC.Value}&nbsp;{productDetails.Price_RRC.UnitOfMeasure}
                                                     </div>
                                                 </div>
-                                                <div className='itemDetails-separator'/>
                                                 <div className='itemDetails-prop'>
                                                     <div className='itemDetails-propName'>Упаковка</div>
                                                     <div className='itemDetails-propValue'>
