@@ -11,6 +11,8 @@ import {fetchElementDetail} from "../../api/fetchElementDetail";
 import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 import {FavoriteType} from "../../types/FavoriteType";
 import {TgService} from "./TgService";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 
 const ARTICLES_KEY = 'articles'
@@ -126,11 +128,14 @@ export class CatalogService {
 
 
     static async getFavorites() {
-        TgService.getCloudItem<FavoriteType>(FAVORITE_KEY)
-            .then((f) => f && DB.setStoreItem(FAVORITE_KEY, f))
-            .catch(console.error)
+        let f = await TgService.getCloudItem<FavoriteType>(FAVORITE_KEY)
+        if (f) {
+            DB.setStoreItem(FAVORITE_KEY, f).catch(console.error)
+            return f
+        }
 
-        return await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
+        f = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
+        return f
     }
 
 
