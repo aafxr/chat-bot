@@ -1,5 +1,7 @@
 import {TgUser} from "./TgUser";
 
+
+
 export class AppUser {
     id: number
     telegram_id: string
@@ -25,6 +27,9 @@ export class AppUser {
     tgUser: TgUser | null
 
 
+    canEdite: boolean
+
+
     constructor(u: Partial<AppUser> = {}) {
         this.id = u.id !== undefined ? u.id : -1
         this.telegram_id = u.telegram_id !== undefined ? u.telegram_id : ''
@@ -48,5 +53,7 @@ export class AppUser {
         this.phone = u.phone !== undefined ? u.phone : -1
         this.country = u.country !== undefined ? u.country : ''
         this.tgUser = u.tgUser !== undefined ? u.tgUser : null
+
+        this.canEdite = false
     }
 }

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {Button, Card, ThemeProvider} from "react-bootstrap";
@@ -13,6 +13,7 @@ import {useAppSelector} from "../../redux/hooks";
 import {IconButton} from "../IconButton";
 
 import './CatalogElement.scss'
+import {useAppUser} from "../../redux/hooks/useAppUser";
 
 
 export type CatalogElementProps = {
@@ -23,6 +24,7 @@ export type CatalogElementProps = {
 }
 
 export function CatalogElement({item, className, onClick}: CatalogElementProps) {
+    const user = useAppUser()
     const order = useOrder()
     const {favorite} = useAppSelector(s => s.catalog)
     const {addFavorite, removeFavorite} = useFavoriteHandlers()
@@ -50,11 +52,12 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                     >
                         <HeartIcon className='icon-16'/>
                     </IconButton>
-                    <IconButton className='product-topBtn'>
-                        <PenIcon className='icon-16'/>
-                    </IconButton>
+                    {user?.canEdite && (
+                        <IconButton className='product-topBtn'>
+                            <PenIcon className='icon-16'/>
+                        </IconButton>
+                    )}
                 </div>
-                {/*<Card.Img variant="top" src={item.preview} loading='lazy'/>*/}
                 <Card.Body className='product-card-body'>
                     <div className={'product-image'}>
                         <LazyLoadImage
