@@ -1,10 +1,7 @@
 .sections{
   &-container{
     position: relative;
-    //right: 0;
-    //left: 0;
     width: 100%;
-    //top: var(--header-height);
     background-color: var(--tg-theme-header-bg-color);
     overflow: hidden;
     z-index: 2;
@@ -33,7 +30,7 @@
   }
 
   &-item.active{
-    color: var(--tg-theme-button-text-color);
-    border-bottom: 3px solid var(--tg-theme-button-text-color);
+    color: var(--tg-theme-accent-text-color);
+    border-bottom: 3px solid var(--tg-theme-accent-text-color);
   }
 }

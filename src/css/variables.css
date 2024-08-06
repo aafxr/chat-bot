@@ -12,12 +12,12 @@
     --tg-theme-bg-color: white;
     --tg-theme-text-color: #333;
     --tg-theme-hint-color: #777;
-    --tg-theme-link-color: #2c77ff;
-    --tg-theme-button-color: #2c77ff;
+    --tg-theme-link-color: #124bb4;
+    --tg-theme-button-color: #124bb4;
     --tg-theme-button-text-color: white;
     --tg-theme-secondary-bg-color: #eee;
     --tg-theme-header-bg-color: #777;
-    --tg-theme-accent-text-color: #2c77ff;
+    --tg-theme-accent-text-color: #124bb4;
     --tg-theme-section-bg-color: #eee;
     --tg-theme-section-header-text-color: #777;
     --tg-theme-section-separator-color: var(--tg-theme-section-bg-color);
