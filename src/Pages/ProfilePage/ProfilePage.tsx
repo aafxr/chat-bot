@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {useAppUser} from "../../redux/hooks/useAppUser";
+import {PageHeader} from "../../components/PageHeader";
 import {Container} from "../../components/Container";
 import {Subtitle} from "../../components/Subtitle";
 import {Spacer} from "../../components/Spacer";
-import {Title} from "../../components/Title";
 import {Image} from "react-bootstrap";
 
 import './ProfilePage.scss'
@@ -17,11 +17,7 @@ export function ProfilePage() {
 
     return (
         <div className='profile wrapper'>
-            <div className='wrapper-header'>
-                <Container className='pt-2 pb-2'>
-                    <Title>Профиль</Title>
-                </Container>
-            </div>
+            <PageHeader title={'Профиль'}/>
             <div className='wrapper-content'>
                 {user
                     ? (

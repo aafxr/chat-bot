@@ -1,0 +1,8 @@
+.pageHeader{
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  color: var(--tg-theme-text-color);
+  font-weight: 700;
+  background-color: var(--tg-theme-header-bg-color);
+}

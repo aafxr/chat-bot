@@ -15,6 +15,7 @@ import {Title} from "../../components/Title";
 import {Button, Tab, Tabs} from "react-bootstrap";
 
 import './OrderPage.scss'
+import {PageHeader} from "../../components/PageHeader";
 
 
 export function OrderPage() {
@@ -44,12 +45,7 @@ export function OrderPage() {
 
     return (
         <div className='order wrapper'>
-            <div className='wrapper-header pb-2'>
-                <Container>
-                    <Title className='pt-2'>Заказы</Title>
-                    {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
-                </Container>
-            </div>
+            <PageHeader title={"Заказы"}/>
             <div className='wrapper-content'>
                 <Container>
                     <Tabs
@@ -58,6 +54,7 @@ export function OrderPage() {
                     >
                         <Tab eventKey="current" title="Текущий">
                             <div className='order-list'>
+                    {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
                                 {items.length
                                     ? (
                                         items.map((o) => (

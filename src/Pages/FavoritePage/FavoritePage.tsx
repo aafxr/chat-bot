@@ -8,6 +8,7 @@ import {Spacer} from "../../components/Spacer";
 import {Title} from "../../components/Title";
 
 import './FavoritePage.scss'
+import {PageHeader} from "../../components/PageHeader";
 
 
 export function FavoritePage() {
@@ -24,12 +25,8 @@ export function FavoritePage() {
 
     return (
         <div className='favorite wrapper'>
-            <div className='wrapper-header'>
-                <Container className='pt-2 overflow-hidden'>
-                    <Title>Избранное</Title>
-                </Container>
-            </div>
-            <div className='wrapper-content mt-4'>
+            <PageHeader title='Избранное' />
+            <div className='wrapper-content mt-2'>
                 <Container>
                     <div className='favorite-content'>
                         {items.map(el =>
