@@ -128,7 +128,14 @@ export class CatalogService {
 
 
     static async getFavorites() {
-        let f = await TgService.getCloudItem<FavoriteType>(FAVORITE_KEY)
+        let f: FavoriteType | undefined = undefined
+
+        try {
+            f = await TgService.getCloudItem<FavoriteType>(FAVORITE_KEY)
+
+        } catch (e) {
+            console.error(e)
+        }
         if (f) {
             DB.setStoreItem(FAVORITE_KEY, f).catch(console.error)
             return f

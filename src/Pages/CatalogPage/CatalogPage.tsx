@@ -1,7 +1,7 @@
+import clsx from "clsx";
+import {useLocation, useNavigate} from "react-router";
 import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from "react-router";
 
-import {CatalogSections} from "../../components/CatalogSections";
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {CatalogElement} from "../../components/CatalogElement";
 import {CatalogItem} from "../../core/classes/CatalogItem";
@@ -29,26 +29,13 @@ const CATALOG_CONTENT_SCROLL = 'catalog_content_scroll'
 
 
 export function CatalogPage() {
+    const {pathname} = useLocation()
     const catalog = useCatalog()
     const navigate = useNavigate()
 
     const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
     const handlers = useMemoScroll<HTMLDivElement>(CATALOG_CONTENT_SCROLL)
-
-
-    useEffect(() => {
-        const el = catalogContentRef.current
-        if (!el || !catalog || state.scrollPrevPos) return
-        setState(p => ({...p, scrollPrevPos: true}))
-
-        try {
-            const pos = JSON.parse(localStorage.getItem(CATALOG_CONTENT_SCROLL)!)
-            el.scrollTo({left: +pos.scrollTop, top: +pos.scrollLeft})
-        } catch (e) {
-        }
-    }, [catalog, state]);
-    console.log(state)
 
 
     useEffect(() => {
@@ -81,13 +68,11 @@ export function CatalogPage() {
 
 
     return (
-        <div className='catalog wrapper'>
-            <Header/>
-            {!!catalog && <CatalogSections
-                catalog={catalog}
-                selected={state.section}
-                onSelect={handleSectionSelect}
-            />}
+        <div className={clsx('catalog wrapper', pathname !== '/' && 'hidden')}>
+            <Header
+                selectedSection={state.section}
+                onSectionSelect={handleSectionSelect}
+            />
             <div
                 ref={catalogContentRef}
                 className='catalog-content wrapper-content'
@@ -106,7 +91,6 @@ export function CatalogPage() {
                                                 <div className='catalog-elements'>
                                                     {
                                                         items.map(e => (
-
                                                             <CatalogElement
                                                                 key={e.id}
                                                                 className='catalog-element'

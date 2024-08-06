@@ -2,7 +2,9 @@ import clsx from "clsx";
 import React, {useEffect, useState} from 'react';
 
 import {setCatalogFilter} from "../../redux/slices/catalog-slice";
+import {CatalogSection} from "../../core/classes/CatalogSection";
 import {useCatalog} from "../../redux/hooks/useCatalog";
+import {CatalogSections} from "../CatalogSections";
 import {useAppDispatch} from "../../redux/hooks";
 import {SearchIcon, CloseIcon} from "../svg";
 import {Container} from "../Container";
@@ -14,10 +16,12 @@ import './Header.scss'
 export type HeaderProps = {
     className?: string
     onSelect?: (str: string) => unknown
+    selectedSection?: CatalogSection
+    onSectionSelect?: (s: CatalogSection) => unknown
 }
 
 
-export function Header({onSelect, className}: HeaderProps) {
+export function Header({onSelect, className, selectedSection, onSectionSelect}: HeaderProps) {
     const [value, setValue] = useState('')
     const dispatch = useAppDispatch()
     const catalog = useCatalog()
@@ -73,6 +77,11 @@ export function Header({onSelect, className}: HeaderProps) {
                     )}
                 </div>
             </Container>
+                {!!catalog && <CatalogSections
+                    catalog={catalog}
+                    selected={selectedSection}
+                    onSelect={onSectionSelect}
+                />}
         </header>
     );
 }

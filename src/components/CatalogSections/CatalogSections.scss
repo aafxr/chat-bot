@@ -1,9 +1,10 @@
 .sections{
   &-container{
-    position: fixed;
-    right: 0;
-    left: 0;
-    top: var(--header-height);
+    position: relative;
+    //right: 0;
+    //left: 0;
+    width: 100%;
+    //top: var(--header-height);
     background-color: var(--tg-theme-header-bg-color);
     overflow: hidden;
     z-index: 2;
@@ -22,16 +23,17 @@
   &-item{
     flex: none;
     white-space: nowrap;
-    border: none;
-    border-radius: 28px;
     padding: 8px 14px;
     color: var(--tg-theme-text-color);
     font-size: 0.875rem;
-    background-color: var(--tg-theme-secondary-bg-color);
+    background-color: inherit;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
   }
 
   &-item.active{
     color: var(--tg-theme-button-text-color);
-    background-color: var(--tg-theme-button-color);
+    border-bottom: 3px solid var(--tg-theme-button-text-color);
   }
 }

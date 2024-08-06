@@ -11,12 +11,13 @@ import {FooterMenu} from "./components/FooterMenu";
 import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
+import {useInitUser} from "./hooks/useInitUser";
 import {Catalog} from "./core/classes/Catalog";
 import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 
 import './css/App.css';
-import {useInitUser} from "./hooks/useInitUser";
+import {Noop} from "./Pages/Noop/Noop";
 
 
 function App() {
@@ -61,8 +62,9 @@ function App() {
 
     return (
         <>
+            <CatalogPage/>
             <Routes>
-                <Route path={'/'} element={<CatalogPage/>}/>
+                <Route path={'/'} element={<Noop/>}/>
                 <Route path={'/:detailId/'} element={<ElementPage/>}/>
                 <Route path={'/order'} element={<OrderPage/>}/>
                 <Route path={'/favorite'} element={<FavoritePage/>}/>
