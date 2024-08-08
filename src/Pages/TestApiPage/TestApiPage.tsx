@@ -10,8 +10,7 @@ export function TestApiPage() {
 
 
     function logInitData() {
-        const text = JSON.stringify(Telegram.WebApp.initData)
-        copyToClipboard(text)
+        copyToClipboard(Telegram.WebApp.initData)
     }
 
 
