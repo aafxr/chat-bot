@@ -8,6 +8,7 @@ import {Spacer} from "../../components/Spacer";
 import {Image} from "react-bootstrap";
 
 import './ProfilePage.scss'
+import {Link} from "react-router-dom";
 
 
 
@@ -70,6 +71,8 @@ export function ProfilePage() {
                         </Container>
                     )
                 }
+                
+                <Link to={'/Teleeeg_bot/test'} className={'link'}>test</Link>
 
             </div>
         </div>
