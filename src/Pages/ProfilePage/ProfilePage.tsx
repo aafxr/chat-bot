@@ -20,6 +20,8 @@ export function ProfilePage() {
         <div className='profile wrapper'>
             <PageHeader title={'Профиль'}/>
             <div className='wrapper-content'>
+                <Link to={'/Teleeeg_bot/test'} className={'link'}>test</Link>
+
                 {user
                     ? (
                         <>
@@ -72,7 +74,6 @@ export function ProfilePage() {
                     )
                 }
                 
-                <Link to={'/Teleeeg_bot/test'} className={'link'}>test</Link>
 
             </div>
         </div>
