@@ -12,13 +12,13 @@ import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {useInitUser} from "./hooks/useInitUser";
+import {TestApiPage} from "./Pages/TestApiPage";
 import {Catalog} from "./core/classes/Catalog";
 import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
+import {Noop} from "./Pages/Noop/Noop";
 
 import './css/App.css';
-import {Noop} from "./Pages/Noop/Noop";
-import {TestApiPage} from "./Pages/TestApiPage/TestApiPage";
 
 
 function App() {

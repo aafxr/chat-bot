@@ -19,6 +19,7 @@ import {Radio} from "../../components/Radio";
 import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
+import {useLoadData} from "../../hooks/useLoadData";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -52,6 +53,16 @@ export function ElementPage() {
     const catalog = useCatalog()
     const element = useCatalogElement(detailId)
     const [state, setState] = useState({...defaultState})
+
+    // const {data, loading, error, reload} = useLoadData(
+    //     CatalogService.getProductDetails,
+    //     element,
+    //     (e, pd) => {
+    //         if (pd) {
+    //             setState(p => ({...p, productDetails: pd}))
+    //         }
+    //     }
+    // )
 
 
     useEffect(() => {
@@ -108,11 +119,9 @@ export function ElementPage() {
     }, []);
 
 
-
-    function toggleRelatedShow(){
+    function toggleRelatedShow() {
         setState(p => ({...p, showRelated: !p.showRelated}))
     }
-
 
 
     if (!element) {

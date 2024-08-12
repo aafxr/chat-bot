@@ -79,7 +79,9 @@ export class CatalogService {
     }
 
 
-    static async getProductDetails(item: CatalogItem, cb: CbWithErrorType<ProductDetails>) {
+    static async getProductDetails(item: CatalogItem | undefined, cb: CbWithErrorType<ProductDetails>) {
+        if(!item) return
+
         DB.getOne<ProductDetails>(StoreName.PRODUCT_DETAILS, item.id)
             .then(pd => cb(undefined, pd ? new ProductDetails(pd) : undefined))
             .catch(e => cb(e))
