@@ -1,5 +1,5 @@
 import axios, {AxiosInstance} from 'axios'
-
+import {BotResponseType} from "../types/BotResponseType";
 
 
 interface AxiosInstanceWithFlag extends AxiosInstance {
@@ -17,10 +17,11 @@ const aFetch = axios.create({
 }) as AxiosInstanceWithFlag;
 
 
+
 // aFetch.interceptors.request.use(async (config) => {
-    // const user = await DB.getStoreItem<User>(USER_AUTH)
-    // config.headers.authorization = `Bearer ${user?.token || ''}`
-    // return config
+// const user = await DB.getStoreItem<User>(USER_AUTH)
+// config.headers.authorization = `Bearer ${user?.token || ''}`
+// return config
 // }, e => Promise.reject(e))
 
 
@@ -63,3 +64,28 @@ const aFetch = axios.create({
 // })
 
 export default aFetch
+
+
+
+const botURL = process.env.REACT_APP_BOT_URL
+export const botFetch = axios.create({
+    baseURL: botURL,
+    timeout: 3000,
+}) as AxiosInstanceWithFlag;
+
+//automatically start session interceptor
+botFetch.interceptors.response.use(r => r, async (err) => {
+    const originalRequest = err.config
+    if (err.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true
+        try {
+            const response = await axios.post<BotResponseType<any>>(botURL + '/api/session', window.Telegram.WebApp.initData)
+            if (response.status > 199 && response.status < 300 && response.data.ok) {
+                return botFetch(originalRequest)
+            }
+        } catch (e) {
+            return Promise.reject(e)
+        }
+    }
+    return Promise.reject(err)
+})

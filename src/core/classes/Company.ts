@@ -1,17 +1,19 @@
 export class Company{
-    Name: string
-    NameFull: string
+    id: number
+    name: string
+    fullName: string
+    address: string
+    country: string
+    city: string
     INN: string
-    Parent: string
-    Email: string[]
-    UID: string
 
     constructor(c: Partial<Company> = {}) {
-        this.Name = c.Name !== undefined ? c.Name : ''
-        this.NameFull = c.NameFull !== undefined ? c.NameFull : ''
-        this.INN = c.INN !== undefined ? c.INN : ''
-        this.Parent = c.Parent !== undefined ? c.Parent : ''
-        this.Email = c.Email !== undefined ? c.Email : []
-        this.UID = c.UID !== undefined ? c.UID : ''
+        this.id         = c.id !== undefined ? c.id : -1
+        this.name       = c.name !== undefined ? c.name : ''
+        this.fullName   = c.fullName !== undefined ? c.fullName : ''
+        this.address    = c.address !== undefined ? c.address : ''
+        this.country    = c.country !== undefined ? c.country : ''
+        this.city       = c.city !== undefined ? c.city : ''
+        this.INN        = c.INN !== undefined ? c.INN : ''
     }
 }

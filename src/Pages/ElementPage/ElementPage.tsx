@@ -63,6 +63,8 @@ export function ElementPage() {
     //         }
     //     }
     // )
+    //
+    // console.log(data)
 
 
     useEffect(() => {
