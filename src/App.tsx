@@ -19,6 +19,7 @@ import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
 import './css/App.css';
+import {NewCompanyPage} from "./Pages/NewCompanyPage/NewCompanyPage";
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
                 <Route path={'/order'} element={<OrderPage/>}/>
                 <Route path={'/favorite'} element={<FavoritePage/>}/>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
+                <Route path={'/newCompany'} element={<NewCompanyPage/>}/>
                 <Route path={'/Teleeeg_bot/test'} element={<TestApiPage/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>

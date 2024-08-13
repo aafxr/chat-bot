@@ -1,11 +1,15 @@
 import {Order} from "../classes/Order";
 import {DB} from "../db/DB";
 import {TgService} from "./TgService";
+import {AppUser} from "../classes/AppUser";
 
 
 const ORDER_KEY = 'order'
 
 export class OrderService{
+
+
+
     static async saveOrder(o: Order){
         await DB.setStoreItem(ORDER_KEY, o)
         TgService.saveCurrentOrder(o).catch(console.error)
