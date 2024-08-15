@@ -11,7 +11,7 @@ type FetchElementDetailResponse = {
 
 
 export async function fetchElementDetail(item: CatalogItem){
-    const res = await axios.get<FetchElementDetailResponse>(`https://reflor-bot.ru/api/getDetail.php?code=${item.apiCode}`)
+    const res = await axios.get<FetchElementDetailResponse>(`https://refloor-bot.ru/api/getDetail?code=${item.apiCode}`)
     if(res.status > 199 &&  res.status < 300){
         return res.data.success ? res.data.product : undefined
     }
