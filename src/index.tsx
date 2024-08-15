@@ -1,4 +1,6 @@
+import '@telegram-apps/telegram-ui/dist/styles.css';
 import './css/index.scss';
+
 import React from 'react';
 import {Provider} from "react-redux";
 import ReactDOM from 'react-dom/client';
@@ -8,6 +10,7 @@ import {BootstrapThemeProvider} from "./providers/BootstrapThemeProvider/Bootstr
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import {store} from "./redux/store";
 import App from './App';
+import {AppRoot} from "@telegram-apps/telegram-ui";
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,13 +19,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     // <React.StrictMode>
-    <BootstrapThemeProvider>
-        <Provider store={store}>
-            <BrowserRouter>
-                <App/>
-            </BrowserRouter>
-        </Provider>
-    </BootstrapThemeProvider>
+    <AppRoot>
+        <BootstrapThemeProvider>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <App/>
+                </BrowserRouter>
+            </Provider>
+        </BootstrapThemeProvider>
+    </AppRoot>
     // </React.StrictMode>
 );
 

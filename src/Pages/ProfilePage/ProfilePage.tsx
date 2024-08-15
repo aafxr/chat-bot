@@ -1,12 +1,10 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
 
 import {useAppUser} from "../../redux/hooks/useAppUser";
-import {PageHeader} from "../../components/PageHeader";
+
+import {Icon24ChevronRight} from "@telegram-apps/telegram-ui/dist/icons/24/chevron_right";
+import {Avatar, Text, Title} from "@telegram-apps/telegram-ui";
 import {Container} from "../../components/Container";
-import {Subtitle} from "../../components/Subtitle";
-import {Spacer} from "../../components/Spacer";
-import {Image} from "react-bootstrap";
 
 import './ProfilePage.scss'
 
@@ -16,9 +14,27 @@ export function ProfilePage() {
     const user = useAppUser()
 
 
+    if(!user){
+        return <>unauthorized</>
+    }
+
     return (
         <div className='profile wrapper'>
-            <PageHeader title={'Профиль'}/>
+            <Container>
+                <Avatar src={user.tgUser?.photo_url} size={48} />
+                <Text>{user.tgUser?.fullName}</Text>
+                <Icon24ChevronRight />
+
+            </Container>
+
+
+        </div>
+    );
+}
+
+
+/*
+<PageHeader title={'Профиль'}/>
             <div className='wrapper-content'>
                 <Link to={'/Teleeeg_bot/test'} className={'link'}>test</Link>
 
@@ -73,9 +89,7 @@ export function ProfilePage() {
                         </Container>
                     )
                 }
-                
+
 
             </div>
-        </div>
-    );
-}
+ */
