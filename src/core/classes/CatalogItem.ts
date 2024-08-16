@@ -18,7 +18,7 @@ export class CatalogItem{
         this.title = item.title !== undefined ? item.title : ''
         this.apiCode = item.apiCode !== undefined ? item.apiCode : ''
         this.apiUID = item.apiUID !== undefined ? item.apiUID : ''
-        this.currency = item.currency !== undefined ? item.currency : ''
+        this.currency = item.currency !== undefined ? item.currency : 'RUB'
         this.preview = item.preview !== undefined ? item.preview : ''
         this.price = item.price !== undefined ? item.price : ''
         this.photo = item.photo !== undefined ? item.photo : []

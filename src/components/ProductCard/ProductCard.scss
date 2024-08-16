@@ -1,0 +1,49 @@
+.productCard{
+  &-container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-image{
+    flex: none;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: var(--br-main);
+    overflow: hidden;
+  }
+
+  &-content{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-title{
+    align-self: center;
+  }
+
+  &-price{
+    align-self: center;
+  }
+}
+
+.productCard.horizontal{
+  .productCard-container{
+    flex-direction: row;
+    justify-content: stretch;
+    gap: var(--offset-main);
+  }
+
+  .productCard-image{
+    width: 240px;
+  }
+
+  .productCard-price{
+    align-self: flex-end;
+    margin-top: auto;
+  }
+
+  .productCard-btn{
+    align-self: flex-end;
+  }
+}

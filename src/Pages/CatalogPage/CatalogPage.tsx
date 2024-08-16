@@ -12,6 +12,7 @@ import {Container} from "../../components/Container";
 import {Header} from "../../components/Header";
 
 import './Catalog.scss'
+import {ProductCard} from "../../components/ProductCard/ProductCard";
 
 
 type CatalogState = {
@@ -73,11 +74,30 @@ export function CatalogPage() {
                 onSectionSelect={handleSectionSelect}
             />
             <div
-
                 className='wrapper-content'
                 {...handlers}
             >
-                <Container ref={catalogContentRef} className="catalog-content">
+                {new Array(8).fill('').map((_, i) => (
+                    <ProductCard
+                        key={i}
+                        item={new CatalogItem({
+                        title: 'ljdfng asd as;dl',
+                        price: '1320',
+                        preview: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx6yT7oBWFeKJH-85mTe_LX8XL5RXw1mRFow&s'
+                    })}
+                        mode={i % 2 ? 'vertical' : 'horizontal' }
+                    />
+                ))}
+
+            </div>
+            <div className='wrapper-footer-spacer'/>
+        </div>
+    )
+}
+
+
+/*
+<Container ref={catalogContentRef} className="catalog-content">
                     <List>
                         {catalog && (
                             catalog._filter
@@ -131,8 +151,4 @@ export function CatalogPage() {
                         )}
                     </List>
                 </Container>
-            </div>
-            <div className='wrapper-footer-spacer'/>
-        </div>
-    )
-}
+ */

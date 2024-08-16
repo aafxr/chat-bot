@@ -14,6 +14,8 @@ import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
 
 import './CatalogElement.scss'
+import {CardCell} from "@telegram-apps/telegram-ui/dist/cjs/components/Blocks/Card/components/CardCell/CardCell";
+import {CardChip} from "@telegram-apps/telegram-ui/dist/cjs/components/Blocks/Card/components/CardChip/CardChip";
 
 
 export type CatalogElementProps = {
@@ -41,6 +43,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
         "card-body": "product-card-body",
         // "btn": "product-btn"
     }
+
 
     return (
         <ThemeProvider prefixes={prefixes}>
