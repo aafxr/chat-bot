@@ -4,7 +4,7 @@ import {useLocation, useNavigate} from "react-router";
 import React, {useEffect, useRef, useState} from 'react';
 
 import {CatalogSection} from "../../core/classes/CatalogSection";
-import {CatalogElement} from "../../components/CatalogElement";
+import {ProductCard} from "../../components/ProductCard";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {useMemoScroll} from "../../hooks/useMemoScroll";
@@ -12,7 +12,6 @@ import {Container} from "../../components/Container";
 import {Header} from "../../components/Header";
 
 import './Catalog.scss'
-import {ProductCard} from "../../components/ProductCard/ProductCard";
 
 
 type CatalogState = {
@@ -77,27 +76,7 @@ export function CatalogPage() {
                 className='wrapper-content'
                 {...handlers}
             >
-                {new Array(8).fill('').map((_, i) => (
-                    <ProductCard
-                        key={i}
-                        item={new CatalogItem({
-                        title: 'ljdfng asd as;dl',
-                        price: '1320',
-                        preview: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx6yT7oBWFeKJH-85mTe_LX8XL5RXw1mRFow&s'
-                    })}
-                        mode={i % 2 ? 'vertical' : 'horizontal' }
-                    />
-                ))}
-
-            </div>
-            <div className='wrapper-footer-spacer'/>
-        </div>
-    )
-}
-
-
-/*
-<Container ref={catalogContentRef} className="catalog-content">
+                <Container ref={catalogContentRef} className="catalog-content">
                     <List>
                         {catalog && (
                             catalog._filter
@@ -112,7 +91,7 @@ export function CatalogPage() {
                                                     <div className='catalog-elements'>
                                                         {
                                                             items.map(e => (
-                                                                <CatalogElement
+                                                                <ProductCard
                                                                     key={e.id}
                                                                     className='catalog-element'
                                                                     item={e}
@@ -138,7 +117,70 @@ export function CatalogPage() {
                                         <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
                                         <div className='catalog-elements'>
                                             {catalog.getElements(s.items).map(e => (
-                                                <CatalogElement
+                                                <ProductCard
+                                                    key={e.id}
+                                                    className='catalog-element'
+                                                    item={e}
+                                                    onClick={handleElementClick}
+                                                />
+                                            ))}
+                                        </div>
+                                    </section>
+                                ))
+                        )}
+                    </List>
+                </Container>
+
+            </div>
+            <div className='wrapper-footer-spacer'/>
+        </div>
+    )
+}
+
+
+/*
+<Container ref={catalogContentRef} className="catalog-content">
+                    <List>
+                        {catalog && (
+                            catalog._filter
+                                ? (
+                                    <section className='catalog-section'>
+                                        <Headline weight={"1"} className='catalog-section-title'>Результаты
+                                            поиска</Headline>
+                                        {
+                                            (() => {
+                                                const items = catalog.getFilteredItems()
+                                                return items.length ? (
+                                                    <div className='catalog-elements'>
+                                                        {
+                                                            items.map(e => (
+                                                                <ProductCard
+                                                                    key={e.id}
+                                                                    className='catalog-element'
+                                                                    item={e}
+                                                                    onClick={handleElementClick}
+                                                                />
+                                                            ))
+                                                        }
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <p><b>{catalog._filter}</b>:&nbsp;по данному запросу товар не
+                                                            найден, попробуйте изменить форму запрос</p>
+                                                    </div>
+                                                )
+                                            })()
+                                        }
+                                    </section>
+                                ) : catalog.sections.map(s => (
+                                    <section
+                                        key={s.id} className='catalog-section'
+                                        data-section-id={s.id}
+                                    >
+                                        <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
+                                        <div className='catalog-elements'>
+                                            {catalog.getElements(s.items).map(e => (
+                                                <ProductCard
                                                     key={e.id}
                                                     className='catalog-element'
                                                     item={e}

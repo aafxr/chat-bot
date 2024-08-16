@@ -11,11 +11,14 @@ import './ProductCard.scss'
 export type ProductCardProps = {
     item: CatalogItem
     mode?: CardMode
+    className?:string
+    onClick?: (item: CatalogItem) => unknown
 }
 
-export function ProductCard({mode = 'vertical', item}: ProductCardProps) {
+export function ProductCard({mode = 'vertical',className,onClick, item}: ProductCardProps) {
+
     return (
-        <div className={clsx('productCard', mode)}>
+        <div className={clsx('productCard', className, mode)}>
             <div className='productCard-container'>
                 <div className='productCard-image'>
                     <LazyLoadImage
