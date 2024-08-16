@@ -1,6 +1,9 @@
-:root{
+:root {
     --br-main: 8px;
-    --margin-main: 15px;
+    --br-section: calc(var(--br-main) * 3);
+    --base-offset: 15px;
+    --margin-main: var(--base-offset);
+    --paddin-main: var(--base-offset);
     --header-height: 54px;
 
 
@@ -25,9 +28,6 @@
     --tg-theme-destructive-text-color: #FF4B41;
 
     --bg-scroll: #aaa;
-
-
-
 
 
 }

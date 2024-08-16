@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import {Headline, List} from "@telegram-apps/telegram-ui";
 import {useLocation, useNavigate} from "react-router";
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -8,9 +9,7 @@ import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {useMemoScroll} from "../../hooks/useMemoScroll";
 import {Container} from "../../components/Container";
-import {Spacer} from "../../components/Spacer";
 import {Header} from "../../components/Header";
-import {Title} from "../../components/Title";
 
 import './Catalog.scss'
 
@@ -45,7 +44,7 @@ export function CatalogPage() {
 
         const s = el.querySelector<HTMLDivElement>(`[data-section-id="${section.id}"]`)
         if (!s) return
-        el.scrollTop = s.offsetTop - 108
+        el.scrollTop = s.offsetTop
     }, [state.section]);
 
 
@@ -62,7 +61,7 @@ export function CatalogPage() {
 
             const $s = el.querySelector<HTMLDivElement>(`[data-section-id="${s.id}"]`)
             if (!$s) return
-            el.scrollTop = $s.offsetTop - 108
+            el.scrollTop = $s.offsetTop
         }
     }
 
@@ -74,63 +73,66 @@ export function CatalogPage() {
                 onSectionSelect={handleSectionSelect}
             />
             <div
-                ref={catalogContentRef}
-                className='catalog-content wrapper-content'
+
+                className='wrapper-content'
                 {...handlers}
             >
-                <Container>
-                    {catalog && (
-                        catalog._filter
-                            ? (
-                                <section className='catalog-section'>
-                                    <Title className='catalog-section-title'>Результаты поиска</Title>
-                                    {
-                                        (() => {
-                                            const items = catalog.getFilteredItems()
-                                            return items.length ? (
-                                                <div className='catalog-elements'>
-                                                    {
-                                                        items.map(e => (
-                                                            <CatalogElement
-                                                                key={e.id}
-                                                                className='catalog-element'
-                                                                item={e}
-                                                                onClick={handleElementClick}
-                                                            />
-                                                        ))
-                                                    }
-                                                </div>
-                                            ) : (
-                                                <div>
-                                                    <p><b>{catalog._filter}</b>:&nbsp;по данному запросу товар не
-                                                        найден, попробуйте изменить форму запрос</p>
-                                                </div>
-                                            )
-                                        })()
-                                    }
-                                </section>
-                            ) : catalog.sections.map(s => (
-                                <section
-                                    key={s.id} className='catalog-section'
-                                    data-section-id={s.id}
-                                >
-                                    <Title className='catalog-section-title'>{s.title}</Title>
-                                    <div className='catalog-elements'>
-                                        {catalog.getElements(s.items).map(e => (
-                                            <CatalogElement
-                                                key={e.id}
-                                                className='catalog-element'
-                                                item={e}
-                                                onClick={handleElementClick}
-                                            />
-                                        ))}
-                                    </div>
-                                </section>
-                            ))
-                    )}
-                    <Spacer/>
+                <Container ref={catalogContentRef} className="catalog-content">
+                    <List>
+                        {catalog && (
+                            catalog._filter
+                                ? (
+                                    <section className='catalog-section'>
+                                        <Headline weight={"1"} className='catalog-section-title'>Результаты
+                                            поиска</Headline>
+                                        {
+                                            (() => {
+                                                const items = catalog.getFilteredItems()
+                                                return items.length ? (
+                                                    <div className='catalog-elements'>
+                                                        {
+                                                            items.map(e => (
+                                                                <CatalogElement
+                                                                    key={e.id}
+                                                                    className='catalog-element'
+                                                                    item={e}
+                                                                    onClick={handleElementClick}
+                                                                />
+                                                            ))
+                                                        }
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <p><b>{catalog._filter}</b>:&nbsp;по данному запросу товар не
+                                                            найден, попробуйте изменить форму запрос</p>
+                                                    </div>
+                                                )
+                                            })()
+                                        }
+                                    </section>
+                                ) : catalog.sections.map(s => (
+                                    <section
+                                        key={s.id} className='catalog-section'
+                                        data-section-id={s.id}
+                                    >
+                                        <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
+                                        <div className='catalog-elements'>
+                                            {catalog.getElements(s.items).map(e => (
+                                                <CatalogElement
+                                                    key={e.id}
+                                                    className='catalog-element'
+                                                    item={e}
+                                                    onClick={handleElementClick}
+                                                />
+                                            ))}
+                                        </div>
+                                    </section>
+                                ))
+                        )}
+                    </List>
                 </Container>
             </div>
+            <div className='wrapper-footer-spacer'/>
         </div>
     )
 }

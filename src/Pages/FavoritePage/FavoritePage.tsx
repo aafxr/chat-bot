@@ -2,13 +2,11 @@ import React, {useMemo} from 'react';
 import {useNavigate} from "react-router";
 
 import {CatalogElement} from "../../components/CatalogElement";
+import {PageHeader} from "../../components/PageHeader";
 import {Container} from "../../components/Container";
 import {useAppSelector} from "../../redux/hooks";
-import {Spacer} from "../../components/Spacer";
-import {Title} from "../../components/Title";
 
 import './FavoritePage.scss'
-import {PageHeader} from "../../components/PageHeader";
 
 
 export function FavoritePage() {
@@ -25,8 +23,9 @@ export function FavoritePage() {
 
     return (
         <div className='favorite wrapper'>
-            <PageHeader title='Избранное' />
-            <div className='wrapper-content mt-2'>
+                <PageHeader title='Избранное' />
+
+            <div className='wrapper-content'>
                 <Container>
                     <div className='favorite-content'>
                         {items.map(el =>
@@ -39,8 +38,8 @@ export function FavoritePage() {
                         }
                     </div>
                 </Container>
-                <Spacer/>
             </div>
+            <div className='wrapper-footer-spacer'/>
         </div>
     );
 }

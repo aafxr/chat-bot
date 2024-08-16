@@ -4,9 +4,8 @@
   }
 
   &-content{
-    height: 100%;
-    margin-top: calc(var(--header-height ) * 2);
-    overflow: auto;
+    //height: 100%;
+    //overflow: auto;
     scroll-behavior: smooth;
   }
 
@@ -19,8 +18,8 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-    background-color: var(--tg-theme-section-bg-color);
-    box-shadow: 0 0 16px 4px var(--tg-theme-bg-color) inset;
+    //background-color: var(--tg-theme-section-bg-color);
+    //box-shadow: 0 0 16px 4px var(--tg-theme-bg-color) inset;
     border-radius: var(--br-main);
   }
 

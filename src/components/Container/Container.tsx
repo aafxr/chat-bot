@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import clsx from "clsx";
 
 import './Container.scss'
@@ -10,11 +10,11 @@ export type ComponentProps = {
 }
 
 
-export function Container({children, className}: ComponentProps) {
+export const Container = forwardRef<HTMLDivElement, ComponentProps>(({children, className}, ref) =>  {
     return (
-        <div className={clsx('app-container', className)}>
+        <div ref={ref} className={clsx('app-container', className)}>
             {children}
         </div>
     );
-}
+})
 

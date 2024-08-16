@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import React, {useEffect, useRef} from 'react';
+import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {Catalog} from "../../core/classes/Catalog";
-import Button from "../Button/Button";
 
 import './CatalogSections.scss'
 
@@ -43,6 +43,29 @@ export function CatalogSections({catalog, className, selected, onSelect}: Catalo
         <div className={clsx('sections', className)}>
             <div className='sections-container'>
                 <div
+                    className='sections-list'
+
+                >
+                    {catalog.sections.map(s => (
+                        <TabsItem
+                            key={s.id}
+                            className={clsx('sections-tab flex-0', {selected: selected?.id === s.id})}
+                            selected={selected?.id === s.id}
+                            onClick={() => onSelect?.(s)}
+                            data-id={s.id}
+                        >
+                            {s.title}
+                        </TabsItem>
+                    ))}
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
+/*
+<div
                     ref={sectionsListRef}
                     className='sections-list'
                     // onWheel={handleWheel}
@@ -58,8 +81,5 @@ export function CatalogSections({catalog, className, selected, onSelect}: Catalo
                         </Button>
                     ))}
                 </div>
-            </div>
-        </div>
-    );
-}
+ */
 

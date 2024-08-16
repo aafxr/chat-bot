@@ -22,10 +22,10 @@ const appUserDefault = new AppUser({
 
 const tgUserDefault = new TgUser({
     id: '',
-    first_name: 'test-user-name',
+    first_name: 'test',
     username: '@test',
     phone: "79999999999",
-    last_name: 'test-last-name'
+    last_name: 'testovich'
 })
 
 

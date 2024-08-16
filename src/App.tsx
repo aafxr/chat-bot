@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
+import {NewCompanyPage} from "./Pages/NewCompanyPage/NewCompanyPage";
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
 import {OrderService} from "./core/services/OrderService";
@@ -19,7 +20,6 @@ import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
 import './css/App.css';
-import {NewCompanyPage} from "./Pages/NewCompanyPage/NewCompanyPage";
 
 
 function App() {

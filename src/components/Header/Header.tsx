@@ -58,31 +58,35 @@ export function Header({onSelect, className, selectedSection, onSectionSelect}: 
 
 
     return (
-        <header className={clsx('header', className)}>
-            <Container className='header-container'>
-                <div className='header-inner'>
-                    <SearchIcon className='header-search' onClick={handleSearchClick}/>
-                    <Input
-                        className='header-input'
-                        value={value}
-                        placeholder={'Поиск по артикулу/названию'}
-                        onChange={handleTextChange}
-                        onKeyDown={handleKeyPress}
-                        autoCapitalize='off'
-                    />
-                    {!!value && (
-                        <div className='header-clear remove-btn' onClick={resetFilter}>
-                            <CloseIcon className='icon-16' />
-                        </div>
-                    )}
-                </div>
-            </Container>
+        <>
+            <header className={clsx('header', className)}>
+                <Container className='header-container'>
+                    <div className='header-inner'>
+                        <SearchIcon className='header-search' onClick={handleSearchClick}/>
+                        <Input
+                            className='header-input'
+                            value={value}
+                            placeholder={'Поиск по артикулу/названию'}
+                            onChange={handleTextChange}
+                            onKeyDown={handleKeyPress}
+                            autoCapitalize='off'
+                        />
+                        {!!value && (
+                            <div className='header-clear remove-btn' onClick={resetFilter}>
+                                <CloseIcon className='icon-16'/>
+                            </div>
+                        )}
+                    </div>
+                </Container>
                 {!!catalog && <CatalogSections
                     catalog={catalog}
                     selected={selectedSection}
                     onSelect={onSectionSelect}
                 />}
-        </header>
+            </header>
+            <div className="wrapper-header header-spacer"/>
+        </>
+
     );
 }
 

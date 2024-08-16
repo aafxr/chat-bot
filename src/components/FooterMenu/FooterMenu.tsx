@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {Tabbar} from "@telegram-apps/telegram-ui";
+import {useLocation, useNavigate} from "react-router";
 
 import {CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
 
 import './FooterMenu.scss'
-import {useLocation, useNavigate} from "react-router";
-import {Tabbar} from "@telegram-apps/telegram-ui";
 
 const navItems = [
     {
@@ -48,10 +48,10 @@ export function FooterMenu() {
 
 
     return (
-            <Tabbar>
+            <Tabbar className="footerMenu footerMenu-container">
                 {
                     navItems.map(item => (
-                        <Tabbar.Item key={item.id} text={item.name} selected={item.id === selected}
+                        <Tabbar.Item className="footerMenu-item" key={item.id} text={item.name} selected={item.id === selected}
                                      onClick={() => navigate(item.link)}>
                             {item.icon}
                         </Tabbar.Item>

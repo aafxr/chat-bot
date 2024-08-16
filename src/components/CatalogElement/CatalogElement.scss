@@ -72,13 +72,13 @@
   }
 
   &-topBtn {
-    aspect-ratio: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    //aspect-ratio: 1 / 1;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
     color: var(--tg-theme-text-color);
     fill: var(--tg-theme-text-color);
-    background-color: var(--tg-theme-secondary-bg-color);
+    //background-color: var(--tg-theme-secondary-bg-color);
   }
 
   &-topBtn.active {

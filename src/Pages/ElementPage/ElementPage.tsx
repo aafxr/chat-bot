@@ -14,12 +14,11 @@ import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 import {Subtitle} from "../../components/Subtitle";
 import {Section} from "../../components/Section";
-import {Spacer} from "../../components/Spacer";
 import {Radio} from "../../components/Radio";
-import {Title} from "../../components/Title";
 
 import './ElementPage.scss'
-import {useLoadData} from "../../hooks/useLoadData";
+import {Cell} from "@telegram-apps/telegram-ui";
+import {PageHeader} from "../../components/PageHeader";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -69,7 +68,7 @@ export function ElementPage() {
 
     useEffect(() => {
         setState({...defaultState})
-    }, [detailId]);
+    }, []);
 
 
     useEffect(() => {
@@ -138,6 +137,7 @@ export function ElementPage() {
 
     return (
         <div className='itemDetails wrapper'>
+            <PageHeader title={element.title}/>
             <div className='wrapper-content'>
                 <div className="itemDetails-container">
                     <div className='itemDetails-slider'>
@@ -171,125 +171,129 @@ export function ElementPage() {
                     <div className='itemDetails-inner'>
                         {productDetails && (
                             <>
-                                <Title className='itemDetails-title'>{element.title}</Title>
-                                {total && productDetails &&
-                                    <div className='row mt-2'>
-                                        <div className='col-4'>
-                                            <Button
-                                                className='app-btn w-100'
-                                                onClick={toggleRelatedShow}
-                                                disabled={!state.relatedItems.length}
-                                            >
-                                                еще
-                                            </Button>
-                                        </div>
-                                        <div className='col-8'>
-                                            <AddOrder
-                                                product={element}
-                                                max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
-                                            />
-                                        </div>
-
-                                    </div>
-                                }
-                                <Tabs
-                                    defaultActiveKey="price"
-                                    id="uncontrolled-tab-example"
-                                    className="mt-1"
-                                >
-                                    <Tab eventKey="price" title="Цена">
-                                        <div className='itemDetails-tabContent'>
-                                            <Section className='itemDetails-section'>
-                                                <div className='itemDetails-prop'>
-                                                    <div
-                                                        className='itemDetails-propName'>{productDetails.Price_MRC.Name}</div>
-                                                    <div className='itemDetails-propValue'>
-                                                        {productDetails.Price_MRC.Value}&nbsp;{productDetails.Price_MRC.UnitOfMeasure}
-                                                    </div>
-                                                </div>
-                                                <div className='itemDetails-prop'>
-                                                    <div
-                                                        className='itemDetails-propName'>{productDetails.Price_RRC.Name}</div>
-                                                    <div className='itemDetails-propValue'>
-                                                        {productDetails.Price_RRC.Value}&nbsp;{productDetails.Price_RRC.UnitOfMeasure}
-                                                    </div>
-                                                </div>
-                                                <div className='itemDetails-prop'>
-                                                    <div className='itemDetails-propName'>Упаковка</div>
-                                                    <div className='itemDetails-propValue'>
-                                                        {productDetails.PackUnitMeasure}&nbsp;=&nbsp;{productDetails.PackUnitQuantity}&nbsp;{productDetails.UnitOfMeasure}
-                                                    </div>
-                                                </div>
-                                            </Section>
-                                        </div>
-                                    </Tab>
-                                    <Tab eventKey="properties" title="Свойства">
-                                        <div className='itemDetails-tabContent'>
-                                            <Section className='itemDetails-section'>
-                                                <Subtitle>Характеристики</Subtitle>
-                                                {element.properties.map(p => (
-                                                    <ElementProperty
-                                                        key={p.id}
-                                                        className='itemDetails-property'
-                                                        property={p}
-                                                    />
-                                                ))}
-                                            </Section>
-                                        </div>
-                                    </Tab>
-                                    <Tab eventKey="order" title="Заказать">
-                                        <div className='itemDetails-tabContent'>
-                                            <Section className='itemDetails-section'>
-                                                <>
-                                                    <Subtitle>Доступно для заказа</Subtitle>
-                                                    {productDetails.Balance_Strings
-                                                        .filter(b => b.TradeArea_Name.toLowerCase() !== 'всего')
-                                                        .map(b => (
-                                                            (
-                                                                <Radio
-                                                                    key={b.TradeArea_Id}
-                                                                    className='itemDetails-balance'
-                                                                    name='tranzit'
-                                                                    value={b.TradeArea_Name}
-                                                                    onClick={() => setState({...state, balance: b})}
-                                                                    checked={b.TradeArea_Id === balance?.TradeArea_Id}
-                                                                >
-                                                                    <ElementBalance
-                                                                        balance={b}
-                                                                        packUnit={+productDetails.PackUnitQuantity}
-                                                                        active={b.TradeArea_Id === balance?.TradeArea_Id}
-                                                                    />
-                                                                </Radio>
-                                                            )
-                                                        ))}
-
-                                                    {total && (
-                                                        <ElementBalance
-                                                            key={total.TradeArea_Id}
-                                                            className='itemDetails-total'
-                                                            balance={total}
-                                                            packUnit={+productDetails.PackUnitQuantity}
-                                                        />
-                                                    )}
-                                                </>
-                                            </Section>
-                                        </div>
-                                    </Tab>
-                                    <Tab eventKey="site" title="Сайт">
-                                        <div className='itemDetails-tabContent'>
-                                            <Section className='itemDetails-section'>
-                                                <a
-                                                    className='link'
-                                                    href={productDetails.LinkToSite}
-                                                    target='_blank'
-                                                    rel="noreferrer"
+                                <Cell>
+                                    {total && productDetails &&
+                                        <div className='row mt-2'>
+                                            <div className='col-4'>
+                                                <Button
+                                                    className='app-btn w-100'
+                                                    onClick={toggleRelatedShow}
+                                                    disabled={!state.relatedItems.length}
                                                 >
-                                                    Посмотреть на сайте
-                                                </a>
-                                            </Section>
+                                                    еще
+                                                </Button>
+                                            </div>
+                                            <div className='col-8'>
+                                                <AddOrder
+                                                    product={element}
+                                                    max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
+                                                />
+                                            </div>
+
                                         </div>
-                                    </Tab>
-                                </Tabs>
+                                    }
+                                </Cell>
+                                <Cell>
+                                    <Tabs
+                                        defaultActiveKey="price"
+                                        id="uncontrolled-tab-example"
+                                        className="mt-1"
+                                    >
+                                        <Tab eventKey="price" title="Цена">
+                                            <div className='itemDetails-tabContent'>
+                                                <Section className='itemDetails-section'>
+                                                    <div className='itemDetails-prop'>
+                                                        <div
+                                                            className='itemDetails-propName'>{productDetails.Price_MRC.Name}</div>
+                                                        <div className='itemDetails-propValue'>
+                                                            {productDetails.Price_MRC.Value}&nbsp;{productDetails.Price_MRC.UnitOfMeasure}
+                                                        </div>
+                                                    </div>
+                                                    <div className='itemDetails-prop'>
+                                                        <div
+                                                            className='itemDetails-propName'>{productDetails.Price_RRC.Name}</div>
+                                                        <div className='itemDetails-propValue'>
+                                                            {productDetails.Price_RRC.Value}&nbsp;{productDetails.Price_RRC.UnitOfMeasure}
+                                                        </div>
+                                                    </div>
+                                                    <div className='itemDetails-prop'>
+                                                        <div className='itemDetails-propName'>Упаковка</div>
+                                                        <div className='itemDetails-propValue'>
+                                                            {productDetails.PackUnitMeasure}&nbsp;=&nbsp;{productDetails.PackUnitQuantity}&nbsp;{productDetails.UnitOfMeasure}
+                                                        </div>
+                                                    </div>
+                                                </Section>
+                                            </div>
+                                        </Tab>
+                                        <Tab eventKey="properties" title="Свойства">
+                                            <div className='itemDetails-tabContent'>
+                                                <Section className='itemDetails-section'>
+                                                    <Subtitle>Характеристики</Subtitle>
+                                                    {element.properties.map(p => (
+                                                        <ElementProperty
+                                                            key={p.id}
+                                                            className='itemDetails-property'
+                                                            property={p}
+                                                        />
+                                                    ))}
+                                                </Section>
+                                            </div>
+                                        </Tab>
+                                        <Tab eventKey="order" title="Заказать">
+                                            <div className='itemDetails-tabContent'>
+                                                <Section className='itemDetails-section'>
+                                                    <>
+                                                        <Subtitle>Доступно для заказа</Subtitle>
+                                                        {productDetails.Balance_Strings
+                                                            .filter(b => b.TradeArea_Name.toLowerCase() !== 'всего')
+                                                            .map(b => (
+                                                                (
+                                                                    <Radio
+                                                                        key={b.TradeArea_Id}
+                                                                        className='itemDetails-balance'
+                                                                        name='tranzit'
+                                                                        value={b.TradeArea_Name}
+                                                                        onClick={() => setState({...state, balance: b})}
+                                                                        checked={b.TradeArea_Id === balance?.TradeArea_Id}
+                                                                    >
+                                                                        <ElementBalance
+                                                                            balance={b}
+                                                                            packUnit={+productDetails.PackUnitQuantity}
+                                                                            active={b.TradeArea_Id === balance?.TradeArea_Id}
+                                                                        />
+                                                                    </Radio>
+                                                                )
+                                                            ))}
+
+                                                        {total && (
+                                                            <ElementBalance
+                                                                key={total.TradeArea_Id}
+                                                                className='itemDetails-total'
+                                                                balance={total}
+                                                                packUnit={+productDetails.PackUnitQuantity}
+                                                            />
+                                                        )}
+                                                    </>
+                                                </Section>
+                                            </div>
+                                        </Tab>
+                                        <Tab eventKey="site" title="Сайт">
+                                            <div className='itemDetails-tabContent'>
+                                                <Section className='itemDetails-section'>
+                                                    <a
+                                                        className='link'
+                                                        href={productDetails.LinkToSite}
+                                                        target='_blank'
+                                                        rel="noreferrer"
+                                                    >
+                                                        Посмотреть на сайте
+                                                    </a>
+                                                </Section>
+                                            </div>
+                                        </Tab>
+                                    </Tabs>
+                                </Cell>
+
                                 <RelatedItems
                                     items={state.relatedItems}
                                     show={state.showRelated}
@@ -299,8 +303,8 @@ export function ElementPage() {
                         )}
                     </div>
                 </div>
-                <Spacer/>
             </div>
+            <div className='wrapper-footer-spacer'/>
         </div>
     );
 }

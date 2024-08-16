@@ -3,8 +3,13 @@
     right: 0;
     left: 0;
     color: var(--tg-theme-text-color);
-    background-color: var(--tg-theme-header-bg-color);
+    background-color: var(--tgui--surface_primary);
     z-index: 2;
+
+  &-spacer{
+    padding: 0;
+    height: 108px;
+  }
 
   &-container{
     height: var(--header-height);

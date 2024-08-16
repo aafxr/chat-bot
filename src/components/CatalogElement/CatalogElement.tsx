@@ -3,17 +3,17 @@ import React from 'react';
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
-import {Button, Card, ThemeProvider} from "react-bootstrap";
+import {Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
+import {useAppUser} from "../../redux/hooks/useAppUser";
+import {Caption, Button, IconButton, Text} from "@telegram-apps/telegram-ui";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
-import {IconButton} from "../IconButton";
 
 import './CatalogElement.scss'
-import {useAppUser} from "../../redux/hooks/useAppUser";
 
 
 export type CatalogElementProps = {
@@ -67,14 +67,16 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                             loading='lazy'
                         />
                     </div>
-                    <Card.Subtitle className='mb-2'>{item.title}</Card.Subtitle>
+                    <Card.Subtitle className='mb-2'>
+                        <Caption level={"2"} weight={"1"}>{item.title}</Caption>
+                    </Card.Subtitle>
                     <div className='product-footer'>
-                        <span className='product-price '>
+                        <Text weight={"1"} className='product-price '>
                             {formatter.format(+item.price)}
-                        </span>
+                        </Text>
                         <Button
+                            size={"s"}
                             className='product-btn'
-                            variant="primary"
                             onClick={() => onClick?.(item)}
                         >
                             Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
@@ -86,3 +88,48 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
     )
 }
 
+
+/*
+<ThemeProvider prefixes={prefixes}>
+            <Card className={className}>
+                <div className='product-buttons'>
+                    <IconButton
+                        className={clsx('product-topBtn', {active: isFavorite})}
+                        onClick={() => isFavorite ? removeFavorite(item) : addFavorite(item)}
+                    >
+                        <HeartIcon className='icon-16'/>
+                    </IconButton>
+                    {user?.canEdite && (
+                        <IconButton className='product-topBtn'>
+                            <PenIcon className='icon-16'/>
+                        </IconButton>
+                    )}
+                </div>
+                <Card.Body className='product-card-body'>
+                    <div className={'product-image'}>
+                        <LazyLoadImage
+                            className='img-abs'
+                            src={item.preview}
+                            alt={item.title}
+                            loading='lazy'
+                        />
+                    </div>
+                    <Card.Subtitle className='mb-2'>
+                        <Caption level={"2"} weight={"1"}>{item.title}</Caption>
+                    </Card.Subtitle>
+                    <div className='product-footer'>
+                        <Text weight={"1"} className='product-price '>
+                            {formatter.format(+item.price)}
+                        </Text>
+                        <Button
+                            size={"s"}
+                            className='product-btn'
+                            onClick={() => onClick?.(item)}
+                        >
+                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
+                        </Button>
+                    </div>
+                </Card.Body>
+            </Card>
+        </ThemeProvider>
+ */

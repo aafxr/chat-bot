@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from 'react';
+import {Headline} from "@telegram-apps/telegram-ui";
 
 import {Container} from "../Container";
-import {Title} from "../Title";
 
 import './PageHeader.scss'
 
@@ -18,7 +18,7 @@ export function PageHeader({className, title}: PageHeaderProps) {
     return (
         <div className={clsx('wrapper-header pageHeader', className)}>
         <Container >
-            <Title>{title}</Title>
+            <Headline weight={"1"}>{title}</Headline>
         </Container>
         </div>
     );
