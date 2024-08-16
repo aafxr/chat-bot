@@ -10,7 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--tg-theme-text-color);
-  background-color: var(--tg-theme-bg-color);
+  background-color: var(--tgui--secondary_bg_color);
 }
 
 code {
@@ -27,12 +27,12 @@ a{
 *::-webkit-scrollbar-button{
   width: 8px;
   height: 8px;
-  background-color: var(--tgui--surface_primary);
+  background-color: var(--tgui--secondary_bg_color);
 }
 
 *::-webkit-scrollbar-thumb{
-  background-color: var(--bg-scroll);
   border-radius: 13px;
+  background-color: var(--tgui--surface_primary);
 }
 
 #root{
@@ -45,26 +45,31 @@ a{
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+  background-color: var(--tgui--secondary_bg_color);
 }
 
 .wrapper-header{
   padding-top: 0.5rem;
   flex: none;
+  background-color: inherit;
 }
 
 .wrapper-content{
   flex: 1 1;
-  overflow: scroll;
+  overflow: auto;
+  background-color: inherit;
 }
 
 .wrapper-footer{
   float: none;
   margin-top: auto;
+  background-color: inherit;
 }
 
 .wrapper-footer-spacer{
   float: none;
   height: 82px;
+  background-color: inherit;
 }
 
 .bot-card-title{
@@ -127,5 +132,11 @@ a{
 }
 
 .sectionBlock{
-  padding: var(--margin-main);
+  margin: var(--margin-main);
+  border-radius: var(--br-section);
+  overflow: hidden;
+}
+
+.block{
+  display: block;
 }

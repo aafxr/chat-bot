@@ -3,13 +3,12 @@ import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
 
 import {useAppUser} from "../../redux/hooks/useAppUser";
 
-import {Avatar, Cell, Headline, Section, Text} from "@telegram-apps/telegram-ui";
+import {Avatar, Caption, Cell, Headline, Section, Text} from "@telegram-apps/telegram-ui";
 import {PageHeader} from "../../components/PageHeader";
 import {TgUser} from "../../core/classes/TgUser";
 
-import {InfoRow} from "../../components/InfoRow";
-import {LinkRow} from "../../components/LinkRow";
 import './ProfilePage.scss'
+import {Link} from "react-router-dom";
 
 
 const nav = [
@@ -22,6 +21,11 @@ const nav = [
         id: 1,
         name: "Заказы",
         link: "/orders",
+    },
+    {
+        id: 2,
+        name: "Мои компании",
+        link: "/companies",
     },
 ];
 
@@ -94,20 +98,33 @@ export function ProfilePage() {
 
             */}
             <div className='wrapper-content'>
-                <Section className='sectionBlock'>
+                <Section
+                    className='sectionBlock'
+                    header={"Персональная информация"}
+                >
                     {!!user && !!user.tgUser && (
                         <>
                             {fields.map(k => (
-                                <InfoRow key={k.id} before={<Text>{k.value}</Text>}><Text>{user.tgUser?.[k.key]}</Text></InfoRow>
+                                <Cell
+                                    key={k.id}
+                                    before={<Caption weight={"2"}>{k.value}</Caption>}
+                                    after={<Caption weight={"2"}>{user.tgUser?.[k.key]}</Caption>}
+                                />
                             ))}
                         </>
                     )}
                 </Section>
-                <Section className='sectionBlock'>
+                <Section
+                    className='sectionBlock'
+                    header={"Опции"}
+                >
                     {nav.map(n => (
-                        <LinkRow key={n.id} to={n.link} after={<Icon16Chevron/>}>
-                            <Text>{n.name}</Text>
-                        </LinkRow>
+                        <Link key={n.id} to={n.link} className='blok'>
+                            <Cell
+                                before={<Caption>{n.name}</Caption>}
+                                after={<Icon16Chevron/>}
+                            />
+                        </Link>
                     ))}
                 </Section>
             </div>

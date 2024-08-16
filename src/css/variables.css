@@ -1,6 +1,6 @@
 :root {
     --br-main: 8px;
-    --br-section: calc(var(--br-main) * 3);
+    --br-section: var(--br-main);
     --base-offset: 15px;
     --margin-main: var(--base-offset);
     --paddin-main: var(--base-offset);
