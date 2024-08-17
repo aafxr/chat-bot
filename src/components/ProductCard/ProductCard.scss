@@ -1,7 +1,14 @@
 .productCard{
   &-container{
+    height: 100%;
+    max-width: 360px;
     display: flex;
     flex-direction: column;
+    justify-content: stretch;
+    border: 2px solid var(--tgui--outline);
+    border-radius: var(--br-main);
+    background-color: var(--tgui--section_bg_color);
+    box-shadow: var(--tgui--base--section--box_shadow);
   }
 
   &-image{
@@ -13,9 +20,26 @@
     overflow: hidden;
   }
 
+  &-buttons{
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    z-index: 100;
+  }
+
+  &-icon{
+    color: var(--tgui--text_color);
+
+    &.active{
+      color: var(--tgui--accent_text_color);
+    }
+  }
+
   &-content{
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: stretch;
   }
 
   &-title{
@@ -23,6 +47,7 @@
   }
 
   &-price{
+    margin-top: auto;
     align-self: center;
   }
 }

@@ -5,6 +5,8 @@
     background-color: var(--tgui--surface_primary);
     overflow: hidden;
     z-index: 2;
+
+
   }
 
   &-list{
@@ -15,6 +17,15 @@
     gap: 8px;
     overflow-x: scroll;
     scroll-behavior: smooth;
+
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-button{
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      display: none;
+    }
   }
 
   &-item{

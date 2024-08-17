@@ -3,7 +3,7 @@ import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
 
 import {useAppUser} from "../../redux/hooks/useAppUser";
 
-import {Avatar, Caption, Cell, Headline, Section, Text} from "@telegram-apps/telegram-ui";
+import {Avatar, Caption, Cell, Divider, Headline, Section, Text} from "@telegram-apps/telegram-ui";
 import {PageHeader} from "../../components/PageHeader";
 import {TgUser} from "../../core/classes/TgUser";
 
@@ -102,16 +102,13 @@ export function ProfilePage() {
                     className='sectionBlock'
                     header={"Персональная информация"}
                 >
-                    {!!user && !!user.tgUser && (
-                        <>
-                            {fields.map(k => (
-                                <Cell
-                                    key={k.id}
-                                    before={<Caption weight={"2"}>{k.value}</Caption>}
-                                    after={<Caption weight={"2"}>{user.tgUser?.[k.key]}</Caption>}
-                                />
-                            ))}
-                        </>
+                    {!!user && !!user.tgUser && fields.map(k => (
+                            <Cell
+                                key={k.id}
+                                before={<Caption weight={"2"}>{k.value}</Caption>}
+                                after={<Caption weight={"2"}>{user.tgUser?.[k.key]}</Caption>}
+                            />
+                        )
                     )}
                 </Section>
                 <Section
