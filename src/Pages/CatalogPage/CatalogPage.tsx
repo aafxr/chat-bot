@@ -12,6 +12,8 @@ import {Container} from "../../components/Container";
 import {Header} from "../../components/Header";
 
 import './Catalog.scss'
+import {usePersistStateHook} from "../../hooks/usePersistStateHook";
+import {CardMode} from "../../types/CardMode";
 
 
 type CatalogState = {
@@ -35,6 +37,8 @@ export function CatalogPage() {
     const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
     const handlers = useMemoScroll<HTMLDivElement>(CATALOG_CONTENT_SCROLL)
+
+    const [cardMode, setCardMode,] = usePersistStateHook<CardMode>("cardMode", localStorage.cardMode || "vertical")
 
 
     useEffect(() => {
@@ -88,7 +92,7 @@ export function CatalogPage() {
                                             (() => {
                                                 const items = catalog.getFilteredItems()
                                                 return items.length ? (
-                                                    <div className='catalog-elements'>
+                                                    <div className={clsx('catalog-elements productsList', cardMode)}>
                                                         {
                                                             items.map(e => (
                                                                 <ProductCard
@@ -96,6 +100,7 @@ export function CatalogPage() {
                                                                     className='catalog-element'
                                                                     item={e}
                                                                     onClick={handleElementClick}
+                                                                    mode={cardMode}
                                                                 />
                                                             ))
                                                         }
@@ -115,14 +120,14 @@ export function CatalogPage() {
                                         data-section-id={s.id}
                                     >
                                         <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
-                                        <div className='catalog-elements'>
+                                        <div className={clsx('catalog-elements productsList', cardMode)}>
                                             {catalog.getElements(s.items).map(e => (
                                                 <ProductCard
                                                     key={e.id}
                                                     className='catalog-element'
                                                     item={e}
                                                     onClick={handleElementClick}
-                                                    mode='horizontal'
+                                                    mode={cardMode}
                                                 />
                                             ))}
                                         </div>
@@ -137,61 +142,3 @@ export function CatalogPage() {
         </div>
     )
 }
-
-
-/*
-<Container ref={catalogContentRef} className="catalog-content">
-                    <List>
-                        {catalog && (
-                            catalog._filter
-                                ? (
-                                    <section className='catalog-section'>
-                                        <Headline weight={"1"} className='catalog-section-title'>Результаты
-                                            поиска</Headline>
-                                        {
-                                            (() => {
-                                                const items = catalog.getFilteredItems()
-                                                return items.length ? (
-                                                    <div className='catalog-elements'>
-                                                        {
-                                                            items.map(e => (
-                                                                <ProductCard
-                                                                    key={e.id}
-                                                                    className='catalog-element'
-                                                                    item={e}
-                                                                    onClick={handleElementClick}
-                                                                />
-                                                            ))
-                                                        }
-                                                    </div>
-                                                ) : (
-                                                    <div>
-                                                        <p><b>{catalog._filter}</b>:&nbsp;по данному запросу товар не
-                                                            найден, попробуйте изменить форму запрос</p>
-                                                    </div>
-                                                )
-                                            })()
-                                        }
-                                    </section>
-                                ) : catalog.sections.map(s => (
-                                    <section
-                                        key={s.id} className='catalog-section'
-                                        data-section-id={s.id}
-                                    >
-                                        <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
-                                        <div className='catalog-elements'>
-                                            {catalog.getElements(s.items).map(e => (
-                                                <ProductCard
-                                                    key={e.id}
-                                                    className='catalog-element'
-                                                    item={e}
-                                                    onClick={handleElementClick}
-                                                />
-                                            ))}
-                                        </div>
-                                    </section>
-                                ))
-                        )}
-                    </List>
-                </Container>
- */
