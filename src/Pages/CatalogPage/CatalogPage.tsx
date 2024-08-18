@@ -122,6 +122,7 @@ export function CatalogPage() {
                                                     className='catalog-element'
                                                     item={e}
                                                     onClick={handleElementClick}
+                                                    mode='horizontal'
                                                 />
                                             ))}
                                         </div>

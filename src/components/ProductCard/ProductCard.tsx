@@ -6,13 +6,14 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {CardMode} from "../../types/CardMode";
 
-import './ProductCard.scss'
-import {CartIcon, HeartIcon, PenIcon} from "../svg";
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
-import {useAppSelector} from "../../redux/hooks";
-import {useOrder} from "../../redux/hooks/useOrder";
-import {OrderItem} from "../../core/classes/OrderItem";
 import {useAppUser} from "../../redux/hooks/useAppUser";
+import {OrderItem} from "../../core/classes/OrderItem";
+import {useOrder} from "../../redux/hooks/useOrder";
+import {CartIcon, HeartIcon, PenIcon} from "../svg";
+import {useAppSelector} from "../../redux/hooks";
+import './ProductCard.scss'
+import {Currency} from "../../constants/currency";
 
 export type ProductCardProps = {
     item: CatalogItem
@@ -29,6 +30,7 @@ export function ProductCard({mode = 'vertical', className, onClick, item}: Produ
 
     const order = useOrder()
     const orderItem: OrderItem | undefined = order.orders[item.id]
+
 
 
     return (
@@ -49,21 +51,27 @@ export function ProductCard({mode = 'vertical', className, onClick, item}: Produ
                         </IconButton>
 
                         {user?.canEdite && (
-                        <IconButton
-                            mode="plain"
-                        >
-                            <PenIcon className='productCard icon-16'/>
-                        </IconButton>
-                            )}
+                            <IconButton
+                                mode="plain"
+                            >
+                                <PenIcon className='productCard icon-16'/>
+                            </IconButton>
+                        )}
 
                     </div>
                 </div>
                 <div className='productCard-content'>
-                    <Caption className='productCard-title' weight={"2"}>{item.title}</Caption>
-                    <Caption className='productCard-price' weight={"1"}>{item.price}&nbsp;{item.currency}</Caption>
-                    <Button className='productCard-btn' size='m'>
-                        Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
-                    </Button>
+                    <Caption className='productCard-title' >{item.title}</Caption>
+                    <div className='productCard-footer'>
+                        <Caption className='productCard-price' weight={"1"}>{item.price}&nbsp;{Currency[item.currency] || item.currency}</Caption>
+                        <Button
+                            className='productCard-btn'
+                            size='m'
+                            onClick={() => onClick?.(item)}
+                        >
+                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
