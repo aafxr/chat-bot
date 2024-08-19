@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import React, {useEffect, useState} from 'react';
-import {Button} from "react-bootstrap";
 
 import {addProduct, removeProduct, setProduct} from "../../redux/slices/order-slice";
 import {CatalogItem} from "../../core/classes/CatalogItem";
@@ -10,6 +9,7 @@ import {useAppDispatch} from "../../redux/hooks";
 import {CloseIcon} from "../svg";
 
 import './AddOrder.scss'
+import {Button} from "@telegram-apps/telegram-ui";
 
 
 export type AddOrderProps = {

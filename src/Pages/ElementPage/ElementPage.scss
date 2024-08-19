@@ -15,7 +15,8 @@
     max-width: 480px;
     margin: 0 auto;
     aspect-ratio: 1/1;
-    border-radius: var(--br-main);
+    border-bottom-left-radius: var(--br-main);
+    border-bottom-right-radius: var(--br-main);
     overflow: hidden;
     @media(min-width: 760px){
       width: auto;

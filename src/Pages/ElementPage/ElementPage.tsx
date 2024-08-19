@@ -1,13 +1,12 @@
-import {Button, Carousel} from "react-bootstrap";
+import {Carousel} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router";
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
+import {Button, Caption, Cell, Radio, Section, TabsList} from "@telegram-apps/telegram-ui";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
-import {ElementBalance} from "../../components/ElementBalance";
-import {Caption, Cell, Radio, Section, TabsList, Text} from "@telegram-apps/telegram-ui";
 import {RelatedItems} from "../../components/RelatedItems";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
@@ -155,7 +154,7 @@ export function ElementPage() {
                 <div className="itemDetails-container">
                     <Section
                         // className='sectionBlock'
-                        header={element.title}
+                        // header={element.title}
                         // header={<Headline weight='1' >{element.title}</Headline>}
                     >
                         <div className='itemDetails-slider'>
@@ -213,7 +212,10 @@ export function ElementPage() {
                                         </div>
                                     </section>
                                 }
-                                <Section className='sectionBlock'>
+                                <Section
+                                    className='sectionBlock'
+                                    header={element.title}
+                                >
                                     <TabsList>
                                         {tabs.map(e => (
                                             <TabsItem

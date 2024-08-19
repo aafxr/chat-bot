@@ -23,6 +23,8 @@ import './css/App.css';
 import {Basket} from "./core/classes/Basket";
 import {BasketService} from "./core/services/basketService";
 import {setBasket} from "./redux/slices/basket-slice/basketSlice";
+import {CompaniesPage} from "./Pages/CompaniesPage/CompaniesPage";
+import {CompanyEdit} from "./Pages/CompanyEdit";
 
 
 function App() {
@@ -86,6 +88,9 @@ function App() {
                 <Route path={'/profile'} element={<ProfilePage/>}/>
                 <Route path={'/newCompany'} element={<NewCompanyPage/>}/>
                 <Route path={'/Teleeeg_bot/test'} element={<TestApiPage/>}/>
+                <Route path={'/companies'} element={<CompaniesPage/>}/>
+                <Route path={'/company/:companyID'} element={<CompanyEdit/>}/>
+                <Route path={'/company/new'} element={<CompanyEdit/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>
             <FooterMenu/>
