@@ -1,19 +1,20 @@
 import clsx from "clsx";
-import {Headline, List} from "@telegram-apps/telegram-ui";
 import {useLocation, useNavigate} from "react-router";
 import React, {useEffect, useRef, useState} from 'react';
+import {Headline, List} from "@telegram-apps/telegram-ui";
 
+import {usePersistStateHook} from "../../hooks/usePersistStateHook";
 import {CatalogSection} from "../../core/classes/CatalogSection";
-import {ProductCard} from "../../components/ProductCard";
+import {BasketButton} from "../../components/BasketButton";
 import {CatalogItem} from "../../core/classes/CatalogItem";
+import {ProductCard} from "../../components/ProductCard";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {useMemoScroll} from "../../hooks/useMemoScroll";
 import {Container} from "../../components/Container";
 import {Header} from "../../components/Header";
+import {CardMode} from "../../types/CardMode";
 
 import './Catalog.scss'
-import {usePersistStateHook} from "../../hooks/usePersistStateHook";
-import {CardMode} from "../../types/CardMode";
 
 
 type CatalogState = {
@@ -139,6 +140,7 @@ export function CatalogPage() {
 
             </div>
             <div className='wrapper-footer-spacer'/>
+            <BasketButton />
         </div>
     )
 }

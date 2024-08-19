@@ -14,8 +14,6 @@ import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
 
 import './CatalogElement.scss'
-import {CardCell} from "@telegram-apps/telegram-ui/dist/cjs/components/Blocks/Card/components/CardCell/CardCell";
-import {CardChip} from "@telegram-apps/telegram-ui/dist/cjs/components/Blocks/Card/components/CardChip/CardChip";
 
 
 export type CatalogElementProps = {

@@ -1,20 +1,23 @@
 import axios from "axios";
-import {ApiResponse} from "../types/ApiRespponse";
+import {BotResponseType} from "../types/BotResponseType";
 import {AppUser} from "../core/classes/AppUser";
+import {Company} from "../core/classes/Company";
+import {Basket} from "../core/classes/Basket";
 
-export async function sendOrder(orderItems: any, user: AppUser){
+export async function sendOrder(b:Basket, user: AppUser, c: Company){
     const payload = {
-        OrderItems : orderItems,
+        OrderItems : b.items,
         'Client' : {
+            'ID': user.id,
             'Phone' : user.phone,
-            'UID' : 'selectedCompany',
+            'UID' : c.id,
         },
         'TradeArea_Id' : 'selectedWarehouse.id',
-        'Comment' : 'orderComment',
+        'Comment' : b.comment,
         'OrderNumber' : 'tg-pwa-'+Date.now()
     }
 
-    const res = await axios.post<ApiResponse<any>>('https://refloor-bot.ru/api/sendOrder', payload)
+    const res = await axios.post<BotResponseType<any>>('https://refloor-bot.ru/api/sendOrder', payload)
     if(res.status > 199 && res.status < 300){
         return res.data
     }

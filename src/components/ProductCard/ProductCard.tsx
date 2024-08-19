@@ -11,9 +11,9 @@ import {useAppUser} from "../../redux/hooks/useAppUser";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
+import {Currency} from "../../constants/currency";
 import {useAppSelector} from "../../redux/hooks";
 import './ProductCard.scss'
-import {Currency} from "../../constants/currency";
 
 export type ProductCardProps = {
     item: CatalogItem

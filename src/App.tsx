@@ -20,6 +20,9 @@ import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
 import './css/App.css';
+import {Basket} from "./core/classes/Basket";
+import {BasketService} from "./core/services/basketService";
+import {setBasket} from "./redux/slices/basket-slice/basketSlice";
 
 
 function App() {
@@ -61,6 +64,13 @@ function App() {
         tg.BackButton.onClick(() => navigate(-1))
         tg.disableVerticalSwipes()
     }, []);
+
+
+    useEffect(() => {
+        BasketService.getBasket()
+            .then(b => dispatch(setBasket(b)))
+            .catch(console.error)
+    }, [])
 
 
 

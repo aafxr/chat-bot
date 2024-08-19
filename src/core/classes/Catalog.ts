@@ -25,6 +25,12 @@ export class Catalog {
         this.sections = c.sections !== undefined ? c.sections.map(e => new CatalogSection(e)) : []
     }
 
+
+    getElementByID(id: CatalogItem['id']) {
+        return this.elements[id]
+    }
+
+
     getElements(ids: CatalogItem['id'][]) {
         const res: CatalogItem[] = []
         for (const id of ids) {
@@ -34,6 +40,7 @@ export class Catalog {
         return res
     }
 
+
     getElementByArticle(article: string) {
         const elementID = this.articles[article]
         return this.elements[elementID]
@@ -41,7 +48,7 @@ export class Catalog {
 
     setFilter(text: string) {
         this._filter = text.toLowerCase()
-        if(!text) {
+        if (!text) {
             this.filteredItems = {}
             return
         }
@@ -56,8 +63,8 @@ export class Catalog {
             }, {})
     }
 
-    getFilteredItems(){
-        if(!this._filter) return []
+    getFilteredItems() {
+        if (!this._filter) return []
         return Object.values(this.filteredItems)
     }
 }
