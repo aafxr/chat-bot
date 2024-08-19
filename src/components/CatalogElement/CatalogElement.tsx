@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import React from 'react';
 import {LazyLoadImage} from 'react-lazy-load-image-component';
+import {Caption, Button, IconButton, Text} from "@telegram-apps/telegram-ui";
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
-import {Card, ThemeProvider} from "react-bootstrap";
 import {CatalogItem} from "../../core/classes/CatalogItem";
+import {useAppUser} from "../../redux/hooks/useAppUser";
 import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
+import {Card, ThemeProvider} from "react-bootstrap";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
-import {useAppUser} from "../../redux/hooks/useAppUser";
-import {Caption, Button, IconButton, Text} from "@telegram-apps/telegram-ui";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
 
