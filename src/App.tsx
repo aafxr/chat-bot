@@ -19,12 +19,13 @@ import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
-import './css/App.css';
 import {Basket} from "./core/classes/Basket";
-import {BasketService} from "./core/services/basketService";
 import {setBasket} from "./redux/slices/basket-slice/basketSlice";
-import {CompaniesPage} from "./Pages/CompaniesPage/CompaniesPage";
+import {BasketService} from "./core/services/basketService";
+import {CompaniesPage} from "./Pages/CompaniesPage";
 import {CompanyEdit} from "./Pages/CompanyEdit";
+
+import './css/App.css';
 
 
 function App() {

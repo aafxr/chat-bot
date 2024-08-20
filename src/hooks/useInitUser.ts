@@ -52,13 +52,13 @@ export function useInitUser() {
     const initUser = useCallback(() => {
         if (state.loading) return
         setState(p => ({...p, loading: true}))
-        const u = TgService.getUser()
-        if (u) {
-            dispatch(setTgUser(u))
-            UserService.getAppUser(u)
+
+            UserService.getAppUser()
                 .then(async (appUser) => {
                     if (!appUser) return
                     dispatch(setAppUser(appUser))
+                    const tgUser = appUser.tgUser
+                    if(tgUser) dispatch(setTgUser(tgUser))
                     const companies = await UserService.getUserCompanies(appUser)
                     if (!companies) return
                     dispatch(setUserCompanies(companies))
@@ -66,20 +66,20 @@ export function useInitUser() {
                 .catch(console.error)
                 .finally(() => setState(p => ({...p, loading: false})))
 
-        } else if(window.location.hostname === 'localhost'){
-            appUserDefault.telegram_id = tgUserDefault.id + ''
-            appUserDefault.tgUser = tgUserDefault
-            appUserDefault.first_name = tgUserDefault.first_name
-            appUserDefault.username = tgUserDefault.username
-            dispatch(setAppUser(appUserDefault))
+        // if(window.location.hostname === 'localhost'){
+        //     appUserDefault.telegram_id = tgUserDefault.id + ''
+        //     appUserDefault.tgUser = tgUserDefault
+        //     appUserDefault.first_name = tgUserDefault.first_name
+        //     appUserDefault.username = tgUserDefault.username
+        //     dispatch(setAppUser(appUserDefault))
 
-        }
+        // }
     }, [dispatch, state])
 
 
     useEffect(() => {
         initUser()
-    }, [dispatch, state, initUser]);
+    }, []); //dispatch, state, initUser
 
 
     return () => initUser()

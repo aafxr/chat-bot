@@ -45,27 +45,7 @@ type CompaniesPageState = {
 
 const defaultState: CompaniesPageState = {
     companies: [
-        new Company({
-            INN: '213546542',
-            name: 'refloor',
-            city: 'russia',
-            country: 'novosibirsk',
-            address: 'krasnoyrsk 35'
-        }),
-        new Company({
-            INN: '3213151542',
-            name: 'QP',
-            city: 'russia',
-            country: 'novosibirsk',
-            address: 'krasnoyrsk 35'
-        }),
-        new Company({
-            INN: '3213151542',
-            name: 'fargo clasic',
-            city: 'russia',
-            country: 'novosibirsk',
-            address: 'krasnoyrsk 35'
-        })
+
     ],
     loading: false,
     message: ''

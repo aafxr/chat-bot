@@ -1,14 +1,14 @@
-import React, {} from 'react';
+import React from 'react';
+import {Link} from "react-router-dom";
 import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
+import {Avatar, Caption, Cell, Headline, Section} from "@telegram-apps/telegram-ui";
+
 
 import {useAppUser} from "../../redux/hooks/useAppUser";
-
-import {Avatar, Caption, Cell, Divider, Headline, Section, Text} from "@telegram-apps/telegram-ui";
 import {PageHeader} from "../../components/PageHeader";
 import {TgUser} from "../../core/classes/TgUser";
 
 import './ProfilePage.scss'
-import {Link} from "react-router-dom";
 
 
 const nav = [

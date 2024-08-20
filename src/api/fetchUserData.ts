@@ -1,15 +1,11 @@
-import axios from "axios";
 import {AppUser} from "../core/classes/AppUser";
+import {BotResponseType} from "../types/BotResponseType";
+import {botFetch} from "../axios";
 
-type FetchUserDataResponse = {
-    data: AppUser
-    ok: true
-} | {
-    ok:false
-}
 
-export async function fetchUserData(userID: string): Promise<AppUser | undefined>{
-    const response = await axios.get<FetchUserDataResponse>('https://refloor-bot.ru/api/getUserData?telegram_id=' + userID)
+export async function fetchUserData(initData: string): Promise<AppUser | undefined>{
+    const response = await botFetch.post<BotResponseType<AppUser>>('/api/me' , initData)
+
     if (response.status > 199 && response.status < 300){
         return response.data.ok ? response.data.data : undefined
     }

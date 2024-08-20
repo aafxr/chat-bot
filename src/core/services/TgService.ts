@@ -6,6 +6,14 @@ const CURRENT_ORDER_KEY = 'currentOrder'
 
 
 export class TgService {
+    static getInitData(){
+        if(Telegram.WebApp.initData){
+              return Telegram.WebApp.initData
+        }
+
+        return 'query_id=AAGYnLRHAAAAAJictEcjQpZD&user=%7B%22id%22%3A1203018904%2C%22first_name%22%3A%22Alexandr%22%2C%22last_name%22%3A%22A%22%2C%22username%22%3A%22AlexandrNS70%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1723104146&hash=5f0ea35b8b571b89399f715258d4664c02f4b03214765be9153cc204879444c6'
+    }
+
     static getUser() {
         if (Telegram.WebApp.initDataUnsafe.user)
             return new TgUser({
