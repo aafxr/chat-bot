@@ -3,6 +3,8 @@ import {fetchUserData} from "../../api/fetchUserData";
 import {AppUser} from "../classes/AppUser";
 import {Company} from "../classes/Company";
 import {TgService} from "./TgService";
+import {sendCreateNewCompany} from "../../api/sendCreateNewCompany";
+import {sendUpdateCompany} from "../../api/sendUpdateCompany";
 
 export class UserService{
     static async getAppUser(){
@@ -22,11 +24,11 @@ export class UserService{
 
 
     static async newCompany(u: AppUser, c: Company){
-        console.log('createCompany')
+        return await sendCreateNewCompany(u, c)
     }
 
 
     static async updateCompany(u: AppUser, c: Company){
-        console.log('updateCompany')
+        return await sendUpdateCompany(u, c)
     }
 }

@@ -26,7 +26,6 @@ export class AppUser {
     country: string
     tgUser: TgUser | null
 
-
     canEdite: boolean
 
 

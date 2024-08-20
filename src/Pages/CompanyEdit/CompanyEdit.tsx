@@ -47,14 +47,14 @@ export function CompanyEdit() {
 
         const c = st.company
 
-        for(const f of companyFields){
-            if (!c[f.key]){
-                setState({
-                    ...st,
-                    message: <Message text={`Необходимо заполнить поле "${f.val}"`} />
-                })
-                return
-            }
+        const msg = c.validate()
+
+        if (msg !== "ok") {
+            setState({
+                ...st,
+                message: <Message text={msg}/>
+            })
+            return
         }
 
 
@@ -67,10 +67,10 @@ export function CompanyEdit() {
                 .catch((e) => {
                     setState({
                         ...st,
-                        message: <Message text={`Не удалось добавить компанию. Попробуйте отправить еще раз.`} />
+                        message: <Message text={`Не удалось добавить компанию. Попробуйте отправить еще раз.`}/>
                     })
                 })
-            :UserService.updateCompany(user, c)
+            : UserService.updateCompany(user, c)
                 .then(() => {
                     dispatch(updateCompany(c))
                     navigate('/companies')
@@ -78,7 +78,7 @@ export function CompanyEdit() {
                 .catch((e) => {
                     setState({
                         ...st,
-                        message: <Message text={`Не удалось обновить компанию. Попробуйте отправить еще раз.`} />
+                        message: <Message text={`Не удалось обновить компанию. Попробуйте отправить еще раз.`}/>
                     })
                 })
     }
@@ -122,7 +122,7 @@ type MessageProps = {
 
 function Message({text}: MessageProps) {
     return (
-        <Section>
+        <Section className='sectionBlock'>
             <Cell
                 before={<Caption>{text}</Caption>}
             />

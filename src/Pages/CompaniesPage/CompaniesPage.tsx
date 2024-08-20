@@ -6,11 +6,11 @@ import {Company} from "../../core/classes/Company";
 import {Link} from "react-router-dom";
 
 type CompanyField = {
-    key: keyof Company
+    key: keyof Omit<Company, "id" | "validate">
     val: string
 }
 
-export  const companyFields: CompanyField[] = [
+export const companyFields: CompanyField[] = [
     {
         key: 'INN',
         val: 'ИНН'
@@ -44,9 +44,7 @@ type CompaniesPageState = {
 }
 
 const defaultState: CompaniesPageState = {
-    companies: [
-
-    ],
+    companies: [],
     loading: false,
     message: ''
 }
@@ -67,16 +65,16 @@ export function CompaniesPage() {
                 )}
 
                 <Section className='sectionBlock'>
-                    <Cell before={
-                        <Link to='/company/new'>
+                    <Link to='/company/new'>
+                        <Cell before={
                             <Caption>
                                 Добавить компанию&nbsp;
                                 <IconButton mode='plain'>
                                     <span className='icon-16'>+</span>
                                 </IconButton>
                             </Caption>
-                        </Link>
-                    }/>
+                        }/>
+                    </Link>
                 </Section>
 
                 {st.companies.map(c => (

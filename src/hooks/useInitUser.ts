@@ -1,32 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {setAppUser, setTgUser, setUserCompanies} from "../redux/slices/user-slice";
 import {UserService} from "../core/services/UserService";
-import {TgService} from "../core/services/TgService";
-import {AppUser} from "../core/classes/AppUser";
 import {useAppDispatch} from "../redux/hooks";
-import {TgUser} from "../core/classes/TgUser";
-
-
-const appUserDefault = new AppUser({
-    id: 42,
-    country: 'Россия',
-    city: 'Новосибирск',
-    org: 'refloor',
-    first_name: 'Иван',
-    phone: 79998882211,
-    manager: 42,
-    telegram_id: '123456789',
-    username: 'nickname',
-
-})
-
-const tgUserDefault = new TgUser({
-    id: '',
-    first_name: 'test',
-    username: '@test',
-    phone: "79999999999",
-    last_name: 'testovich'
-})
 
 
 type initUserState = {
