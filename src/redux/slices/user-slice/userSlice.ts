@@ -2,15 +2,20 @@ import {TgUser} from "../../../core/classes/TgUser";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppUser} from "../../../core/classes/AppUser";
 import {Company} from "../../../core/classes/Company";
+import {Basket} from "../../../core/classes/Basket";
 
 interface UserSliceState {
     tg_user?: TgUser
     app_user?: AppUser
     userCompanies: Company[]
+    orders: Array<any>
+    basket: Basket
 }
 
 const initialState: UserSliceState = {
-    userCompanies: []
+    userCompanies: [],
+    orders:[],
+    basket: new Basket()
 }
 
 const userSlice = createSlice({

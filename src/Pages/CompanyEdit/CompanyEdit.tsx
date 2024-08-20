@@ -1,14 +1,15 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {Button, Caption, Cell, Input, Section} from "@telegram-apps/telegram-ui";
 
 import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
 import {companyFields} from "../CompaniesPage";
-import {useLocation, useNavigate} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {useAppDispatch} from "../../redux/hooks";
 import {updateCompany} from "../../redux/slices/user-slice";
+import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 
 
 type CompanyEditState = {
@@ -25,13 +26,26 @@ const defaultState: CompanyEditState = {
 
 
 export function CompanyEdit() {
-    const {pathname} = useLocation()
+    const {companyID} = useParams()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const user = useAppUser()
+    const companies = useUserCompanies()
     const [st, setState] = useState(defaultState)
 
-    const isNewCompany = pathname.endsWith('new')
+    const isNewCompany = !companyID
+
+
+    useEffect(() => {
+        if(!companyID) return
+        const id =  +companyID!
+        const c = companies.find(c => c.id === id)
+        if(c) setState({
+            ...st,
+            company: c
+        })
+    }, [companies, companyID]);
+
 
 
     function handleChangeField(key: keyof Company, val: string) {
@@ -91,6 +105,7 @@ export function CompanyEdit() {
                 <Section className='sectionBlock'>
                     {companyFields.map(e => (
                         <Input
+                            key={e.key}
                             className='inputBase'
                             header={e.val}
                             placeholder={e.val}

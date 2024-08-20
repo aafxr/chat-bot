@@ -8,7 +8,7 @@ export class Company{
     INN: string
 
     constructor(c: Partial<Company> = {}) {
-        this.id         = c.id !== undefined ? c.id : -1
+        this.id         = c.id !== undefined ? c.id : 0
         this.name       = c.name !== undefined ? c.name : ''
         this.fullName   = c.fullName !== undefined ? c.fullName : ''
         this.address    = c.address !== undefined ? c.address : ''
@@ -36,7 +36,8 @@ export class Company{
         }
         if(this.INN === ""){
             return "Необходимо указать ИНН компании"
-        } else if (/^\d{10}$/.test(this.INN)){
+        }
+        if (!/^\d{10}$/.test(this.INN.trim())){
             return "ИНН должен содержать 10 цифр"
         }
 

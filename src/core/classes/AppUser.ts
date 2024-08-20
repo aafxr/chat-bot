@@ -5,7 +5,6 @@ import {TgUser} from "./TgUser";
 export class AppUser {
     id: number
     telegram_id: string
-    first_name: string
     username: string
     activity: string
     created_at: string
@@ -30,9 +29,8 @@ export class AppUser {
 
 
     constructor(u: Partial<AppUser> = {}) {
-        this.id = u.id !== undefined ? u.id : -1
+        this.id = u.id !== undefined ? u.id : 0
         this.telegram_id = u.telegram_id !== undefined ? u.telegram_id : ''
-        this.first_name = u.first_name !== undefined ? u.first_name : ''
         this.username = u.username !== undefined ? u.username : ''
         this.activity = u.activity !== undefined ? u.activity : ''
         this.created_at = u.created_at !== undefined ? u.created_at : ''

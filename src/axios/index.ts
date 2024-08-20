@@ -65,8 +65,6 @@ const aFetch = axios.create({
 
 export default aFetch
 
-const localInitData= "query_id=AAGYnLRHAAAAAJictEdhwfIo&user=%7B%22id%22%3A1203018904%2C%22first_name%22%3A%22Alexandr%22%2C%22last_name%22%3A%22A%22%2C%22username%22%3A%22AlexandrNS70%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1723537590&hash=2bd7367a39b14d903eac9fcd9fa0f96b77a132dd1bdc20e36fef9a0f3cfea465"
-
 const botURL = process.env.REACT_APP_BOT_URL
 export const botFetch = axios.create({
     baseURL: botURL,
@@ -80,7 +78,7 @@ botFetch.interceptors.response.use(r => r, async (err) => {
     if (err.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
         try {
-            const response = await axios.post<BotResponseType<any>>(botURL + '/api/session', window.location.hostname === "localhost" ? localInitData : window.Telegram.WebApp.initData)
+            const response = await axios.post<BotResponseType<any>>(botURL + '/api/session', window.Telegram.WebApp.initData)
             if (response.status > 199 && response.status < 300 && response.data.ok) {
                 return botFetch(originalRequest)
             }

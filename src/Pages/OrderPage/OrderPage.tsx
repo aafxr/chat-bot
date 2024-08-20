@@ -8,11 +8,10 @@ import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
 import {Container} from "../../components/Container";
 import {useOrder} from "../../redux/hooks/useOrder";
+import {Button, Tab, Tabs} from "react-bootstrap";
 import {useAppDispatch} from "../../redux/hooks";
 import {Order} from "../../core/classes/Order";
 import {Spacer} from "../../components/Spacer";
-import {Title} from "../../components/Title";
-import {Button, Tab, Tabs} from "react-bootstrap";
 
 import './OrderPage.scss'
 import {PageHeader} from "../../components/PageHeader";

@@ -6,7 +6,7 @@ export class Order{
     orders: Record<CatalogItem['id'], OrderItem>
 
     constructor(o: Partial<Order> = {}) {
-        this.id = o.id || 1
+        this.id = o.id || 0
         if(o.orders){
             Object.entries(o.orders)
                 .forEach(([k, v]) => o.orders![k] = new OrderItem(v))

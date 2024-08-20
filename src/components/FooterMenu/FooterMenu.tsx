@@ -17,7 +17,7 @@ const navItems = [
         id: 1,
         name: "Заказ",
         icon: <CartIcon className='footerMenu-icon'/>,
-        link: '/order'
+        link: '/orders'
     },
     {
         id: 2,

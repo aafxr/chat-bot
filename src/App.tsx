@@ -83,7 +83,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<Noop/>}/>
                 <Route path={'/:detailId/'} element={<ElementPage/>}/>
-                <Route path={'/order'} element={<OrderPage/>}/>
+                <Route path={'/orders'} element={<OrderPage/>}/>
                 <Route path={'/favorite'} element={<FavoritePage/>}/>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
                 <Route path={'/Telegram_bot/test'} element={<TestApiPage/>}/>
