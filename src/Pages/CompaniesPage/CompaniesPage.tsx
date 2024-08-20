@@ -87,9 +87,7 @@ export function CompaniesPage() {
                         <Cell before={
                             <Caption>
                                 Добавить компанию&nbsp;
-                                <IconButton mode='plain'>
-                                    <span className='icon-16'>+</span>
-                                </IconButton>
+                                <Button size='s' mode='plain'>+</Button>
                             </Caption>
                         }/>
                     </Link>

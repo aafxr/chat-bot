@@ -25,6 +25,7 @@ import {Noop} from "./Pages/Noop/Noop";
 import {Basket} from "./core/classes/Basket";
 
 import './css/App.css';
+import {BasketPage} from "./Pages/BasketPage/BasketPage";
 
 
 function App() {
@@ -90,6 +91,7 @@ function App() {
                 <Route path={'/companies'} element={<CompaniesPage/>}/>
                 <Route path={'/company/:companyID'} element={<CompanyEdit/>}/>
                 <Route path={'/company/new'} element={<CompanyEdit/>}/>
+                <Route path={'/basket'} element={<BasketPage/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>
             <FooterMenu/>
