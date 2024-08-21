@@ -16,10 +16,12 @@ import {UserService} from "../../core/services/UserService";
 import {AppUser} from "../../core/classes/AppUser";
 import {Link} from "react-router-dom";
 import {BasketService} from "../../core/services/basketService";
+import {useNavigate} from "react-router";
 
 
 
 export function ConfirmOrderPage() {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const basket = useUserBasket()
     const user = useAppUser()
@@ -76,6 +78,9 @@ export function ConfirmOrderPage() {
         basket.comment = comment
 
         BasketService.submitBasket(basket, user)
+            .then(() => navigate('/orderSuccess'))
+            .catch(console.error)
+
     }
 
 
