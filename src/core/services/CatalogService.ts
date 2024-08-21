@@ -11,8 +11,6 @@ import {fetchElementDetail} from "../../api/fetchElementDetail";
 import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 import {FavoriteType} from "../../types/FavoriteType";
 import {TgService} from "./TgService";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 
 const ARTICLES_KEY = 'articles'

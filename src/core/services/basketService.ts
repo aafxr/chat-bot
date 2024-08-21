@@ -8,9 +8,6 @@ import {TgService} from "./TgService";
 
 
 export class BasketService {
-
-
-
     /**
      * send order to chatbot server and if request success remove basket record from tg cloud
      */

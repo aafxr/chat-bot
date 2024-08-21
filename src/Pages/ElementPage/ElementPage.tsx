@@ -15,6 +15,7 @@ import {Balance} from "../../core/classes/Balance";
 
 import './ElementPage.scss'
 import {PageHeader} from "../../components/PageHeader";
+import {FooterMenu} from "../../components/FooterMenu";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -319,6 +320,7 @@ export function ElementPage() {
                 </div>
             </div>
             <div className='wrapper-footer-spacer'/>
+            <FooterMenu />
         </div>
     );
 }

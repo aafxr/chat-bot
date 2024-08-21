@@ -1,0 +1,21 @@
+.basketPage{
+  &-item:not(:first-child){
+    margin-top: var(--offset-main);
+  }
+
+  &-footer{
+    display: flex;
+    flex-direction: column;
+    gap: var(--offset-main);
+    background-color: var(--tgui--bg_color);
+  }
+
+  &-summary{
+    display: flex;
+    gap: var(--offset-main);
+  }
+
+  &-orderBtn{
+    border-radius: 0;
+  }
+}

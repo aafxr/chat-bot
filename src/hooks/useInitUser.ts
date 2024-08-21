@@ -40,15 +40,6 @@ export function useInitUser() {
                 })
                 .catch(console.error)
                 .finally(() => setState(p => ({...p, loading: false})))
-
-        // if(window.location.hostname === 'localhost'){
-        //     appUserDefault.telegram_id = tgUserDefault.id + ''
-        //     appUserDefault.tgUser = tgUserDefault
-        //     appUserDefault.first_name = tgUserDefault.first_name
-        //     appUserDefault.username = tgUserDefault.username
-        //     dispatch(setAppUser(appUserDefault))
-
-        // }
     }, [dispatch, state])
 
 

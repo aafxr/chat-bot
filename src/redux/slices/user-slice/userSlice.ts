@@ -5,7 +5,7 @@ import {TgService} from "../../../core/services/TgService";
 import {AppUser} from "../../../core/classes/AppUser";
 import {Company} from "../../../core/classes/Company";
 import {TgUser} from "../../../core/classes/TgUser";
-import {Basket} from "../../../core/classes/Basket";
+import {Basket, BasketDetail} from "../../../core/classes/Basket";
 
 interface UserSliceState {
     tg_user?: TgUser
@@ -81,7 +81,13 @@ const userSlice = createSlice({
          * @param state
          * @param action
          */
-        setBasketProductQuantity(state, action: PayloadAction<BasketProductDetails>){
+        setBasketProductQuantity(state, action: PayloadAction<BasketProductDetails | BasketDetail>){
+            if(action.payload instanceof BasketDetail){
+                state.basket.setBasketDetail(action.payload)
+                state.basket = new Basket(state.basket)
+                TgService.setBasket(state.basket).catch(console.error)
+                return
+            }
             const {product, quantity, details} = action.payload
             state.basket.setProduct(product, details, quantity)
             state.basket = new Basket(state.basket)

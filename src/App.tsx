@@ -25,6 +25,7 @@ import './css/App.css';
 import {BasketPage} from "./Pages/BasketPage/BasketPage";
 import {setBasket, setBasketProductQuantity} from "./redux/slices/user-slice";
 import {TgService} from "./core/services/TgService";
+import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
 
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
                 <Route path={'/company/:companyID'} element={<CompanyEdit/>}/>
                 <Route path={'/company/new'} element={<CompanyEdit/>}/>
                 <Route path={'/basket'} element={<BasketPage/>}/>
+                <Route path={'/confirmOrder'} element={<ConfirmOrderPage/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>
         </>

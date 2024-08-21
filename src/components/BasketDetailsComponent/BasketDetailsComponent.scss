@@ -1,0 +1,47 @@
+.basketItem{
+  &-container{
+    position: relative;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    border: 2px solid var(--tgui--divider);
+    border-radius: var(--br-main);
+    background-color: var(--tgui--bg_color);
+    overflow: hidden;
+  }
+
+  &-image{
+    flex: none;
+    position: relative;
+    width: 120px;
+    aspect-ratio: 1;
+  }
+
+  &-inner{
+    padding: 0 var(--offset-main);
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  &-units{
+    display: flex;
+    gap: var(--offset-main);
+  }
+
+  &-footer{
+    justify-self: flex-end;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-counter{
+  }
+
+  &-removeBtn{
+    padding: 0;
+    color: var(--tgui--destructive_text_color);
+  }
+}

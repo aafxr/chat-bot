@@ -8,10 +8,10 @@ import {useFormatter} from "../../hooks/useFormatter";
 import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
 import {Order} from "../../core/classes/Order";
-import {CloseIcon} from "../svg/CloseIcon";
 import {Image} from "react-bootstrap";
 import {Subtitle} from "../Subtitle";
 import {Counter} from "../Counter";
+import {CloseIcon} from "../svg";
 
 import './OrderItemCard.scss'
 

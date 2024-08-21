@@ -38,7 +38,7 @@ export function AddOrder({product, details, max, className}: AddOrderProps) {
         if (!bd) return
         // if (st.current.init) return
         // st.current.init = true
-        setText((bd.count).toString())
+        setText((bd.packCount).toString())
     }, [bd]);
 
 
@@ -49,15 +49,11 @@ export function AddOrder({product, details, max, className}: AddOrderProps) {
 
     function handleChangeQuantity(c: number) {
         if (!bd) return
-        const count = bd.count + c
+        const count = bd.packCount + c
 
         if (count <= 0) {
             dispatch(removeBasketProduct(product))
             return
-        }
-        if (count > max) {
-            dispatch(setBasketProductQuantity({product, details, quantity: count}))
-            return;
         }
         dispatch(setBasketProductQuantity({product, details, quantity: count}))
     }
@@ -71,7 +67,7 @@ export function AddOrder({product, details, max, className}: AddOrderProps) {
     function handleBlur() {
         let v = +text.trim()
         if (!bd) return
-        if (v === bd.count) return
+        if (v === bd.packCount) return
         if (Number.isNaN(v)) {
             setText(v.toString() || '1')
             return
@@ -104,7 +100,7 @@ export function AddOrder({product, details, max, className}: AddOrderProps) {
                             <Button
                                 className='addOrder-button'
                                 onClick={() => handleChangeQuantity(1)}
-                                disabled={bd.count >= max}
+                                disabled={bd.packCount >= max}
                             >+</Button>
 
                             <div
