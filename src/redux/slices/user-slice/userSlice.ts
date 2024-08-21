@@ -1,7 +1,10 @@
-import {TgUser} from "../../../core/classes/TgUser";
+import {ProductDetails} from "../../../core/classes/ProductDetails";
+import {CatalogItem} from "../../../core/classes/CatalogItem";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {TgService} from "../../../core/services/TgService";
 import {AppUser} from "../../../core/classes/AppUser";
 import {Company} from "../../../core/classes/Company";
+import {TgUser} from "../../../core/classes/TgUser";
 import {Basket} from "../../../core/classes/Basket";
 
 interface UserSliceState {
@@ -17,6 +20,16 @@ const initialState: UserSliceState = {
     orders:[],
     basket: new Basket()
 }
+
+
+
+export type BasketProductDetails = {
+    product: CatalogItem
+    details: ProductDetails
+    quantity: number
+}
+
+
 
 const userSlice = createSlice({
     name: 'user',
@@ -59,6 +72,30 @@ const userSlice = createSlice({
                 return
             }
             state.userCompanies.push(p)
+        },
+        setBasket(state, action: PayloadAction<Basket>){
+            state.basket = action.payload
+        },
+        /**
+         * add product if not exist and rewrite product quantity to payload
+         * @param state
+         * @param action
+         */
+        setBasketProductQuantity(state, action: PayloadAction<BasketProductDetails>){
+            const {product, quantity, details} = action.payload
+            state.basket.setProduct(product, details, quantity)
+            state.basket = new Basket(state.basket)
+            TgService.setBasket(state.basket).catch(console.error)
+        },
+        /**
+         * remove product from basket
+         * @param state
+         * @param action
+         */
+        removeBasketProduct(state, action: PayloadAction<CatalogItem>){
+            state.basket.removeProduct(action.payload)
+            state.basket = new Basket(state.basket)
+            TgService.setBasket(state.basket).catch(console.error)
         }
     }
 })
@@ -68,6 +105,9 @@ export const {
     setAppUser,
     setTgUser,
     setUserCompanies,
-    updateCompany
+    updateCompany,
+    setBasketProductQuantity,
+    removeBasketProduct,
+    setBasket
 } = userSlice.actions
 export const userReducer = userSlice.reducer

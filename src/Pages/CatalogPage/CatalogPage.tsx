@@ -15,6 +15,7 @@ import {Header} from "../../components/Header";
 import {CardMode} from "../../types/CardMode";
 
 import './Catalog.scss'
+import {FooterMenu} from "../../components/FooterMenu";
 
 
 type CatalogState = {
@@ -98,6 +99,7 @@ export function CatalogPage() {
                                                             items.map(e => (
                                                                 <ProductCard
                                                                     key={e.id}
+                                                                    to={`/${e.id}`}
                                                                     className='catalog-element'
                                                                     item={e}
                                                                     onClick={handleElementClick}
@@ -125,6 +127,7 @@ export function CatalogPage() {
                                             {catalog.getElements(s.items).map(e => (
                                                 <ProductCard
                                                     key={e.id}
+                                                    to={`/${e.id}`}
                                                     className='catalog-element'
                                                     item={e}
                                                     onClick={handleElementClick}
@@ -140,6 +143,7 @@ export function CatalogPage() {
 
             </div>
             <div className='wrapper-footer-spacer'/>
+            <FooterMenu/>
             <BasketButton />
         </div>
     )

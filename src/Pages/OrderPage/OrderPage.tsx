@@ -15,6 +15,7 @@ import {Spacer} from "../../components/Spacer";
 
 import './OrderPage.scss'
 import {PageHeader} from "../../components/PageHeader";
+import {FooterMenu} from "../../components/FooterMenu";
 
 
 export function OrderPage() {
@@ -89,9 +90,10 @@ export function OrderPage() {
                             {formatter.format(total)}
                         </div>
                     </div>
-                    <Spacer/>
                 </Container>
             </div>
+            <div className='wrapper-footer-spacer'/>
+            <FooterMenu/>
             <ConfirmModal
                 show={!!removeItem}
                 onHide={cancelRemove}

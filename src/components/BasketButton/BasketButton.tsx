@@ -1,8 +1,8 @@
 import React from 'react';
 import {useNavigate} from "react-router";
-
-import {useBasket} from "../../redux/hooks/useBasket";
 import {Button} from "@telegram-apps/telegram-ui";
+
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {BasketIcon} from "../svg";
 
 import './BasketButton.scss'
@@ -12,7 +12,7 @@ export type BasketButtonProps = {}
 
 
 export function BasketButton({}: BasketButtonProps) {
-    const basket = useBasket()
+    const basket = useUserBasket()
     const navigate = useNavigate()
 
 

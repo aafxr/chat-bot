@@ -1,54 +1,65 @@
 import clsx from "clsx";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {Button} from "@telegram-apps/telegram-ui";
 
-import {addProduct, removeProduct, setProduct} from "../../redux/slices/order-slice";
+
+import {removeBasketProduct, setBasketProductQuantity} from "../../redux/slices/user-slice";
+import {ProductDetails} from "../../core/classes/ProductDetails";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {OrderItem} from "../../core/classes/OrderItem";
-import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppDispatch} from "../../redux/hooks";
 import {CloseIcon} from "../svg";
 
+
 import './AddOrder.scss'
-import {Button} from "@telegram-apps/telegram-ui";
 
 
 export type AddOrderProps = {
     className?: string
     product: CatalogItem
+    details: ProductDetails
     max: number
 }
 
 
-export function AddOrder({product, max, className}: AddOrderProps) {
+export function AddOrder({product, details, max, className}: AddOrderProps) {
     const dispatch = useAppDispatch()
-    const order = useOrder()
-    const orderItem: OrderItem | undefined = order.orders[product.id]
-
+    const basket = useUserBasket()
+    const bd = basket.getDetails(product)
     const [text, setText] = useState('')
+
+    const st = useRef({
+        init: false
+    })
 
 
     useEffect(() => {
-        setText('' + orderItem?.quantity || '1')
-    }, [orderItem?.quantity]);
+        if (!bd) return
+        // if (st.current.init) return
+        // st.current.init = true
+        setText((bd.count).toString())
+    }, [bd]);
 
 
     function handleAddOrder() {
-        const o = new OrderItem({product, quantity: 1})
-        dispatch(setProduct(o))
+        dispatch(setBasketProductQuantity({product, details, quantity: 1}))
     }
 
+
     function handleChangeQuantity(c: number) {
-        if (orderItem && orderItem.quantity + c <= 0) {
-            dispatch(removeProduct(product))
+        if (!bd) return
+        const count = bd.count + c
+
+        if (count <= 0) {
+            dispatch(removeBasketProduct(product))
             return
         }
-        if (c > max) {
-            const o = new OrderItem({product, quantity: max})
-            dispatch(setProduct(o))
+        if (count > max) {
+            dispatch(setBasketProductQuantity({product, details, quantity: count}))
             return;
         }
-        const o = new OrderItem({product, quantity: c})
-        dispatch(addProduct(o))
+        dispatch(setBasketProductQuantity({product, details, quantity: count}))
     }
 
 
@@ -58,21 +69,21 @@ export function AddOrder({product, max, className}: AddOrderProps) {
 
 
     function handleBlur() {
-        let v = text.trim()
-        if (+v === orderItem?.quantity) return
-        const c = Number(v)
-        if (Number.isNaN(c)) {
-            setText(orderItem?.quantity.toString() || '1')
+        let v = +text.trim()
+        if (!bd) return
+        if (v === bd.count) return
+        if (Number.isNaN(v)) {
+            setText(v.toString() || '1')
             return
         }
-        handleChangeQuantity(c)
+        handleChangeQuantity(v)
     }
 
 
     return (
         <div className={clsx('addOrder addOrder-container', className)}>
             <div className='addOrder-inner'>
-                {orderItem
+                {bd
                     ? (
                         <div className='addOrder-counter'>
                             <Button
@@ -93,12 +104,12 @@ export function AddOrder({product, max, className}: AddOrderProps) {
                             <Button
                                 className='addOrder-button'
                                 onClick={() => handleChangeQuantity(1)}
-                                disabled={orderItem.quantity >= max}
+                                disabled={bd.count >= max}
                             >+</Button>
 
                             <div
                                 className='addOrder-remove remove-btn'
-                                onClick={() => dispatch(removeProduct(product))}
+                                onClick={() => dispatch(removeBasketProduct(product))}
                             >
                                 <CloseIcon className='addOrder-icon icon-16'/>
 

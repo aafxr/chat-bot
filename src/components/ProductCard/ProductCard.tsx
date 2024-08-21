@@ -14,15 +14,18 @@ import {CartIcon, HeartIcon, PenIcon} from "../svg";
 import {Currency} from "../../constants/currency";
 import {useAppSelector} from "../../redux/hooks";
 import './ProductCard.scss'
+import {useNavigate} from "react-router";
 
 export type ProductCardProps = {
+    to?: string
     item: CatalogItem
     mode?: CardMode
     className?: string
     onClick?: (item: CatalogItem) => unknown
 }
 
-export function ProductCard({mode = 'vertical', className, onClick, item}: ProductCardProps) {
+export function ProductCard({mode = 'vertical', to, className, onClick, item}: ProductCardProps) {
+    const navigate = useNavigate()
     const user = useAppUser()
     const {addFavorite, removeFavorite} = useFavoriteHandlers()
     const {favorite} = useAppSelector(s => s.catalog)
@@ -32,9 +35,22 @@ export function ProductCard({mode = 'vertical', className, onClick, item}: Produ
     const orderItem: OrderItem | undefined = order.orders[item.id]
 
 
+    function handleCardClick(){
+        if(!to) return
+        navigate(to)
+    }
+
+    function handleFavIconClick(e: React.MouseEvent<HTMLButtonElement>){
+        e.stopPropagation()
+        isFavorite ? removeFavorite(item) : addFavorite(item)
+    }
+
 
     return (
-        <div className={clsx('productCard', className, mode)}>
+        <div
+            className={clsx('productCard',{"productCard-redirect": !!to}, className, mode)}
+            onClick={handleCardClick}
+        >
             <div className='productCard-container'>
                 <div className='productCard-image'>
                     <LazyLoadImage
@@ -43,10 +59,7 @@ export function ProductCard({mode = 'vertical', className, onClick, item}: Produ
                         alt={item.title}
                     />
                     <div className='productCard-buttons'>
-                        <IconButton
-                            mode="plain"
-                            onClick={() => isFavorite ? removeFavorite(item) : addFavorite(item)}
-                        >
+                        <IconButton mode="plain" onClick={handleFavIconClick}>
                             <HeartIcon className={clsx('productCard-icon icon-16', {active: isFavorite})}/>
                         </IconButton>
 

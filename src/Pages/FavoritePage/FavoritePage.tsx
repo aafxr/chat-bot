@@ -8,6 +8,7 @@ import {useAppSelector} from "../../redux/hooks";
 
 import './FavoritePage.scss'
 import {ProductCard} from "../../components/ProductCard";
+import {FooterMenu} from "../../components/FooterMenu";
 
 
 export function FavoritePage() {
@@ -41,6 +42,7 @@ export function FavoritePage() {
                 </Container>
             </div>
             <div className='wrapper-footer-spacer'/>
+            <FooterMenu/>
         </div>
     );
 }

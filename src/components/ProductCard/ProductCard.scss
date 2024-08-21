@@ -11,6 +11,10 @@
     box-shadow: var(--tgui--base--section--box_shadow);
   }
 
+  &-redirect{
+    cursor: pointer;
+  }
+
   &-image{
     flex: none;
     position: relative;

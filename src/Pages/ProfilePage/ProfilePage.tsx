@@ -12,17 +12,19 @@ import './ProfilePage.scss'
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 import {useUserOrders} from "../../redux/hooks/useUserOrders";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
+import {AppUser} from "../../core/classes/AppUser";
+import {FooterMenu} from "../../components/FooterMenu";
 
 
 
 
-type Field<K extends keyof TgUser> = {
+type Field<T> = {
     id: number;
-    key: K;
+    key: T;
     value: string
 };
 
-const fields: Array<Field<keyof TgUser>> = [
+const tgFields: Array<Field<keyof TgUser>> = [
     {
         id: 0,
         key: "first_name",
@@ -35,15 +37,39 @@ const fields: Array<Field<keyof TgUser>> = [
     },
     {
         id: 2,
-        key: "username",
+        key: "nickname",
         value: "Ник"
+    },
+];
+
+const appUserFields: Array<Field<keyof AppUser>> = [
+    {
+        id: 0,
+        key: 'phone',
+        value: 'Телефон'
+    },
+    {
+        id: 1,
+        key:'city',
+        value: 'Город'
+    },
+    {
+        id: 2,
+        key:'country',
+        value: 'Страна'
     },
     {
         id: 3,
-        key: "phone",
-        value: "Телефон"
+        key:'manager',
+        value: 'Менеджер'
     },
-];
+    {
+        id: 4,
+        key:'org',
+        value: 'Организация'
+    }
+
+]
 
 
 export function ProfilePage() {
@@ -115,11 +141,19 @@ export function ProfilePage() {
                     className='sectionBlock'
                     header={"Персональная информация"}
                 >
-                    {!!user && !!user.tgUser && fields.map(k => (
+                    {!!user && !!user.tgUser && tgFields.map(k => (
                             <Cell
                                 key={k.id}
                                 before={<Caption weight={"2"}>{k.value}</Caption>}
                                 after={<Caption weight={"2"}>{user.tgUser?.[k.key]}</Caption>}
+                            />
+                        )
+                    )}
+                    {!!user && appUserFields.map(k => (
+                            <Cell
+                                key={k.id}
+                                before={<Caption weight={"2"}>{k.value}</Caption>}
+                                after={<Caption weight={"2"}>{user[k.key]}</Caption>}
                             />
                         )
                     )}
@@ -148,8 +182,7 @@ export function ProfilePage() {
 
             */}
             <div className='wrapper-footer-spacer'/>
-
-
+            <FooterMenu/>
         </div>
     );
 }

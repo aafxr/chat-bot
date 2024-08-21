@@ -2,10 +2,8 @@ import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
-import {setBasket} from "./redux/slices/basket-slice/basketSlice";
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
-import {BasketService} from "./core/services/basketService";
 import {OrderService} from "./core/services/OrderService";
 import {CompaniesPage} from "./Pages/CompaniesPage";
 import {setOrder} from "./redux/slices/order-slice";
@@ -22,10 +20,11 @@ import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
-import {Basket} from "./core/classes/Basket";
 
 import './css/App.css';
 import {BasketPage} from "./Pages/BasketPage/BasketPage";
+import {setBasket, setBasketProductQuantity} from "./redux/slices/user-slice";
+import {TgService} from "./core/services/TgService";
 
 
 function App() {
@@ -70,7 +69,7 @@ function App() {
 
 
     useEffect(() => {
-        BasketService.getBasket()
+        TgService.getBasket()
             .then(b => dispatch(setBasket(b)))
             .catch(console.error)
     }, [])
@@ -94,7 +93,6 @@ function App() {
                 <Route path={'/basket'} element={<BasketPage/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>
-            <FooterMenu/>
         </>
     );
 }

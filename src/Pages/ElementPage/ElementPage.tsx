@@ -14,6 +14,7 @@ import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 
 import './ElementPage.scss'
+import {PageHeader} from "../../components/PageHeader";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -149,7 +150,7 @@ export function ElementPage() {
 
     return (
         <div className='itemDetails wrapper'>
-            {/*<PageHeader title={element.title}/>*/}
+            <PageHeader arrow />
             <div className='wrapper-content hideScroll '>
                 <div className="itemDetails-container">
                     <Section
@@ -206,6 +207,7 @@ export function ElementPage() {
                                             <div className='col-8'>
                                                 <AddOrder
                                                     product={element}
+                                                    details={productDetails}
                                                     max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
                                                 />
                                             </div>

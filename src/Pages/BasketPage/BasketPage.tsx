@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-import {Caption, Cell, Section} from "@telegram-apps/telegram-ui";
+import {Caption, Cell, Section, Text} from "@telegram-apps/telegram-ui";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {PageHeader} from "../../components/PageHeader";
 
@@ -10,16 +10,16 @@ export function BasketPage() {
 
     return (
         <div className='wrapper'>
-            <PageHeader title='Корзина'/>
+            <PageHeader arrow title='Корзина'/>
             <div className='wrapper-content'>
                 {!basket.length
                     ? (
                         <Section className='sectionBlock'>
-                            <Cell before={
-                                <Caption>Корзина пустая, вернуться в&nbsp;
+                            <Cell >
+                                <Text>Корзина пустая, вернуться в&nbsp;
                                     <Link to={'/catalog'} className='link'>каталог</Link>
-                                </Caption>
-                            }/>
+                                </Text>
+                            </Cell>
                         </Section>)
                     : (<Section className='sectionBlock'>
                             {basket.items.map(el => (
