@@ -1,18 +1,24 @@
+import {sendRemoveUserCompany} from "../../api/sendRemoveUserCompany";
 import {sendCreateNewCompany} from "../../api/sendCreateNewCompany";
 import {fetchUserCompanies} from "../../api/fetchUserCompanies";
+import {setUserCompanies} from "../../redux/slices/user-slice";
 import {sendUpdateCompany} from "../../api/sendUpdateCompany";
 import {fetchUserData} from "../../api/fetchUserData";
 import {AppUser} from "../classes/AppUser";
 import {Company} from "../classes/Company";
 import {TgService} from "./TgService";
-import {sendRemoveUserCompany} from "../../api/sendRemoveUserCompany";
 import {store} from "../../redux/store";
-import {setUserCompanies} from "../../redux/slices/user-slice";
+import {sendUpdateUser} from "../../api/sendUpdateUser";
 
 export class UserService {
     static async getAppUser() {
         const res = await fetchUserData(TgService.getInitData())
         if (res) return new AppUser(res)
+    }
+
+
+    static async updateAppUser(user: AppUser){
+        const res = await sendUpdateUser(user)
     }
 
 

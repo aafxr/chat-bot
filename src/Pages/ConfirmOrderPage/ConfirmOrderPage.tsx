@@ -1,9 +1,9 @@
 import React, {ReactNode, useState} from 'react';
-import {Button, Input, Select, Textarea} from "@telegram-apps/telegram-ui";
+import {Button, Input, Select, Text, Textarea} from "@telegram-apps/telegram-ui";
 
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {setBasket} from "../../redux/slices/user-slice";
+import {setAppUser, setBasket} from "../../redux/slices/user-slice";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
@@ -12,6 +12,10 @@ import {Basket} from "../../core/classes/Basket";
 import {Block} from "../../components/Block";
 
 import './ConfirmOrderPage.scss'
+import {UserService} from "../../core/services/UserService";
+import {AppUser} from "../../core/classes/AppUser";
+import {Link} from "react-router-dom";
+import {BasketService} from "../../core/services/basketService";
 
 
 
@@ -39,13 +43,39 @@ export function ConfirmOrderPage() {
 
 
     function handleConfirmOrder(){
+        let m : ReactNode
         if(!user) return
+        const p = phone.replaceAll(/\D/g, '')
         if(!user.phone){
-            const p = phone.replaceAll(/\D/, '')
             if(!/^\d{11,15}/.test(p)){
-
+                m = (
+                    <Block>
+                        <Text>Не корректно указа номер телефона</Text>
+                    </Block>
+                )
+                setMsg(m)
+                return
             }
+            const newUser = new AppUser(user)
+            newUser.phone = +p
+            UserService.updateAppUser(newUser)
+                .then(() => dispatch(setAppUser(newUser)))
+                .catch(console.error)
         }
+
+        if(!companies.length){
+            m = (
+                <Block>
+                    <Text>добавить <Link to={'/company/new'} className='link'>компанию</Link></Text>
+                </Block>
+            )
+            setMsg(m)
+            return
+        }
+
+        basket.comment = comment
+
+        BasketService.submitBasket(basket, user)
     }
 
 

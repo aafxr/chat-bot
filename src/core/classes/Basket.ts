@@ -2,10 +2,15 @@ import {CatalogItem} from "./CatalogItem";
 import {ProductDetails} from "./ProductDetails";
 import {Catalog} from "./Catalog";
 import {Company} from "./Company";
+import {AppUser} from "./AppUser";
 
 export class Basket {
-    comment: string
     _items: Map<BasketDetail['id'], BasketDetail>
+
+    comment: string
+    userId: AppUser['id']
+    userPhone: AppUser['phone']
+    companyID: Company['id']
 
     company: Company | null
 
@@ -13,6 +18,10 @@ export class Basket {
         this._items = new Map()
         this.comment = b.comment || ''
         this.company = b.company || null
+
+        this.userId = b.userId !== undefined ? b.userId : 0
+        this.userPhone = b.userPhone !== undefined ? b.userPhone : 0
+        this.companyID = b.companyID !== undefined ? b.companyID : 0
 
         if (b.items) {
             for (const item of b.items) {
