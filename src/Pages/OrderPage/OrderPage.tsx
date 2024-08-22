@@ -74,7 +74,7 @@ export function OrderPage() {
                 onHide={cancelRemove}
                 titleText={'Удалить продукт'}
                 body={removeOrder
-                    ? `${removeOrder.id} ${removeOrder.created_at.toLocaleDateString(dateLang, dateOptions)}`
+                    ? `${removeOrder.id} ${removeOrder.CreatedAt.toLocaleDateString(dateLang, dateOptions)}`
                     : ''
                 }
                 confirmText={'Удалить'}

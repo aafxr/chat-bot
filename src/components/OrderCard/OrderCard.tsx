@@ -27,7 +27,7 @@ export function OrderCard({order, className, onRemove}: OrderItemCardProps) {
                     <Headline weight="2">
                         <span>Заказ&nbsp;№{order.id}</span>
                     </Headline>
-                    <Caption>{order.updated_at.toLocaleDateString(dateLang, dateOptions)}</Caption>
+                    <Caption>{order.CreatedAt.toLocaleDateString(dateLang, dateOptions)}</Caption>
                 </div>
                 <Cell
                     before={<Caption>Товаров в заказе</Caption>}

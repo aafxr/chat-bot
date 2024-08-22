@@ -3,17 +3,17 @@ import {Basket} from "./Basket";
 export class Order extends Basket{
 
     id: number
-    created_at: Date
-    updated_at: Date
-    deleted_at: Date
+    CreatedAt: Date
+    UpdatedAt: Date
+    DeletedAt: Date
 
     constructor(o: Partial<Order> = {}) {
         super(o);
 
         this.id = o.id !== undefined ? o.id : 0
-        this.created_at = o.created_at !== undefined ? new Date(o.created_at) : new Date(0)
-        this.updated_at = o.updated_at !== undefined ? new Date(o.updated_at) : new Date(0)
-        this.deleted_at = o.deleted_at !== undefined ? new Date(o.deleted_at) : new Date(0)
+        this.CreatedAt = o.CreatedAt !== undefined ? new Date(o.CreatedAt) : new Date(0)
+        this.UpdatedAt = o.UpdatedAt !== undefined ? new Date(o.UpdatedAt) : new Date(0)
+        this.DeletedAt = o.DeletedAt !== undefined ? new Date(o.DeletedAt) : new Date(0)
     }
 
 }

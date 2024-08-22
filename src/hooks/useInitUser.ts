@@ -1,5 +1,4 @@
 import {useCallback, useEffect, useState} from "react";
-import {setAppUser, setTgUser, setUserCompanies} from "../redux/slices/user-slice";
 import {UserService} from "../core/services/UserService";
 import {useAppDispatch} from "../redux/hooks";
 

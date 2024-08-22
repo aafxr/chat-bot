@@ -5,9 +5,6 @@
     padding: 4px;
     background-color: var(--tgui--bg_color);
     border-radius: var(--br-main);
-  }
-
-  &-container:not(:first-child){
     margin-top: var(--offset-main);
   }
 
