@@ -26,9 +26,9 @@ export function FavoritePage() {
 
     return (
         <div className='favorite wrapper'>
-                <PageHeader title='Избранное' />
+                {/*<PageHeader title='Избранное' />*/}
 
-            <div className='wrapper-content'>
+            <div className='wrapper-content mt-4'>
                 <Container>
                     <div className='favorite-content productsList'>
                         {items.map(el =>

@@ -42,7 +42,7 @@ export function OrderPage() {
 
     return (
         <div className='order wrapper'>
-            <PageHeader title={"Заказы"}/>
+            {/*<PageHeader title={"Заказы"}/>*/}
             <div className='wrapper-content'>
                 <div className='order-list'>
                     {orders.length

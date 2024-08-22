@@ -88,7 +88,7 @@ export function ConfirmOrderPage() {
 
     return (
         <div className='confirmOrder wrapper'>
-            <PageHeader arrow/>
+            {/*<PageHeader arrow/>*/}
             <div className='wrapper-content confirmOrder-content'>
 
                 {msg}

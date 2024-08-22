@@ -110,7 +110,7 @@ export function ProfilePage() {
 
     return (
         <div className='profile profile-container wrapper'>
-            <PageHeader title={"Профиль"}/>
+            {/*<PageHeader title={"Профиль"}/>*/}
             <div className='wrapper-header'>
                 <Cell
                     before={
