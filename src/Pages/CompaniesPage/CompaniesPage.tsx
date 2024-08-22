@@ -1,15 +1,13 @@
-import React, {ReactNode, useRef, useState} from 'react';
-import {Button, Caption, Cell, IconButton, Section, Snackbar, Spinner} from "@telegram-apps/telegram-ui";
-
-import {PageHeader} from "../../components/PageHeader";
-import {Company} from "../../core/classes/Company";
 import {Link} from "react-router-dom";
+import React, {ReactNode, useState} from 'react';
+import {Button, Caption, Cell, Section, Spinner} from "@telegram-apps/telegram-ui";
+
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
-import {Modal, ModalHeader, Placeholder} from "react-bootstrap";
-import {ModalClose} from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalClose/ModalClose";
-import {Icon28Close} from "@telegram-apps/telegram-ui/dist/icons/28/close";
+import {useArrowBack} from "../../redux/hooks/useArrowBack";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
+import {PageHeader} from "../../components/PageHeader";
+import {Company} from "../../core/classes/Company";
 
 type CompanyField = {
     key: keyof Omit<Company, "id" | "validate">
@@ -58,15 +56,16 @@ const defaultState: CompaniesPageState = {
 }
 
 export function CompaniesPage() {
+    useArrowBack()
     const [st, setState] = useState(defaultState)
     const user = useAppUser()
     const companies = useUserCompanies()
 
 
-    function handleRemoveCompanyClick(e: React.MouseEvent<HTMLButtonElement>, c: Company){
+    function handleRemoveCompanyClick(e: React.MouseEvent<HTMLButtonElement>, c: Company) {
         e.stopPropagation()
         e.preventDefault()
-        if(! user ) return
+        if (!user) return
         UserService.removeCompany(user, c).catch(console.error)
     }
 
@@ -100,12 +99,12 @@ export function CompaniesPage() {
                             className='sectionBlock'
                             header={c.name}
                             footer={
-                            <Button
-                                mode='plain'
-                                onClick={(e) => handleRemoveCompanyClick(e, c)}
-                            >
-                                Удалить
-                            </Button>
+                                <Button
+                                    mode='plain'
+                                    onClick={(e) => handleRemoveCompanyClick(e, c)}
+                                >
+                                    Удалить
+                                </Button>
                             }
                         >
                             {companyFields.map(e => (

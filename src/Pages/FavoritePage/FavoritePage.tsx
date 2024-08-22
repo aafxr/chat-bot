@@ -1,17 +1,18 @@
 import React, {useMemo} from 'react';
 import {useNavigate} from "react-router";
 
-import {CatalogElement} from "../../components/CatalogElement";
+import {useArrowBack} from "../../redux/hooks/useArrowBack";
+import {ProductCard} from "../../components/ProductCard";
+import {FooterMenu} from "../../components/FooterMenu";
 import {PageHeader} from "../../components/PageHeader";
 import {Container} from "../../components/Container";
 import {useAppSelector} from "../../redux/hooks";
 
 import './FavoritePage.scss'
-import {ProductCard} from "../../components/ProductCard";
-import {FooterMenu} from "../../components/FooterMenu";
 
 
 export function FavoritePage() {
+    useArrowBack()
     const {favorite, catalog} = useAppSelector(s => s.catalog)
     const navigate = useNavigate()
 

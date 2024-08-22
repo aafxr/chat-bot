@@ -10,12 +10,11 @@ import {ProductDetails} from "../../core/classes/ProductDetails";
 import {RelatedItems} from "../../components/RelatedItems";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useCatalog} from "../../redux/hooks/useCatalog";
+import {FooterMenu} from "../../components/FooterMenu";
 import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 
 import './ElementPage.scss'
-import {PageHeader} from "../../components/PageHeader";
-import {FooterMenu} from "../../components/FooterMenu";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -151,7 +150,6 @@ export function ElementPage() {
 
     return (
         <div className='itemDetails wrapper'>
-            <PageHeader arrow />
             <div className='wrapper-content hideScroll '>
                 <div className="itemDetails-container">
                     <Section

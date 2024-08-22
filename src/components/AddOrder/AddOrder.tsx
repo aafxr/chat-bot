@@ -1,13 +1,12 @@
 import clsx from "clsx";
-import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "@telegram-apps/telegram-ui";
+import React, {useEffect, useRef, useState} from 'react';
 
 
 import {removeBasketProduct, setBasketProductQuantity} from "../../redux/slices/user-slice";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {CatalogItem} from "../../core/classes/CatalogItem";
-import {OrderItem} from "../../core/classes/OrderItem";
 import {useAppDispatch} from "../../redux/hooks";
 import {CloseIcon} from "../svg";
 

@@ -4,12 +4,13 @@ import {Button, Caption, Cell, Input, Section} from "@telegram-apps/telegram-ui"
 import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
 import {companyFields} from "../CompaniesPage";
-import {useLocation, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {useAppDispatch} from "../../redux/hooks";
 import {updateCompany} from "../../redux/slices/user-slice";
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
+import {useArrowBack} from "../../redux/hooks/useArrowBack";
 
 
 type CompanyEditState = {
@@ -26,6 +27,7 @@ const defaultState: CompanyEditState = {
 
 
 export function CompanyEdit() {
+    useArrowBack()
     const {companyID} = useParams()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()

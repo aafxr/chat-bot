@@ -1,6 +1,8 @@
 .addOrder{
   &-container{
-    background-color: var(--tg-theme-bg-color);
+    background-color: inherit;
+
+    //background-color: var(--tg-theme-bg-color);
   }
 
   &-inner{
@@ -13,8 +15,8 @@
   }
 
   &-button{
-    color: var(--tg-theme-button-text-color);
-    fill: var(--tg-theme-button-text-color);
+    //color: var(--tg-theme-button-text-color);
+    //fill: var(--tg-theme-button-text-color);
     background-color: var(--tg-theme-button-color);
   }
 
@@ -24,10 +26,11 @@
     border-left: none;
     border-right: none;
     border-top: none;
-    color: var(--tg-theme-text-color);
+    color: var(--tgui--text_color);
     font-weight: 700;
     border-color: var(--bs-border-color);
-    background-color: var(--tg-theme-bg-color);
+    background-color: var(--tgui--bg_color);
+
   }
 
   &-button-add{

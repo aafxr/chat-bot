@@ -1,26 +1,28 @@
+import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 import React, {ReactNode, useState} from 'react';
 import {Button, Input, Select, Text, Textarea} from "@telegram-apps/telegram-ui";
 
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
-import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {setAppUser, setBasket} from "../../redux/slices/user-slice";
+import {BasketService} from "../../core/services/basketService";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
+import {useArrowBack} from "../../redux/hooks/useArrowBack";
+import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
+import {AppUser} from "../../core/classes/AppUser";
 import {useAppDispatch} from "../../redux/hooks";
 import {Basket} from "../../core/classes/Basket";
 import {Block} from "../../components/Block";
 
 import './ConfirmOrderPage.scss'
-import {UserService} from "../../core/services/UserService";
-import {AppUser} from "../../core/classes/AppUser";
-import {Link} from "react-router-dom";
-import {BasketService} from "../../core/services/basketService";
-import {useNavigate} from "react-router";
 
 
 
 export function ConfirmOrderPage() {
+    useArrowBack()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const basket = useUserBasket()
