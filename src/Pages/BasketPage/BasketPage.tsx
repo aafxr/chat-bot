@@ -12,6 +12,7 @@ import {Currency} from "../../constants/currency";
 import {Block} from "../../components/Block";
 
 import './BasketPage.scss'
+import {FooterMenu} from "../../components/FooterMenu";
 
 
 const formatter = new Intl.NumberFormat(navigator.language, {
@@ -71,6 +72,8 @@ export function BasketPage() {
                         disabled={!basket.length }
                     >Оформить заказ</Button>
                 </div>
+                <div className='wrapper-footer-spacer' />
+                <FooterMenu />
             </div>
         </div>
     );
