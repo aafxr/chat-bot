@@ -2,6 +2,7 @@ import {Basket} from "../classes/Basket";
 import {sendOrder} from "../../api/sendOrder";
 import {AppUser} from "../classes/AppUser";
 import {TgService} from "./TgService";
+import {BasketDTO} from "../dto/BasketDTO";
 
 
 
@@ -15,7 +16,9 @@ export class BasketService {
         b.userId = user.id
         b.userPhone = user.phone
 
-        const res =  await sendOrder(b)
+        const basketDto = new BasketDTO(b)
+
+        const res =  await sendOrder(basketDto)
         if(res && res.ok){
             TgService.removeBasket().catch(console.error)
             return true

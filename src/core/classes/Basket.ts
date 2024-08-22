@@ -11,7 +11,6 @@ export class Basket {
     userId: AppUser['id']
     userPhone: AppUser['phone']
     companyID: Company['id']
-
     company: Company | null
 
     constructor(b: Partial<Basket> = {}) {
@@ -108,6 +107,10 @@ export class Basket {
     getDetails(p: CatalogItem) {
         return this._items.get(p.id)
     }
+
+    hasProduct(id: CatalogItem['id']){
+        return this._items.has(id)
+    }
 }
 
 
@@ -140,4 +143,7 @@ export class BasketDetail {
     get positionPrice() {
         return this.count * (+this.price) || 0
     }
+
+
+
 }

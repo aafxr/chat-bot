@@ -10,10 +10,10 @@ import {OrderItem} from "../../core/classes/OrderItem";
 import {useFormatter} from "../../hooks/useFormatter";
 import {Card, ThemeProvider} from "react-bootstrap";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
-import {useOrder} from "../../redux/hooks/useOrder";
 import {useAppSelector} from "../../redux/hooks";
 
 import './CatalogElement.scss'
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
 
 
 export type CatalogElementProps = {
@@ -25,12 +25,12 @@ export type CatalogElementProps = {
 
 export function CatalogElement({item, className, onClick}: CatalogElementProps) {
     const user = useAppUser()
-    const order = useOrder()
+    const basket = useUserBasket()
     const {favorite} = useAppSelector(s => s.catalog)
     const {addFavorite, removeFavorite} = useFavoriteHandlers()
     const isFavorite = !!favorite[item.id]
 
-    const orderItem: OrderItem | undefined = order.orders[item.id]
+    const inBasket = basket.hasProduct(item.id)
 
     const formatter = useFormatter(item.currency)
 
@@ -80,7 +80,7 @@ export function CatalogElement({item, className, onClick}: CatalogElementProps) 
                             className='product-btn'
                             onClick={() => onClick?.(item)}
                         >
-                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
+                            Подробно&nbsp;{inBasket ? <CartIcon className='icon-16'/> : ''}
                         </Button>
                     </div>
                 </Card.Body>

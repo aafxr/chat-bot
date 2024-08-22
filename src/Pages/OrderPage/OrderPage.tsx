@@ -2,44 +2,39 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
-import {OrderItemCard} from "../../components/OrderItemCard";
-import {setOrder} from "../../redux/slices/order-slice";
-import {OrderItem} from "../../core/classes/OrderItem";
-import {useFormatter} from "../../hooks/useFormatter";
-import {Container} from "../../components/Container";
-import {useOrder} from "../../redux/hooks/useOrder";
-import {Button, Tab, Tabs} from "react-bootstrap";
-import {useAppDispatch} from "../../redux/hooks";
-import {Order} from "../../core/classes/Order";
-import {Spacer} from "../../components/Spacer";
-
-import './OrderPage.scss'
+import {useUserOrders} from "../../redux/hooks/useUserOrders";
+import {dateLang, dateOptions} from "../../utils/formatter";
+import {setOrders} from "../../redux/slices/user-slice";
 import {PageHeader} from "../../components/PageHeader";
 import {FooterMenu} from "../../components/FooterMenu";
+import {OrderCard} from "../../components/OrderCard";
+import {Container} from "../../components/Container";
+import {useAppDispatch} from "../../redux/hooks";
+import {Order} from "../../core/classes/Order";
+import {Block} from "../../components/Block";
+
+import './OrderPage.scss'
+import {Caption} from "@telegram-apps/telegram-ui";
 
 
 export function OrderPage() {
     const dispatch = useAppDispatch()
-    const order = useOrder()
-    const items = Object.values(order.orders)
-    const total = items.reduce((a, e) => a + e.getTotal(), 0)
-    const formatter = useFormatter(items[0]?.product.currency || 'RUB')
+    const orders = useUserOrders()
 
-    const [removeItem, setRemoveITem] = useState<OrderItem>()
+    const [removeOrder, setRemoveOrder] = useState<Order>()
 
 
     function confirmRemove() {
-        if (!removeItem) return
-        const newOrder = new Order(order)
-        newOrder.delete(removeItem.product)
-        dispatch(setOrder(newOrder))
-        setRemoveITem(undefined)
+        if (!removeOrder) return
+        const newOrdersList = orders.filter((o) => o !== removeOrder)
+        dispatch(setOrders(newOrdersList))
+        setRemoveOrder(undefined)
 
     }
 
 
     function cancelRemove() {
-        setRemoveITem(undefined)
+        setRemoveOrder(undefined)
     }
 
 
@@ -48,57 +43,40 @@ export function OrderPage() {
             <PageHeader title={"Заказы"}/>
             <div className='wrapper-content'>
                 <Container>
-                    <Tabs
-                        defaultActiveKey="current"
-                        className="order-tabs"
-                    >
-                        <Tab eventKey="current" title="Текущий">
-                            <div className='order-list'>
-                    {!!items.length && <Button className='order-button mt-2'>Оформить заказ</Button>}
-                                {items.length
-                                    ? (
-                                        items.map((o) => (
-                                            <OrderItemCard
-                                                key={o.product.id}
-                                                className='mt-2'
-                                                orderItem={o}
-                                                onRemove={setRemoveITem}
-                                            />
-                                        ))
-                                    ) : (
-                                        <div>
-                                            Вернуться&nbsp;
-                                            <Link className='link' to={'/'}>в каталог</Link>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </Tab>
-                        <Tab eventKey="all" title="Все">
-                            <p>Все заказы</p>
-                        </Tab>
-                    </Tabs>
+                    <div className='order-list'>
+                        {orders.length
+                            ? (
+                                orders.map((o) => (
+                                    <OrderCard
+                                        order={o}
+                                        onRemove={() => setRemoveOrder(o)}
+                                    />
+                                ))
+                            ) : (
+                                <Block className='mt-4'>
+                                    <Caption weight='2'>
+                                        Перецдите в <Link className='link' to={'/'}>каталог</Link>, стобы сформировать ваш первый закзаз
+                                    </Caption>
+                                </Block>
+                            )
+                        }
+                    </div>
                 </Container>
 
             </div>
             <div className='wrapper-footer'>
-                <Container>
 
-                    <div className='order-summary'>
-                        Итого:
-                        <div className='order-total'>
-                            {formatter.format(total)}
-                        </div>
-                    </div>
-                </Container>
             </div>
             <div className='wrapper-footer-spacer'/>
             <FooterMenu/>
             <ConfirmModal
-                show={!!removeItem}
+                show={!!removeOrder}
                 onHide={cancelRemove}
                 titleText={'Удалить продукт'}
-                body={removeItem?.product.title || ''}
+                body={removeOrder
+                    ? `${removeOrder.id} ${removeOrder.created_at.toLocaleDateString(dateLang, dateOptions)}`
+                    : ''
+                }
                 confirmText={'Удалить'}
                 cancelText={'Отмена'}
                 onCancel={cancelRemove}
@@ -106,5 +84,4 @@ export function OrderPage() {
             />
         </div>
     )
-        ;
 }

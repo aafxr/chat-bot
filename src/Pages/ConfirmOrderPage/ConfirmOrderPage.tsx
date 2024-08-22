@@ -77,10 +77,10 @@ export function ConfirmOrderPage() {
 
         basket.comment = comment
 
+        console.log(basket)
         BasketService.submitBasket(basket, user)
             .then(() => navigate('/orderSuccess'))
             .catch(console.error)
-
     }
 
 

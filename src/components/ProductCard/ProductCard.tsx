@@ -9,12 +9,12 @@ import {CardMode} from "../../types/CardMode";
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {OrderItem} from "../../core/classes/OrderItem";
-import {useOrder} from "../../redux/hooks/useOrder";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
 import {Currency} from "../../constants/currency";
 import {useAppSelector} from "../../redux/hooks";
 import './ProductCard.scss'
 import {useNavigate} from "react-router";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
 
 export type ProductCardProps = {
     to?: string
@@ -31,8 +31,8 @@ export function ProductCard({mode = 'vertical', to, className, onClick, item}: P
     const {favorite} = useAppSelector(s => s.catalog)
     const isFavorite = !!favorite[item.id]
 
-    const order = useOrder()
-    const orderItem: OrderItem | undefined = order.orders[item.id]
+    const basket = useUserBasket()
+    const inBasket = basket.hasProduct(item.id)
 
 
     function handleCardClick(){
@@ -82,7 +82,7 @@ export function ProductCard({mode = 'vertical', to, className, onClick, item}: P
                             size='m'
                             onClick={() => onClick?.(item)}
                         >
-                            Подробно&nbsp;{orderItem ? <CartIcon className='icon-16'/> : ''}
+                            Подробно&nbsp;{inBasket ? <CartIcon className='icon-16'/> : ''}
                         </Button>
                     </div>
                 </div>

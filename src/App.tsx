@@ -5,10 +5,11 @@ import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
 import {OrderService} from "./core/services/OrderService";
+import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
 import {CompaniesPage} from "./Pages/CompaniesPage";
-import {setOrder} from "./redux/slices/order-slice";
 import {useCatalog} from "./redux/hooks/useCatalog";
-import {FooterMenu} from "./components/FooterMenu";
+import {setBasket, setOrders} from "./redux/slices/user-slice";
+import {TgService} from "./core/services/TgService";
 import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
@@ -16,16 +17,13 @@ import {useInitUser} from "./hooks/useInitUser";
 import {TestApiPage} from "./Pages/TestApiPage";
 import {CompanyEdit} from "./Pages/CompanyEdit";
 import {Catalog} from "./core/classes/Catalog";
+import {BasketPage} from "./Pages/BasketPage";
 import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
 
 
 import './css/App.css';
-import {BasketPage} from "./Pages/BasketPage/BasketPage";
-import {setBasket, setBasketProductQuantity} from "./redux/slices/user-slice";
-import {TgService} from "./core/services/TgService";
-import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
 
 
 function App() {
@@ -56,8 +54,8 @@ function App() {
 
 
     useEffect(() => {
-        OrderService.loadOrder()
-            .then(o => o && dispatch(setOrder(o)))
+        OrderService.loadOrders()
+            .then(o => o && dispatch(setOrders(o)))
             .catch(console.error)
     }, [dispatch]);
 

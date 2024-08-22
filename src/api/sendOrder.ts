@@ -1,8 +1,8 @@
 import {BotResponseType} from "../types/BotResponseType";
-import {Basket} from "../core/classes/Basket";
 import {botFetch} from "../axios";
+import {BasketDTO} from "../core/dto/BasketDTO";
 
-export async function sendOrder(b:Basket){
+export async function sendOrder(b:BasketDTO){
     // const payload = {
     //     OrderItems : b.items,
     //     'Client' : {

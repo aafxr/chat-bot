@@ -53,12 +53,13 @@ export class TgService {
     }
 
 
-    static async loadCurrentOrder(){
-        return this.getCloudItem<Order>(CURRENT_ORDER_KEY)
+    static async loadOrders(){
+        const orders = await this.getCloudItem<Order[]>(CURRENT_ORDER_KEY)
+        return orders.map(o => new Order(o))
     }
 
 
-    static async saveCurrentOrder(o: Order) {
+    static async saveCurrentOrders(o: Order[]) {
         return new Promise((res, rej) => {
             const value = JSON.stringify(o)
             Telegram.WebApp.CloudStorage.setItem(
@@ -70,14 +71,8 @@ export class TgService {
     }
 
 
-    static async removeCurrentOrder() {
-        return new Promise((res, rej) => {
-            Telegram.WebApp.CloudStorage
-                .removeItem(
-                    CURRENT_ORDER_KEY,
-                    (e: Error | null, result) => e ? rej(e) : res(result)
-                )
-        })
+    static async removeCurrentOrders() {
+        return await this.removeCloudItem(CURRENT_ORDER_KEY)
     }
 
 

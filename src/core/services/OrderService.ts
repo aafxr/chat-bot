@@ -5,25 +5,26 @@ import {TgService} from "./TgService";
 
 const ORDER_KEY = 'order'
 
-export class OrderService{
+export class OrderService {
 
 
-
-    static async saveOrder(o: Order){
+    static async saveOrders(o: Order[]) {
         await DB.setStoreItem(ORDER_KEY, o)
-        TgService.saveCurrentOrder(o).catch(console.error)
+        TgService.saveCurrentOrders(o).catch(console.error)
     }
 
-    static async removeOrder(){
-        await DB.deleteStoreItem(ORDER_KEY)
-        TgService.removeCurrentOrder().catch(console.error)
+    static async removeOrder(o: Order) {
+        let orders = await this.loadOrders()
+        orders = orders.filter(e => e.id !== o.id)
+        await this.saveOrders(orders)
     }
 
-    static async loadOrder(){
-        let order: Order | undefined = await TgService.loadCurrentOrder()
-        if(!order){
-            order = await DB.getStoreItem<Order>(ORDER_KEY)
+    static async loadOrders(): Promise<Order[]> {
+        let orders: Order[] | undefined = await TgService.loadOrders()
+        if (!orders) {
+            orders = await DB.getStoreItem<Order[]>(ORDER_KEY)
         }
-        if(order) return new Order(order)
+        if (orders) return orders.map(o => new Order(o))
+        return []
     }
 }

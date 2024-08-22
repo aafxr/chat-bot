@@ -1,8 +1,26 @@
-import {CatalogItem} from "./CatalogItem";
-import {OrderItem} from "./OrderItem";
+import {Basket} from "./Basket";
 
-export class Order{
+export class Order extends Basket{
+
     id: number
+    created_at: Date
+    updated_at: Date
+    deleted_at: Date
+
+    constructor(o: Partial<Order> = {}) {
+        super(o);
+
+        this.id = o.id !== undefined ? o.id : 0
+        this.created_at = o.created_at !== undefined ? new Date(o.created_at) : new Date(0)
+        this.updated_at = o.updated_at !== undefined ? new Date(o.updated_at) : new Date(0)
+        this.deleted_at = o.deleted_at !== undefined ? new Date(o.deleted_at) : new Date(0)
+    }
+
+}
+
+
+/*
+id: number
     orders: Record<CatalogItem['id'], OrderItem>
 
     constructor(o: Partial<Order> = {}) {
@@ -46,6 +64,4 @@ export class Order{
     entries(): [CatalogItem, number][]{
         return Object.values(this.orders).map(v => [v.product,v.quantity])
     }
-
-
-}
+ */

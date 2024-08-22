@@ -6,6 +6,7 @@ import {AppUser} from "../../../core/classes/AppUser";
 import {Company} from "../../../core/classes/Company";
 import {TgUser} from "../../../core/classes/TgUser";
 import {Basket, BasketDetail} from "../../../core/classes/Basket";
+import {Order} from "../../../core/classes/Order";
 
 interface UserSliceState {
     tg_user?: TgUser
@@ -102,6 +103,14 @@ const userSlice = createSlice({
             state.basket.removeProduct(action.payload)
             state.basket = new Basket(state.basket)
             TgService.setBasket(state.basket).catch(console.error)
+        },
+        /**
+         * rewrite user orders list
+         * @param state
+         * @param action
+         */
+        setOrders(state, action:PayloadAction<Order[]>){
+            state.orders = action.payload
         }
     }
 })
@@ -114,6 +123,7 @@ export const {
     updateCompany,
     setBasketProductQuantity,
     removeBasketProduct,
-    setBasket
+    setBasket,
+    setOrders
 } = userSlice.actions
 export const userReducer = userSlice.reducer
