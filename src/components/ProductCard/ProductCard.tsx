@@ -1,20 +1,19 @@
 import clsx from "clsx";
 import React from 'react';
-import {Button, Caption, IconButton} from "@telegram-apps/telegram-ui";
+import {useNavigate} from "react-router";
 import {LazyLoadImage} from "react-lazy-load-image-component";
-
-import {CatalogItem} from "../../core/classes/CatalogItem";
-import {CardMode} from "../../types/CardMode";
+import {Button, Caption, IconButton} from "@telegram-apps/telegram-ui";
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
+import {CatalogItem} from "../../core/classes/CatalogItem";
 import {useAppUser} from "../../redux/hooks/useAppUser";
-import {OrderItem} from "../../core/classes/OrderItem";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
 import {Currency} from "../../constants/currency";
 import {useAppSelector} from "../../redux/hooks";
+import {CardMode} from "../../types/CardMode";
+
 import './ProductCard.scss'
-import {useNavigate} from "react-router";
-import {useUserBasket} from "../../redux/hooks/useUserBasket";
 
 export type ProductCardProps = {
     to?: string

@@ -3,7 +3,7 @@
     right: 0;
     left: 0;
     color: var(--tg-theme-text-color);
-    background-color: var(--tgui--surface_primary);
+    background-color: inherit;
     z-index: 2;
 
   &-spacer{
@@ -40,6 +40,7 @@
     padding-left: 0;
     width: 100%;
     border: none;
+    background-color: var(--tgui--bg_color);
   }
 
   &-clear{

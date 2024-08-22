@@ -42,26 +42,24 @@ export function OrderPage() {
         <div className='order wrapper'>
             <PageHeader title={"Заказы"}/>
             <div className='wrapper-content'>
-                <Container>
-                    <div className='order-list'>
-                        {orders.length
-                            ? (
-                                orders.map((o) => (
-                                    <OrderCard
-                                        order={o}
-                                        onRemove={() => setRemoveOrder(o)}
-                                    />
-                                ))
-                            ) : (
-                                <Block className='mt-4'>
-                                    <Caption weight='2'>
-                                        Перецдите в <Link className='link' to={'/'}>каталог</Link>, стобы сформировать ваш первый закзаз
-                                    </Caption>
-                                </Block>
-                            )
-                        }
-                    </div>
-                </Container>
+                <div className='order-list'>
+                    {orders.length
+                        ? (
+                            orders.map((o) => (
+                                <OrderCard
+                                    order={o}
+                                    onRemove={() => setRemoveOrder(o)}
+                                />))
+                        ) : (
+                            <Block className='mt-4'>
+                                <Caption weight='2'>
+                                    Перейдите в <Link className='link' to={'/'}>каталог</Link>, чтобы сформировать ваш
+                                    первый закзаз
+                                </Caption>
+                            </Block>
+                        )
+                    }
+                </div>
 
             </div>
             <div className='wrapper-footer'>

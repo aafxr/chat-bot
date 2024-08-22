@@ -53,17 +53,18 @@ function App() {
     }, [dispatch]);
 
 
-    useEffect(() => {
-        OrderService.loadOrders()
-            .then(o => o && dispatch(setOrders(o)))
-            .catch(console.error)
-    }, [dispatch]);
+    // useEffect(() => {
+    //     OrderService.loadOrders()
+    //         .then(o => o && dispatch(setOrders(o)))
+    //         .catch(console.error)
+    // }, [dispatch]);
 
 
     useEffect(() => {
         const tg = Telegram.WebApp
         tg.BackButton.onClick(() => navigate(-1))
         tg.disableVerticalSwipes()
+        tg.expand()
     }, []);
 
 

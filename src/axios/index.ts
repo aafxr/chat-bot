@@ -1,5 +1,7 @@
 import axios, {AxiosInstance} from 'axios'
 import {BotResponseType} from "../types/BotResponseType";
+import {TgService} from "../core/services/TgService";
+import {config} from "react-transition-group";
 
 
 interface AxiosInstanceWithFlag extends AxiosInstance {
@@ -65,11 +67,18 @@ const aFetch = axios.create({
 
 export default aFetch
 
+let token = ""
 const botURL = process.env.REACT_APP_BOT_URL
 export const botFetch = axios.create({
     baseURL: botURL,
     timeout: 3000,
 }) as AxiosInstanceWithFlag;
+
+
+botFetch.interceptors.request.use((config) => {
+    config.headers.set("Authorization", token)
+    return config
+})
 
 
 //automatically start session interceptor
@@ -78,8 +87,9 @@ botFetch.interceptors.response.use(r => r, async (err) => {
     if (err.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
         try {
-            const response = await axios.post<BotResponseType<any>>(botURL + '/api/session', window.Telegram.WebApp.initData)
+            const response = await axios.post<BotResponseType<string>>(botURL + '/api/auth', TgService.getInitData())
             if (response.status > 199 && response.status < 300 && response.data.ok) {
+                token = response.data.data
                 return botFetch(originalRequest)
             }
         } catch (e) {

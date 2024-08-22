@@ -18,8 +18,10 @@ export function usePersistStateHook<S>(key: string, initState: S): [S, (s: S) =>
     useEffect(() => {
         const data = localStorage.getItem(key)
         try {
+            let obj: S | undefined
             if (data) {
-                setState(JSON.parse(data))
+                obj = JSON.parse(data)
+                setState(obj ? obj : initState)
             } else {
                 setState(initState)
             }
@@ -30,7 +32,11 @@ export function usePersistStateHook<S>(key: string, initState: S): [S, (s: S) =>
     }, [])
 
 
-    useEffect(() => () => localStorage.setItem(key, JSON.stringify(state)), [key, state]);
+    useEffect(() => {
+        return () => {
+            localStorage.setItem(key, JSON.stringify(state))
+        }
+    }, [key, state]);
 
     return [state, setState]
 }

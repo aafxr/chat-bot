@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Tabbar} from "@telegram-apps/telegram-ui";
 import {useLocation, useNavigate} from "react-router";
 
-import {CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
+import {BasketIcon, CartIcon, HeartIcon, HomeIcon, UserIcon} from "../svg";
 
 import './FooterMenu.scss'
 
@@ -15,18 +15,24 @@ const navItems = [
     },
     {
         id: 1,
-        name: "Заказ",
+        name: "Корзина",
+        icon: <BasketIcon className='footerMenu-icon'/>,
+        link: '/basket'
+    },
+    {
+        id: 2,
+        name: "Заказы",
         icon: <CartIcon className='footerMenu-icon'/>,
         link: '/orders'
     },
     {
-        id: 2,
+        id: 3,
         name: "Избранное",
         icon: <HeartIcon className='footerMenu-icon'/>,
         link: '/favorite'
     },
     {
-        id: 3,
+        id: 4,
         name: "Профиль",
         icon: <UserIcon className='footerMenu-icon'/>,
         link: '/profile'

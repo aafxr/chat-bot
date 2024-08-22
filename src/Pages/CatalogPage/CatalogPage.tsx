@@ -9,13 +9,12 @@ import {BasketButton} from "../../components/BasketButton";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {ProductCard} from "../../components/ProductCard";
 import {useCatalog} from "../../redux/hooks/useCatalog";
-import {useMemoScroll} from "../../hooks/useMemoScroll";
+import {FooterMenu} from "../../components/FooterMenu";
 import {Container} from "../../components/Container";
 import {Header} from "../../components/Header";
 import {CardMode} from "../../types/CardMode";
 
 import './Catalog.scss'
-import {FooterMenu} from "../../components/FooterMenu";
 
 
 type CatalogState = {
@@ -28,7 +27,6 @@ const defaultState: CatalogState = {
 }
 
 
-const CATALOG_CONTENT_SCROLL = 'catalog_content_scroll'
 
 
 export function CatalogPage() {
@@ -38,7 +36,6 @@ export function CatalogPage() {
 
     const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
-    const handlers = useMemoScroll<HTMLDivElement>(CATALOG_CONTENT_SCROLL)
 
     const [cardMode, setCardMode,] = usePersistStateHook<CardMode>("cardMode", localStorage.cardMode || "vertical")
 
@@ -78,10 +75,7 @@ export function CatalogPage() {
                 selectedSection={state.section}
                 onSectionSelect={handleSectionSelect}
             />
-            <div
-                className='wrapper-content'
-                {...handlers}
-            >
+            <div className='wrapper-content'>
                 <Container ref={catalogContentRef} className="catalog-content">
                     <List>
                         {catalog && (
@@ -144,7 +138,6 @@ export function CatalogPage() {
             </div>
             <div className='wrapper-footer-spacer'/>
             <FooterMenu/>
-            <BasketButton />
         </div>
     )
 }
