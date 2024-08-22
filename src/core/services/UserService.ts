@@ -1,7 +1,7 @@
 import {sendRemoveUserCompany} from "../../api/sendRemoveUserCompany";
 import {sendCreateNewCompany} from "../../api/sendCreateNewCompany";
 import {fetchUserCompanies} from "../../api/fetchUserCompanies";
-import {setUserCompanies} from "../../redux/slices/user-slice";
+import {setAppUser, setOrders, setUserCompanies} from "../../redux/slices/user-slice";
 import {sendUpdateCompany} from "../../api/sendUpdateCompany";
 import {fetchUserData} from "../../api/fetchUserData";
 import {AppUser} from "../classes/AppUser";
@@ -9,11 +9,26 @@ import {Company} from "../classes/Company";
 import {TgService} from "./TgService";
 import {store} from "../../redux/store";
 import {sendUpdateUser} from "../../api/sendUpdateUser";
+import {Order} from "../classes/Order";
 
 export class UserService {
     static async getAppUser() {
         const res = await fetchUserData(TgService.getInitData())
-        if (res) return new AppUser(res)
+        if (res) {
+            if("orders" in res && Array.isArray(res.orders)){
+                const orders: Order[] = (res.orders as Order[]).map(o => new Order(o))
+                store.dispatch(setOrders(orders))
+            }
+
+            if("organizations" in res && Array.isArray(res.organizations)){
+                const organizations: Company[] = (res.organizations as Company[]).map(c => new Company(c))
+                store.dispatch(setUserCompanies(organizations))
+            }
+            const user = new AppUser(res)
+
+            store.dispatch(setAppUser(user))
+            return user
+        }
     }
 
 

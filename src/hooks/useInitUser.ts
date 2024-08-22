@@ -29,15 +29,6 @@ export function useInitUser() {
         setState(p => ({...p, loading: true}))
 
             UserService.getAppUser()
-                .then(async (appUser) => {
-                    if (!appUser) return
-                    dispatch(setAppUser(appUser))
-                    const tgUser = appUser.tgUser
-                    if(tgUser) dispatch(setTgUser(tgUser))
-                    const companies = await UserService.getUserCompanies(appUser)
-                    if (!companies) return
-                    dispatch(setUserCompanies(companies))
-                })
                 .catch(console.error)
                 .finally(() => setState(p => ({...p, loading: false})))
     }, [dispatch, state])

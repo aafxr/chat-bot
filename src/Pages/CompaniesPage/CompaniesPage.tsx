@@ -73,7 +73,7 @@ export function CompaniesPage() {
 
     return (
         <div className='wrapper'>
-            <PageHeader title='Мои компании'/>
+            <PageHeader arrow title='Мои компании'/>
             <div className='wrapper-content'>
                 {st.loading && <Spinner size='m'/>}
                 {!!st.message && (

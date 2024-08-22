@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
+import {Caption} from "@telegram-apps/telegram-ui";
 
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
 import {useUserOrders} from "../../redux/hooks/useUserOrders";
@@ -14,7 +15,6 @@ import {Order} from "../../core/classes/Order";
 import {Block} from "../../components/Block";
 
 import './OrderPage.scss'
-import {Caption} from "@telegram-apps/telegram-ui";
 
 
 export function OrderPage() {

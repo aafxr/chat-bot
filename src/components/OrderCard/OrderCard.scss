@@ -1,72 +1,30 @@
-.order {
+.orderItem {
   color: var(--tg-theme-text-color);
 
   &-container{
     padding: 4px;
-    background-color: var(--tg-theme-secondary-bg-color);
+    background-color: var(--tgui--bg_color);
     border-radius: var(--br-main);
+  }
+
+  &-container:not(:first-child){
+    margin-top: var(--offset-main);
   }
 
   &-inner {
     display: flex;
+    flex-direction: column;
     justify-content: stretch;
     align-items: stretch;
     gap: 8px;
   }
 
-  &-content{
-    width: 100%;
-    position: relative;
+  &-title {
     display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-  }
-
-  &-image {
-    flex: none;
-    display: inline-block;
-    width: 100px;
-    border-radius: var(--br-main);
-  }
-
-  &-title{
-    padding-right: 30px;
-    color: var(--tg-theme-accent-text-color);
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  &-counter{
-    align-self: flex-end;
-
-  }
-
-  &-remove{
-    position: absolute;
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 0;
-    top: 3px;
-    right: 3px;
-    width: 24px;
-    height: 24px;
-    background-color: var(--tg-theme-secondary-bg-color);
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
+    padding: 0 var(--offset-main);
+    color: var(--tgui--accent_text_color);
   }
 
-  &-summery{
-    margin-top: auto;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    align-items: flex-end;
-
-    span{
-      font-weight: 700;
-    }
-  }
 }

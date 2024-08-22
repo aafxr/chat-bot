@@ -17,21 +17,25 @@ export type OrderItemCardProps = {
 }
 
 
-
 export function OrderCard({order, className, onRemove}: OrderItemCardProps) {
 
 
     return (
-        <Block className={clsx('order order-container', className)}>
-            <div className='order-inner'>
-                <Headline >№{order.id}&nbsp;{order.created_at.toLocaleDateString(dateLang, dateOptions)}</Headline>
+        <Block className={clsx('orderItem orderItem-container', className)}>
+            <div className='orderItem-inner'>
+                <div className='orderItem-title'>
+                    <Headline weight="2">
+                        <span>Заказ&nbsp;№{order.id}</span>
+                    </Headline>
+                    <Caption>{order.updated_at.toLocaleDateString(dateLang, dateOptions)}</Caption>
+                </div>
                 <Cell
                     before={<Caption>Товаров в заказе</Caption>}
                     after={<Caption>{order.length}</Caption>}
-                    />
+                />
                 <Cell
                     before={<Caption>Сумма заказа</Caption>}
-                    after={<Caption>{formatter.format(order.totalPrice)}&nbsp;{Currency['RUB']}</Caption>}
+                    after={<Caption weight='1'>{formatter.format(order.totalPrice)}&nbsp;{Currency['RUB']}</Caption>}
                 />
 
             </div>
