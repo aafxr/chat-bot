@@ -34,7 +34,7 @@ export function usePersistStateHook<S>(key: string, initState: S): [S, (s: S) =>
 
     useEffect(() => {
         return () => {
-            localStorage.setItem(key, JSON.stringify(state))
+            state && localStorage.setItem(key, JSON.stringify(state))
         }
     }, [key, state]);
 

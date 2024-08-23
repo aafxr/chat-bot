@@ -73,18 +73,6 @@ export function CatalogPage() {
     }
 
 
-    // useEffect(() => {
-    //     const el = catalogContentRef.current
-    //     if(!el || !section) return
-    //
-    //     const node = el.querySelector(`[data-section-id="${section.id}"]`)
-    //     if(!node) return
-    //     const rect = node.getBoundingClientRect()
-    //
-    //     el.scrollTop = rect.top
-    // }, [section]);
-
-
     return (
         <div className={clsx('catalog wrapper', pathname !== '/' && 'hidden')}>
             <Header onSectionSelect={handleSectionSelect}/>

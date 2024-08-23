@@ -9,6 +9,8 @@ import {Container} from "../../components/Container";
 import {useAppSelector} from "../../redux/hooks";
 
 import './FavoritePage.scss'
+import {Block} from "../../components/Block";
+import {Caption} from "@telegram-apps/telegram-ui";
 
 
 export function FavoritePage() {
@@ -29,6 +31,11 @@ export function FavoritePage() {
                 {/*<PageHeader title='Избранное' />*/}
 
             <div className='wrapper-content mt-4'>
+                {!items.length && (
+                    <Block>
+                        <Caption weight='2'>У вас пока нет товаров добавленых в избранное</Caption>
+                    </Block>
+                )}
                 <Container>
                     <div className='favorite-content productsList'>
                         {items.map(el =>
