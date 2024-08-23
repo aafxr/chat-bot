@@ -42,7 +42,7 @@ const navItems = [
 
 
 export function FooterMenu() {
-    const [selected, setSelected] = useState(0)
+    const [selected, setSelected] = useState<number>()
     const {pathname} = useLocation()
     const navigate = useNavigate()
 

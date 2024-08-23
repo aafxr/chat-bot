@@ -1,11 +1,16 @@
 .footerMenu {
   &-container{
+    padding: 0;
     z-index: 1000;
   }
 
 
   &-item{
     padding: 12px 4px 12px;
+    gap: 2px;
+    span{
+      text-overflow: unset;
+    }
   }
 
     //&-item {

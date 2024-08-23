@@ -11,18 +11,27 @@ import './CatalogSections.scss'
 export type CatalogArticlesProps = {
     catalog: Catalog
     className?: string
-    selected?: CatalogSection
     onSelect?: (s: CatalogSection) => unknown
 }
 
 
-export function CatalogSections({catalog, className, selected, onSelect}: CatalogArticlesProps) {
-    const sectionsListRef = useRef<HTMLDivElement>(null)
+export function CatalogSections({catalog, className, onSelect}: CatalogArticlesProps) {
+    const listRef = useRef<HTMLDivElement>(null)
+    const selected = catalog.getCurrentSection()
+    const sections = catalog.sections.slice(1)
+    const all = catalog.sections[0]
+    const isFilter = !!catalog._filter
+
+    console.log(selected)
+    console.log(all)
 
 
     useEffect(() => {
-        const el = sectionsListRef.current
-        if(!el || !selected) return
+        if(selected.id === -1 && listRef.current){
+            listRef.current.scrollLeft = 0
+        }
+        const el = listRef.current
+        if(!el) return
 
         const s = el.querySelector<HTMLDivElement>(`[data-id="${selected.id}"]`)
         if(!s) return
@@ -31,55 +40,33 @@ export function CatalogSections({catalog, className, selected, onSelect}: Catalo
     }, [selected]);
 
 
-    // function handleWheel(e: React.WheelEvent<HTMLDivElement>){
-    //     const el = e.currentTarget
-    //     const {deltaY} = e
-    //     el.scrollLeft = el.scrollLeft + deltaY * 2
-    // }
-
-
-
     return (
         <div className={clsx('sections', className)}>
             <div className='sections-container'>
-                <div
-                    className='sections-list'
-
-                >
-                    {catalog.sections.map(s => (
-                        <TabsItem
-                            key={s.id}
-                            className={clsx('sections-tab flex-0', {selected: selected?.id === s.id})}
-                            selected={selected?.id === s.id}
-                            onClick={() => onSelect?.(s)}
-                            data-id={s.id}
-                        >
-                            {s.title}
-                        </TabsItem>
-                    ))}
+                <div className='section-all'>
+                    <TabsItem
+                        className={clsx('sections-tab flex-0', {selected: selected?.id === all.id})}
+                        selected={selected?.id === all.id}
+                        onClick={() => onSelect?.(all)}
+                        data-id={all.id}
+                    >
+                        {all.title}
+                    </TabsItem>
                 </div>
-
+                <div ref={listRef} className='sections-list'>
+                    {sections.map(s => (
+                            <TabsItem
+                                key={s.id}
+                                className={clsx('sections-tab flex-0', {selected:!isFilter && selected?.id === s.id})}
+                                selected={!isFilter && selected?.id === s.id}
+                                onClick={() => onSelect?.(s)}
+                                data-id={s.id}
+                            >
+                                {s.title}
+                            </TabsItem>
+                        ))}
+                </div>
             </div>
         </div>
     );
 }
-
-/*
-<div
-                    ref={sectionsListRef}
-                    className='sections-list'
-                    // onWheel={handleWheel}
-                >
-                    {catalog.sections.map(s => (
-                        <Button
-                            key={s.id}
-                            className={clsx('sections-item', {active: selected?.id === s.id})}
-                            onClick={() => onSelect?.(s)}
-                            data-id={s.id}
-                        >
-                            {s.title}
-                        </Button>
-                    ))}
-                </div>
- */
-

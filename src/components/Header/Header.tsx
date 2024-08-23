@@ -16,12 +16,11 @@ import './Header.scss'
 export type HeaderProps = {
     className?: string
     onSelect?: (str: string) => unknown
-    selectedSection?: CatalogSection
     onSectionSelect?: (s: CatalogSection) => unknown
 }
 
 
-export function Header({onSelect, className, selectedSection, onSectionSelect}: HeaderProps) {
+export function Header({onSelect, className, onSectionSelect}: HeaderProps) {
     const [value, setValue] = useState('')
     const dispatch = useAppDispatch()
     const catalog = useCatalog()
@@ -78,11 +77,7 @@ export function Header({onSelect, className, selectedSection, onSectionSelect}: 
                         )}
                     </div>
                 </Container>
-                {!!catalog && <CatalogSections
-                    catalog={catalog}
-                    selected={selectedSection}
-                    onSelect={onSectionSelect}
-                />}
+                {!!catalog && <CatalogSections catalog={catalog} onSelect={onSectionSelect}/>}
             </header>
             <div className="wrapper-header header-spacer"/>
         </>

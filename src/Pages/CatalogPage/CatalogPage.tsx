@@ -5,12 +5,14 @@ import {Headline, List} from "@telegram-apps/telegram-ui";
 
 import {usePersistStateHook} from "../../hooks/usePersistStateHook";
 import {CatalogSection} from "../../core/classes/CatalogSection";
-import {BasketButton} from "../../components/BasketButton";
+import {setCatalog} from "../../redux/slices/catalog-slice";
 import {CatalogItem} from "../../core/classes/CatalogItem";
 import {ProductCard} from "../../components/ProductCard";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {FooterMenu} from "../../components/FooterMenu";
 import {Container} from "../../components/Container";
+import {Catalog} from "../../core/classes/Catalog";
+import {useAppDispatch} from "../../redux/hooks";
 import {Header} from "../../components/Header";
 import {CardMode} from "../../types/CardMode";
 
@@ -18,18 +20,16 @@ import './Catalog.scss'
 
 
 type CatalogState = {
-    section?: CatalogSection
-    scrollPrevPos: boolean
 }
 
 const defaultState: CatalogState = {
-    scrollPrevPos: false
 }
 
 
 
 
 export function CatalogPage() {
+    const dispatch = useAppDispatch()
     const {pathname} = useLocation()
     const catalog = useCatalog()
     const navigate = useNavigate()
@@ -39,16 +39,18 @@ export function CatalogPage() {
 
     const [cardMode, setCardMode,] = usePersistStateHook<CardMode>("cardMode", localStorage.cardMode || "vertical")
 
+    const section = catalog?.getCurrentSection()
+
+
 
     useEffect(() => {
         const el = catalogContentRef.current
-        const section = state.section
-        if (!el || !section) return
+        if (!el || !section || section.id === -1) return
 
         const s = el.querySelector<HTMLDivElement>(`[data-section-id="${section.id}"]`)
         if (!s) return
         el.scrollTop = s.offsetTop
-    }, [state.section]);
+    }, [section]);
 
 
     function handleElementClick(item: CatalogItem) {
@@ -57,10 +59,12 @@ export function CatalogPage() {
 
 
     function handleSectionSelect(s: CatalogSection) {
-        if (state.section?.id !== s.id) {
-            setState({...state, section: s})
+        if (section?.id !== s.id) {
+            const newCatalog = new Catalog(catalog)
+            newCatalog.setSection(s.id)
+            dispatch(setCatalog(newCatalog))
             const el = catalogContentRef.current
-            if (!el) return
+            if (!el || s.id === -1) return
 
             const $s = el.querySelector<HTMLDivElement>(`[data-section-id="${s.id}"]`)
             if (!$s) return
@@ -69,12 +73,21 @@ export function CatalogPage() {
     }
 
 
+    // useEffect(() => {
+    //     const el = catalogContentRef.current
+    //     if(!el || !section) return
+    //
+    //     const node = el.querySelector(`[data-section-id="${section.id}"]`)
+    //     if(!node) return
+    //     const rect = node.getBoundingClientRect()
+    //
+    //     el.scrollTop = rect.top
+    // }, [section]);
+
+
     return (
         <div className={clsx('catalog wrapper', pathname !== '/' && 'hidden')}>
-            <Header
-                selectedSection={state.section}
-                onSectionSelect={handleSectionSelect}
-            />
+            <Header onSectionSelect={handleSectionSelect}/>
             <div className='wrapper-content'>
                 <Container ref={catalogContentRef} className="catalog-content">
                     <List>
@@ -111,7 +124,7 @@ export function CatalogPage() {
                                             })()
                                         }
                                     </section>
-                                ) : catalog.sections.map(s => (
+                                ) : catalog.getSectionsWithoutAll().map(s => (
                                     <section
                                         key={s.id} className='catalog-section'
                                         data-section-id={s.id}
