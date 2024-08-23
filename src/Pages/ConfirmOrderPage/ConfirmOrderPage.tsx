@@ -7,10 +7,8 @@ import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 import {setAppUser, setBasket} from "../../redux/slices/user-slice";
 import {BasketService} from "../../core/services/basketService";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
-import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
 import {AppUser} from "../../core/classes/AppUser";
 import {useAppDispatch} from "../../redux/hooks";
@@ -22,7 +20,6 @@ import './ConfirmOrderPage.scss'
 
 
 export function ConfirmOrderPage() {
-    useArrowBack()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const basket = useUserBasket()

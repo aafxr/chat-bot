@@ -1,18 +1,16 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
-import {Button, Cell, Headline, Section, Text} from "@telegram-apps/telegram-ui";
+import {Button, Headline,  Text} from "@telegram-apps/telegram-ui";
 
 import {BasketDetailsComponent} from "../../components/BasketDetailsComponent";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
-import {PageHeader} from "../../components/PageHeader";
+import {FooterMenu} from "../../components/FooterMenu";
 import {Container} from "../../components/Container";
 import {Currency} from "../../constants/currency";
 import {Block} from "../../components/Block";
 
 import './BasketPage.scss'
-import {FooterMenu} from "../../components/FooterMenu";
 
 
 const formatter = new Intl.NumberFormat(navigator.language, {
@@ -23,7 +21,6 @@ const formatter = new Intl.NumberFormat(navigator.language, {
 
 
 export function BasketPage() {
-    useArrowBack()
     const basket = useUserBasket()
     const navigate = useNavigate()
 

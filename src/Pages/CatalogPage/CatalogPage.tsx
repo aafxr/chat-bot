@@ -1,9 +1,8 @@
 import clsx from "clsx";
+import React, {useEffect, useRef} from 'react';
 import {useLocation, useNavigate} from "react-router";
-import React, {useEffect, useRef, useState} from 'react';
 import {Headline, List} from "@telegram-apps/telegram-ui";
 
-import {usePersistStateHook} from "../../hooks/usePersistStateHook";
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {setCatalog} from "../../redux/slices/catalog-slice";
 import {CatalogItem} from "../../core/classes/CatalogItem";
@@ -14,18 +13,8 @@ import {Container} from "../../components/Container";
 import {Catalog} from "../../core/classes/Catalog";
 import {useAppDispatch} from "../../redux/hooks";
 import {Header} from "../../components/Header";
-import {CardMode} from "../../types/CardMode";
 
 import './Catalog.scss'
-
-
-type CatalogState = {
-}
-
-const defaultState: CatalogState = {
-}
-
-
 
 
 export function CatalogPage() {
@@ -34,13 +23,20 @@ export function CatalogPage() {
     const catalog = useCatalog()
     const navigate = useNavigate()
 
-    const [state, setState] = useState(defaultState)
     const catalogContentRef = useRef<HTMLDivElement>(null)
 
-    const [cardMode, setCardMode,] = usePersistStateHook<CardMode>("cardMode", localStorage.cardMode || "vertical")
+    // const [cardMode, setCardMode,] = usePersistStateHook<CardMode>("cardMode", localStorage.cardMode || "vertical")
 
     const section = catalog?.getCurrentSection()
 
+    const isCatalog = pathname !== '/'
+
+
+    useEffect(() => {
+        isCatalog
+            ? Telegram.WebApp.BackButton.hide()
+            : Telegram.WebApp.BackButton.show()
+    }, [isCatalog]);
 
 
     useEffect(() => {
@@ -74,7 +70,7 @@ export function CatalogPage() {
 
 
     return (
-        <div className={clsx('catalog wrapper', pathname !== '/' && 'hidden')}>
+        <div className={clsx('catalog wrapper', isCatalog && 'hidden')}>
             <Header onSectionSelect={handleSectionSelect}/>
             <div className='wrapper-content'>
                 <Container ref={catalogContentRef} className="catalog-content">
@@ -89,7 +85,7 @@ export function CatalogPage() {
                                             (() => {
                                                 const items = catalog.getFilteredItems()
                                                 return items.length ? (
-                                                    <div className={clsx('catalog-elements productsList', cardMode)}>
+                                                    <div className={clsx('catalog-elements productsList', "vertical")}>
                                                         {
                                                             items.map(e => (
                                                                 <ProductCard
@@ -98,7 +94,7 @@ export function CatalogPage() {
                                                                     className='catalog-element'
                                                                     item={e}
                                                                     onClick={handleElementClick}
-                                                                    mode={cardMode}
+                                                                    mode="vertical"
                                                                 />
                                                             ))
                                                         }
@@ -118,7 +114,7 @@ export function CatalogPage() {
                                         data-section-id={s.id}
                                     >
                                         <Headline weight={"1"} className='catalog-section-title'>{s.title}</Headline>
-                                        <div className={clsx('catalog-elements productsList', cardMode)}>
+                                        <div className={clsx('catalog-elements productsList', "vertical")}>
                                             {catalog.getElements(s.items).map(e => (
                                                 <ProductCard
                                                     key={e.id}
@@ -126,7 +122,7 @@ export function CatalogPage() {
                                                     className='catalog-element'
                                                     item={e}
                                                     onClick={handleElementClick}
-                                                    mode={cardMode}
+                                                    mode="vertical"
                                                 />
                                             ))}
                                         </div>

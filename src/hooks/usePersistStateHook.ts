@@ -34,7 +34,8 @@ export function usePersistStateHook<S>(key: string, initState: S): [S, (s: S) =>
 
     useEffect(() => {
         return () => {
-            state && localStorage.setItem(key, JSON.stringify(state))
+            const isString = typeof state === 'string'
+            state && localStorage.setItem(key, isString ? state : JSON.stringify(state))
         }
     }, [key, state]);
 

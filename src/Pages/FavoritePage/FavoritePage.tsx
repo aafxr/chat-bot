@@ -1,20 +1,17 @@
 import React, {useMemo} from 'react';
 import {useNavigate} from "react-router";
 
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
 import {ProductCard} from "../../components/ProductCard";
 import {FooterMenu} from "../../components/FooterMenu";
-import {PageHeader} from "../../components/PageHeader";
 import {Container} from "../../components/Container";
+import {Caption} from "@telegram-apps/telegram-ui";
 import {useAppSelector} from "../../redux/hooks";
+import {Block} from "../../components/Block";
 
 import './FavoritePage.scss'
-import {Block} from "../../components/Block";
-import {Caption} from "@telegram-apps/telegram-ui";
 
 
 export function FavoritePage() {
-    useArrowBack()
     const {favorite, catalog} = useAppSelector(s => s.catalog)
     const navigate = useNavigate()
 

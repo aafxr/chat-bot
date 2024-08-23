@@ -14,7 +14,6 @@ import {useUserOrders} from "../../redux/hooks/useUserOrders";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {AppUser} from "../../core/classes/AppUser";
 import {FooterMenu} from "../../components/FooterMenu";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
 
 
 
@@ -74,7 +73,6 @@ const appUserFields: Array<Field<keyof AppUser>> = [
 
 
 export function ProfilePage() {
-    useArrowBack()
     const user = useAppUser()
     const companies = useUserCompanies()
     const orders = useUserOrders()

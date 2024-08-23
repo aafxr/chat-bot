@@ -5,9 +5,7 @@ import {Caption} from "@telegram-apps/telegram-ui";
 import {ConfirmModal} from "../../components/modals/ConfirmModal/ConfirmModal";
 import {useUserOrders} from "../../redux/hooks/useUserOrders";
 import {dateLang, dateOptions} from "../../utils/formatter";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
 import {setOrders} from "../../redux/slices/user-slice";
-import {PageHeader} from "../../components/PageHeader";
 import {FooterMenu} from "../../components/FooterMenu";
 import {OrderCard} from "../../components/OrderCard";
 import {useAppDispatch} from "../../redux/hooks";
@@ -18,7 +16,6 @@ import './OrderPage.scss'
 
 
 export function OrderPage() {
-    useArrowBack()
     const dispatch = useAppDispatch()
     const orders = useUserOrders()
 

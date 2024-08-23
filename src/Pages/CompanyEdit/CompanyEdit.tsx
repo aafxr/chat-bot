@@ -1,16 +1,15 @@
+import {useNavigate, useParams} from "react-router";
 import React, {ReactNode, useEffect, useState} from 'react';
 import {Button, Caption, Cell, Input, Section} from "@telegram-apps/telegram-ui";
 
-import {PageHeader} from "../../components/PageHeader";
-import {Company} from "../../core/classes/Company";
-import {companyFields} from "../CompaniesPage";
-import {useNavigate, useParams} from "react-router";
+import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
+import {updateCompany} from "../../redux/slices/user-slice";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
+import {PageHeader} from "../../components/PageHeader";
+import {Company} from "../../core/classes/Company";
 import {useAppDispatch} from "../../redux/hooks";
-import {updateCompany} from "../../redux/slices/user-slice";
-import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
+import {companyFields} from "../CompaniesPage";
 
 
 type CompanyEditState = {
@@ -27,7 +26,6 @@ const defaultState: CompanyEditState = {
 
 
 export function CompanyEdit() {
-    useArrowBack()
     const {companyID} = useParams()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()

@@ -3,7 +3,6 @@ import React, {ReactNode, useState} from 'react';
 import {Button, Caption, Cell, Section, Spinner} from "@telegram-apps/telegram-ui";
 
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
-import {useArrowBack} from "../../redux/hooks/useArrowBack";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {PageHeader} from "../../components/PageHeader";
@@ -56,7 +55,6 @@ const defaultState: CompaniesPageState = {
 }
 
 export function CompaniesPage() {
-    useArrowBack()
     const [st, setState] = useState(defaultState)
     const user = useAppUser()
     const companies = useUserCompanies()
