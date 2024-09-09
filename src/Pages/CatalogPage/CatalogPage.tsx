@@ -29,7 +29,7 @@ export function CatalogPage() {
 
     const section = catalog?.getCurrentSection()
 
-    const isCatalog = pathname !== '/'
+    const isCatalog = pathname === '/'
 
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export function CatalogPage() {
 
 
     return (
-        <div className={clsx('catalog wrapper', isCatalog && 'hidden')}>
+        <div className={clsx('catalog wrapper', !isCatalog && 'hidden')}>
             <Header onSectionSelect={handleSectionSelect}/>
             <div className='wrapper-content'>
                 <Container ref={catalogContentRef} className="catalog-content">

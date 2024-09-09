@@ -1,6 +1,6 @@
 import {Carousel} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router";
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
 import {Button, Caption, Cell, Radio, Section, TabsList} from "@telegram-apps/telegram-ui";
@@ -54,16 +54,16 @@ const tabs: TabItemType[] = [
     },
     {
         id: 1,
-        title: 'Свойства',
+        title: 'Характеристики',
     },
     {
         id: 2,
-        title: 'Заказать',
+        title: 'Наличие',
     },
-    {
-        id: 3,
-        title: 'Сайт',
-    }
+    // {
+    //     id: 3,
+    //     title: 'Сайт',
+    // }
 
 ]
 
@@ -221,6 +221,7 @@ export function ElementPage() {
                                         {tabs.map(e => (
                                             <TabsItem
                                                 key={e.id}
+                                                className={'itemDetails-tab'}
                                                 onClick={() => setSelectedTab(e.id)}
                                                 selected={e.id === selectedTab}
                                             >
@@ -277,16 +278,13 @@ export function ElementPage() {
                                                                                     checked={b.TradeArea_Id === balance?.TradeArea_Id}/>
                                                                             </div>
                                                                         }
-                                                                        after={
-                                                                            <div
-                                                                                className='itemDetails-tradeArea-packs'>
-                                                                                <Caption>{b.Quantity} м<sup>2</sup></Caption>
-                                                                                <Caption>{packsCount(b, productDetails)}&nbsp;упак</Caption>
-                                                                            </div>
-                                                                        }
                                                                         onClick={() => setState({...state, balance: b})}
                                                                     >
                                                                         <Caption>{b.TradeArea_Name}</Caption>
+                                                                        <div className='itemDetails-tradeArea-packs'>
+                                                                            <Caption>{packsCount(b, productDetails)}&nbsp;упак</Caption>
+                                                                            <Caption>{b.Quantity} м<sup>2</sup></Caption>
+                                                                        </div>
                                                                     </Cell>
                                                                 )
                                                             ))}
@@ -301,7 +299,6 @@ export function ElementPage() {
                                                     }
                                                     />
                                                 )
-
                                         }
                                     })()}
                                 </Section>
@@ -318,7 +315,7 @@ export function ElementPage() {
                 </div>
             </div>
             <div className='wrapper-footer-spacer'/>
-            <FooterMenu />
+            <FooterMenu/>
         </div>
     );
 }

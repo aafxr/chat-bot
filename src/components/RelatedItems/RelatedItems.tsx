@@ -5,7 +5,7 @@ import {Offcanvas} from "react-bootstrap";
 import {OffcanvasProps} from "react-bootstrap/Offcanvas";
 
 import {CatalogItem} from "../../core/classes/CatalogItem";
-import {CatalogElement} from "../CatalogElement";
+import {ProductCard} from "../ProductCard";
 
 import './RelatedItems.scss'
 
@@ -38,7 +38,7 @@ export function RelatedItems({items, className, ...props}: RelatedItemsProps) {
                         <div className='productDetails-container'>
                             <div className='productDetails-items'>
                                 {items.map(r => (
-                                    <CatalogElement
+                                    <ProductCard
                                         key={r.id}
                                         className='productDetails-item'
                                         item={r}

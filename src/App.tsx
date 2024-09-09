@@ -4,11 +4,10 @@ import {Navigate, Route, Routes, useNavigate} from "react-router";
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
-import {OrderService} from "./core/services/OrderService";
 import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
 import {CompaniesPage} from "./Pages/CompaniesPage";
 import {useCatalog} from "./redux/hooks/useCatalog";
-import {setBasket, setOrders} from "./redux/slices/user-slice";
+import {setBasket} from "./redux/slices/user-slice";
 import {TgService} from "./core/services/TgService";
 import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
