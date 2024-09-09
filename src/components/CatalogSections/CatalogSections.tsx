@@ -22,9 +22,6 @@ export function CatalogSections({catalog, className, onSelect}: CatalogArticlesP
     const all = catalog.sections[0]
     const isFilter = !!catalog._filter
 
-    console.log(selected)
-    console.log(all)
-
 
     useEffect(() => {
         if(selected.id === -1 && listRef.current){
