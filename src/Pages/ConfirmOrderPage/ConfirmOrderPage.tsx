@@ -5,7 +5,7 @@ import {Button, Input, Select, Text, Textarea} from "@telegram-apps/telegram-ui"
 
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 import {setAppUser, setBasket} from "../../redux/slices/user-slice";
-import {BasketService} from "../../core/services/basketService";
+import {BasketService} from "../../core/services/BasketService";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";

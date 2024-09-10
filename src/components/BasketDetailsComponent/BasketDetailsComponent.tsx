@@ -34,7 +34,7 @@ export function BasketDetailsComponent({bd, className}: BasketDetailsComponentPr
         dispatch(setBasketProductQuantity(bd))
     }
 
-    function handleRemoveBasketProduct(){
+    function handleRemoveBasketProduct() {
         try {
             Telegram.WebApp.showConfirm(`Удалить товар: ${bd.title}?`, (confirm) => {
                 if (product && confirm) {
@@ -61,7 +61,7 @@ export function BasketDetailsComponent({bd, className}: BasketDetailsComponentPr
                 <div className='basketItem-footer'>
                     <Counter className='basketItem-counter' onChange={handleChangeQuantity} initValue={bd.packCount}/>
                     <Button
-                    className='basketItem-removeBtn'
+                        className='basketItem-removeBtn'
                         mode='plain'
                         onClick={handleRemoveBasketProduct}
                     >

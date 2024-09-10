@@ -104,6 +104,9 @@ export function ElementPage() {
             })))
     }, [element, state]);
 
+    // @ts-ignore
+    window.balances = state.productDetails?.Balance_Strings
+
 
     useEffect(() => {
         const {productDetails, relatedRequested, relatedLoading} = state

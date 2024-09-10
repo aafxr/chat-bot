@@ -4,16 +4,15 @@ import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
 import {Avatar, Caption, Cell, Headline, Section} from "@telegram-apps/telegram-ui";
 
 
-import {useAppUser} from "../../redux/hooks/useAppUser";
-import {PageHeader} from "../../components/PageHeader";
-import {TgUser} from "../../core/classes/TgUser";
-
-import './ProfilePage.scss'
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
 import {useUserOrders} from "../../redux/hooks/useUserOrders";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {AppUser} from "../../core/classes/AppUser";
+import {useAppUser} from "../../redux/hooks/useAppUser";
 import {FooterMenu} from "../../components/FooterMenu";
+import {AppUser} from "../../core/classes/AppUser";
+import {TgUser} from "../../core/classes/TgUser";
+
+import './ProfilePage.scss'
 
 
 
@@ -67,8 +66,12 @@ const appUserFields: Array<Field<keyof AppUser>> = [
         id: 4,
         key:'org',
         value: 'Организация'
+    },
+    {
+        id: 5,
+        key:'storehouse',
+        value: 'Склад'
     }
-
 ]
 
 
@@ -102,13 +105,17 @@ export function ProfilePage() {
     ];
 
 
+    function handleUserFieldClick(f: Field<keyof AppUser>) {
+
+    }
+
+
     if (!user) {
         return <>unauthorized</>
     }
 
     return (
         <div className='profile profile-container wrapper'>
-            {/*<PageHeader title={"Профиль"}/>*/}
             <div className='wrapper-header'>
                 <Cell
                     before={
@@ -154,6 +161,7 @@ export function ProfilePage() {
                                 key={k.id}
                                 before={<Caption weight={"2"}>{k.value}</Caption>}
                                 after={<Caption weight={"2"}>{user[k.key]}</Caption>}
+                                onClick={() => handleUserFieldClick(k)}
                             />
                         )
                     )}

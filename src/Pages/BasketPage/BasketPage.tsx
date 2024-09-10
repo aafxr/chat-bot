@@ -31,7 +31,6 @@ export function BasketPage() {
 
     return (
         <div className='wrapper basketPage'>
-            {/*<PageHeader arrow title='Корзина'/>*/}
             <div className='wrapper-content'>
                 {!basket.length
                     ? (
