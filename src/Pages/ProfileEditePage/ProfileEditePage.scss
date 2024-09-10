@@ -1,0 +1,17 @@
+.profileEdite{
+  &-footer{
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    gap: calc(var(--base-offset) / 2);
+  }
+
+  &-footerBtn{
+    flex: 1 1;
+  }
+
+  &-saveBtn{
+    //width: 100%;
+    //border-radius: 0;
+  }
+}

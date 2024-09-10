@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
-import {Avatar, Caption, Cell, Headline, Section} from "@telegram-apps/telegram-ui";
+import {Avatar, Button, Caption, Cell, Headline, Section} from "@telegram-apps/telegram-ui";
 
 
 import {useUserCompanies} from "../../redux/hooks/useUserCompanies";
@@ -13,6 +13,7 @@ import {AppUser} from "../../core/classes/AppUser";
 import {TgUser} from "../../core/classes/TgUser";
 
 import './ProfilePage.scss'
+import {useNavigate} from "react-router";
 
 
 
@@ -76,6 +77,7 @@ const appUserFields: Array<Field<keyof AppUser>> = [
 
 
 export function ProfilePage() {
+    const navigate = useNavigate()
     const user = useAppUser()
     const companies = useUserCompanies()
     const orders = useUserOrders()
@@ -107,6 +109,10 @@ export function ProfilePage() {
 
     function handleUserFieldClick(f: Field<keyof AppUser>) {
 
+    }
+
+    function handleEditeButtonClick() {
+        navigate('/profile/edite')
     }
 
 
@@ -147,6 +153,8 @@ export function ProfilePage() {
                 <Section
                     className='sectionBlock'
                     header={"Персональная информация"}
+                    footer={
+                        <Button mode='plain' onClick={handleEditeButtonClick}>Редактировать</Button>}
                 >
                     {!!user && !!user.tgUser && tgFields.map(k => (
                             <Cell

@@ -23,6 +23,7 @@ import {Noop} from "./Pages/Noop/Noop";
 
 
 import './css/App.css';
+import {ProfileEditePage} from "./Pages/ProfileEditePage";
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
                 <Route path={'/orders'} element={<OrderPage/>}/>
                 <Route path={'/favorite'} element={<FavoritePage/>}/>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
+                <Route path={'/profile/edite'} element={<ProfileEditePage/>}/>
                 <Route path={'/Telegram_bot/test'} element={<TestApiPage/>}/>
                 <Route path={'/companies'} element={<CompaniesPage/>}/>
                 <Route path={'/company/:companyID'} element={<CompanyEdit/>}/>
