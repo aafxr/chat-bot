@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useState} from 'react';
 import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
-import {Button, Caption, Cell, Radio, Section, TabsList} from "@telegram-apps/telegram-ui";
+import {Button, Caption, Cell, Radio, Section, Selectable, TabsList} from "@telegram-apps/telegram-ui";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
@@ -66,6 +66,9 @@ const tabs: TabItemType[] = [
     // }
 
 ]
+
+
+const packsCount = (b: Balance, pd: ProductDetails) => Math.floor((+b.Quantity) / (+pd.PackUnitQuantity))
 
 
 export function ElementPage() {
@@ -135,7 +138,6 @@ export function ElementPage() {
         setState(p => ({...p, showRelated: !p.showRelated}))
     }
 
-    const packsCount = (b: Balance, pd: ProductDetails) => Math.floor((+b.Quantity) / (+pd.PackUnitQuantity))
 
 
     if (!element) {
@@ -230,77 +232,7 @@ export function ElementPage() {
 
                                         ))}
                                     </TabsList>
-                                    {(() => {
-                                        switch (selectedTab) {
-                                            case 0:
-                                                return (
-                                                    <>
-                                                        <Cell
-                                                            before={<Caption>{productDetails.Price_MRC.Name}</Caption>}
-                                                            after={<Caption>{productDetails.Price_MRC.Value}</Caption>}
-                                                        />
-                                                        <Cell
-                                                            before={<Caption>{productDetails.Price_RRC.Name}</Caption>}
-                                                            after={<Caption>{productDetails.Price_RRC.Value}</Caption>}
-                                                        />
-                                                        <Cell
-                                                            before={<Caption>{'Упаковка'}</Caption>}
-                                                            after={
-                                                                <Caption
-                                                                    weight={'1'}>{productDetails.PackUnitMeasure}&nbsp;=&nbsp;{productDetails.PackUnitQuantity}&nbsp;{productDetails.UnitOfMeasure}</Caption>}
-                                                        />
-                                                    </>
-                                                )
-                                            case 1:
-                                                return (
-                                                    <>
-                                                        {element.properties.map(p => (
-                                                            <Cell
-                                                                key={p.id}
-                                                                before={<Caption>{p.name}</Caption>}
-                                                                after={<Caption weight='2'>{p.value}</Caption>}
-                                                            />
-                                                        ))}
-                                                    </>
-                                                )
-                                            case 2:
-                                                return (
-                                                    <Section header='Доступно для заказа'>
-                                                        {productDetails.Balance_Strings
-                                                            .filter(b => b.TradeArea_Name.toLowerCase() !== 'всего')
-                                                            .map(b => (
-                                                                (
-                                                                    <Cell
-                                                                        key={b.TradeArea_Name}
-                                                                        before={
-                                                                            <div className='itemDetails-tradeArea'>
-                                                                                <Radio
-                                                                                    checked={b.TradeArea_Id === balance?.TradeArea_Id}/>
-                                                                            </div>
-                                                                        }
-                                                                        onClick={() => setState({...state, balance: b})}
-                                                                    >
-                                                                        <Caption>{b.TradeArea_Name}</Caption>
-                                                                        <div className='itemDetails-tradeArea-packs'>
-                                                                            <Caption>{packsCount(b, productDetails)}&nbsp;упак</Caption>
-                                                                            <Caption>{b.Quantity} м<sup>2</sup></Caption>
-                                                                        </div>
-                                                                    </Cell>
-                                                                )
-                                                            ))}
-                                                    </Section>
-                                                )
-                                            case 3:
-                                                return (
-                                                    <Cell before={
-                                                        <Caption className={'link'}>
-                                                            {productDetails.LinkToSite}
-                                                        </Caption>
-                                                    }
-                                                    />
-                                                )
-                                        }
-                                    })()}
+                                    <TabContent tabId={selectedTab} details={productDetails} element={element} balance={balance} />
                                 </Section>
 
 
@@ -318,4 +250,100 @@ export function ElementPage() {
             <FooterMenu/>
         </div>
     );
+}
+
+
+type TabContentProps = {
+    tabId: TabItemType['id']
+    details: ProductDetails
+    element: CatalogItem
+    balance?: Balance
+}
+
+
+function TabContent({tabId, details, element, balance}: TabContentProps) {
+    switch (tabId) {
+        case 0:
+            return (
+                <>
+                    <Cell
+                        before={<Caption>{details.Price_MRC.Name}</Caption>}
+                        after={<Caption>{details.Price_MRC.Value}</Caption>}
+                    />
+                    <Cell
+                        before={<Caption>{details.Price_RRC.Name}</Caption>}
+                        after={<Caption>{details.Price_RRC.Value}</Caption>}
+                    />
+                    <Cell
+                        before={<Caption>{'Упаковка'}</Caption>}
+                        after={
+                            <Caption
+                                weight={'1'}>{details.PackUnitMeasure}&nbsp;=&nbsp;{details.PackUnitQuantity}&nbsp;{details.UnitOfMeasure}</Caption>}
+                    />
+                </>
+            )
+        case 1:
+            return (
+                <>
+                    {element.properties.map(p => (
+                        <Cell
+                            key={p.id}
+                            before={<Caption>{p.name}</Caption>}
+                            after={<Caption weight='2'>{p.value}</Caption>}
+                        />
+                    ))}
+                </>
+            )
+        case 2:
+            return (
+                <Section header='Доступно для заказа'>
+                    {details.Balance_Strings
+                        .filter(b => b.TradeArea_Name.toLowerCase() !== 'всего')
+                        .map(b => (
+                            (
+                                <div key={b.TradeArea_Id} className='itemDetails-tradearea tradearea'>
+                                    <Selectable className='tradearea-checkbox' defaultChecked={b.TradeArea_Id === balance?.TradeArea_Id} />
+                                    <div className='tradearea-content'>
+                                        <Caption>{b.TradeArea_Name}</Caption>
+                                        <div className='itemDetails-tradeArea-packs'>
+                                            <Caption>{packsCount(b, details)}&nbsp;упак</Caption>
+                                            <Caption>{b.Quantity} м<sup>2</sup></Caption>
+                                        </div>
+                                    </div>
+                                    <div className='tradearea-button'>
+                                        <Button>order</Button>
+                                    </div>
+                                </div>
+                                // <Cell
+                                //     key={b.TradeArea_Name}
+                                //     before={
+                                //         <div className='itemDetails-tradeArea'>
+                                //             <Radio
+                                //                 checked={b.TradeArea_Id === balance?.TradeArea_Id}/>
+                                //         </div>
+                                //     }
+                                //     // onClick={() => setState({...state, balance: b})}
+                                // >
+                                //     <Caption>{b.TradeArea_Name}</Caption>
+                                //     <div className='itemDetails-tradeArea-packs'>
+                                //         <Caption>{packsCount(b, details)}&nbsp;упак</Caption>
+                                //         <Caption>{b.Quantity} м<sup>2</sup></Caption>
+                                //     </div>
+                                // </Cell>
+                            )
+                        ))}
+                </Section>
+            )
+        // case 3:
+        //     return (
+        //         <Cell before={
+        //             <Caption className={'link'}>
+        //                 {details.LinkToSite}
+        //             </Caption>
+        //         }
+        //         />
+        //     )
+        default:
+            return <></>
+    }
 }

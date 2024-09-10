@@ -41,8 +41,10 @@
   }
 
 
-  &-tradeArea{
+  &-tradearea{
+    padding: 4px 22px;
     display: flex;
+    justify-content: stretch;
     align-items: center;
     gap: 0.5rem;
   }
@@ -152,4 +154,20 @@
       flex-wrap: wrap;
     }
   }
+}
+
+
+.tradearea{
+  &-checkbox{
+    flex: none;
+  }
+
+  &-content{
+    flex: 1 1;
+  }
+
+  &-button{
+    flex: none;
+  }
+
 }
