@@ -51,7 +51,7 @@ const storehouses: StoreHouseType[] = [
 
 
 export class StorehouseService {
-    static async getStoreHousesList(){
+    static getStoreHousesList(){
         return storehouses
     }
 }

@@ -1,8 +1,9 @@
 import {useNavigate} from "react-router";
 import React, {useEffect, useState} from 'react';
-import {Button, Section, Select} from "@telegram-apps/telegram-ui";
+import {Button, Section, Select, Caption} from "@telegram-apps/telegram-ui";
 
 import {StorehouseService, StoreHouseType} from "../../core/services/StorehouseService";
+import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {AppUser} from "../../core/classes/AppUser";
 
@@ -12,12 +13,14 @@ type ProfileEditePageState = {
     changed: boolean
     user: AppUser
     storehouses: StoreHouseType[]
+    message: string
 }
 
 const defaultState: ProfileEditePageState = {
     changed: false,
     user: new AppUser(),
-    storehouses: []
+    storehouses: [],
+    message: ''
 }
 
 export function ProfileEditePage() {
@@ -29,22 +32,30 @@ export function ProfileEditePage() {
     useEffect(() => {
         if (!user) return
         setState({...s, user: new AppUser(user)})
-        StorehouseService.getStoreHousesList()
-            .then(shl => setState({
-                changed: false,
-                user: new AppUser(user),
-                storehouses: shl
-            }))
+        const shl = StorehouseService.getStoreHousesList()
+        setState({
+            ...s,
+            changed: false,
+            user: new AppUser(user),
+            storehouses: shl
+        })
     }, []);
 
 
-    function handleStorehouseChange(sh: StoreHouseType){
-
+    function handleStorehouseChange(shId: StoreHouseType['id']) {
+        const newUser = new AppUser(s.user)
+        if (newUser.storehouseId !== shId) {
+            newUser.storehouseId = shId
+            setState({...s, changed: true, user: newUser})
+        }
     }
 
 
     function handleSave() {
-
+        if (!s.changed) return
+        UserService.updateAppUser(s.user)
+            .then(() => navigate(-1))
+            .catch(e => setState({...s, message: e.message}))
     }
 
 
@@ -56,15 +67,20 @@ export function ProfileEditePage() {
     return (
         <div className='wrapper profileEdite'>
             <div className='wrapper-content'>
+                {s.message && (
+                    <Section className='sectionBlock'>
+                        <Caption>{s.message}</Caption>
+                    </Section>
+                )}
                 <Section className='sectionBlock'>
                     <div className='profileEdite-field'>
-                        <Select header='Склад'>
+                        <Select header='Склад' onChange={e => handleStorehouseChange(e.target.value)}>
                             {
                                 s.storehouses.map(sh => (
                                     <option
                                         key={sh.id}
                                         selected={user?.storehouseId === sh.id}
-                                        onClick={() => handleStorehouseChange(sh)}
+                                        value={sh.id}
                                     >{sh.storehouse}</option>
                                 ))
                             }
@@ -79,6 +95,7 @@ export function ProfileEditePage() {
                         className='profileEdite-footerBtn profileEdite-footerBtn-save'
                         size='l'
                         onClick={handleSave}
+                        disabled={!s.changed}
                     >
                         Сохранить
                     </Button>

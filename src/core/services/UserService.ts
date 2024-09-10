@@ -34,6 +34,11 @@ export class UserService {
 
     static async updateAppUser(user: AppUser){
         const res = await sendUpdateUser(user)
+        if(res.ok){
+            store.dispatch(setAppUser(new AppUser(res.data)))
+        }else{
+            return Promise.reject(new Error(res.message))
+        }
     }
 
 

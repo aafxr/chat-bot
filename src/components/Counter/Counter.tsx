@@ -64,11 +64,6 @@ export function Counter({className, initValue, min, max, onChange, suffix = ''}:
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let text = e.target.value
-        // let v = parseFloat(text)
-        // if (!v) v = 0
-        // text = v.toString()
-        // if(suffix) text += ' ' + suffix
-
         setText(text)
         if (ref.current.timer) clearTimeout(ref.current.timer as number);
         ref.current.timer = setTimeout(() => handleChangedText(text), 300)
@@ -83,7 +78,7 @@ export function Counter({className, initValue, min, max, onChange, suffix = ''}:
                 disabled={(min && v <= min) || v <= 0}
             >-
             </button>
-            <div className='counter-input' data-after={suffix || ''}>
+            <div className={clsx('counter-input', suffix && 'counter-input-suffix')} data-after={suffix || ''}>
                 <input
                     type="text"
                     inputMode={'numeric'}

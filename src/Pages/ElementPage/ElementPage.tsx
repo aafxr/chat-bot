@@ -1,6 +1,6 @@
 import {Carousel} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
 import {Button, Caption, Cell, Radio, Section, Selectable, TabsList} from "@telegram-apps/telegram-ui";
@@ -16,6 +16,14 @@ import {Balance} from "../../core/classes/Balance";
 
 import './ElementPage.scss'
 import {Counter} from "../../components/Counter";
+import {AppUser} from "../../core/classes/AppUser";
+import {useAppUser} from "../../redux/hooks/useAppUser";
+import {Basket} from "../../core/classes/Basket";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
+import {StorehouseService} from "../../core/services/StorehouseService";
+import {useAppDispatch} from "../../redux/hooks";
+import {removeBasketProduct, setBasket} from "../../redux/slices/user-slice";
+import debounce from "debounce";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -55,7 +63,7 @@ const tabs: TabItemType[] = [
     },
     {
         id: 1,
-        title: 'Характеристики',
+        title: 'Свойства',
     },
     {
         id: 2,
@@ -79,6 +87,17 @@ export function ElementPage() {
     const element = useCatalogElement(detailId)
     const [state, setState] = useState({...defaultState})
     const [selectedTab, setSelectedTab] = useState(0)
+    const user = useAppUser()
+    const basket = useUserBasket()
+
+    const {productDetails, balance} = state
+
+    const storageIdx = useMemo(() => {
+        if (!user || !productDetails) return -1
+        return productDetails.Balance_Strings.findIndex(bs => bs.TradeArea_Id === user.storehouseId)
+    }, [user, productDetails])
+
+    const isProductAtStorage = ~storageIdx
 
 
     useEffect(() => {
@@ -103,9 +122,6 @@ export function ElementPage() {
                 productDetailsRequested: true
             })))
     }, [element, state]);
-
-    // @ts-ignore
-    window.balances = state.productDetails?.Balance_Strings
 
 
     useEffect(() => {
@@ -143,26 +159,17 @@ export function ElementPage() {
     }
 
 
-
     if (!element) {
         navigate('/')
         return <></>
     }
-
-    const {productDetails, balance} = state
-    const total = productDetails?.Balance_Strings
-        .filter(b => b.TradeArea_Name.toLowerCase().startsWith('всего'))[0]
 
 
     return (
         <div className='itemDetails wrapper'>
             <div className='wrapper-content hideScroll '>
                 <div className="itemDetails-container">
-                    <Section
-                        // className='sectionBlock'
-                        // header={element.title}
-                        // header={<Headline weight='1' >{element.title}</Headline>}
-                    >
+                    <Section>
                         <div className='itemDetails-slider'>
                             {element.photo.length
                                 ? (
@@ -197,28 +204,34 @@ export function ElementPage() {
                     <div className='itemDetails-inner'>
                         {productDetails && (
                             <>
-                                {total && productDetails &&
-                                    <section className='sectionBlock itemDetails-buttons'>
-                                        <div className='row mt-2'>
-                                            <div className='col-4'>
-                                                <Button
-                                                    className='app-btn w-100'
-                                                    onClick={toggleRelatedShow}
-                                                    disabled={!state.relatedItems.length}
-                                                >
-                                                    еще
-                                                </Button>
-                                            </div>
-                                            <div className='col-8'>
-                                                <AddOrder
-                                                    product={element}
-                                                    details={productDetails}
-                                                    max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}
-                                                />
-                                            </div>
-                                        </div>
-                                    </section>
-                                }
+                                {!isProductAtStorage && (
+                                    <Section className='sectionBlock'>
+                                        <Caption className='errorText p-2' size={1}>На выбранном Вами складе нет данного
+                                            товара</Caption>
+                                    </Section>
+                                )}
+                                {/*{total && productDetails &&*/}
+                                {/*    <section className='sectionBlock itemDetails-buttons'>*/}
+                                {/*        <div className='row mt-2'>*/}
+                                {/*            <div className='col-4'>*/}
+                                {/*                <Button*/}
+                                {/*                    className='app-btn w-100'*/}
+                                {/*                    onClick={toggleRelatedShow}*/}
+                                {/*                    disabled={!state.relatedItems.length}*/}
+                                {/*                >*/}
+                                {/*                    еще*/}
+                                {/*                </Button>*/}
+                                {/*            </div>*/}
+                                {/*            <div className='col-8'>*/}
+                                {/*                <AddOrder*/}
+                                {/*                    product={element}*/}
+                                {/*                    details={productDetails}*/}
+                                {/*                    max={Math.floor(Number(total.Quantity) / Number(productDetails.PackUnitQuantity))}*/}
+                                {/*                />*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
+                                {/*    </section>*/}
+                                {/*}*/}
                                 <Section
                                     className='sectionBlock'
                                     header={element.title}
@@ -236,7 +249,15 @@ export function ElementPage() {
 
                                         ))}
                                     </TabsList>
-                                    <TabContent tabId={selectedTab} details={productDetails} element={element} balance={balance} />
+                                    <TabContent
+                                        tabId={selectedTab}
+                                        details={productDetails}
+                                        element={element}
+                                        balance={balance}
+                                        user={user}
+                                        basket={basket}
+                                        storageIdx={storageIdx}
+                                    />
                                 </Section>
 
 
@@ -258,14 +279,31 @@ export function ElementPage() {
 
 
 type TabContentProps = {
+    user?: AppUser
     tabId: TabItemType['id']
     details: ProductDetails
     element: CatalogItem
     balance?: Balance
+    basket: Basket
+    storageIdx: number
 }
 
 
-function TabContent({tabId, details, element, balance}: TabContentProps) {
+function TabContent({tabId, details, element, balance, user, basket, storageIdx}: TabContentProps) {
+    const dispatch = useAppDispatch()
+
+    function handleAddProductToBasket(count: number) {
+        if (count <= 0) {
+            dispatch(removeBasketProduct(element))
+            return
+        }
+        basket.setProduct(element, details, count)
+        dispatch(setBasket(new Basket(basket)))
+    }
+
+    const debouncedHandleQuantityChange = debounce(handleAddProductToBasket, 300)
+
+
     switch (tabId) {
         case 0:
             return (
@@ -301,12 +339,32 @@ function TabContent({tabId, details, element, balance}: TabContentProps) {
         case 2:
             return (
                 <Section header='Доступно для заказа'>
+                    {!!~storageIdx && (
+                        <div className='itemDetails-tradearea tradearea'>
+                            <Selectable className='tradearea-checkbox' defaultChecked/>
+                            <div className='tradearea-content'>
+                                <Caption weight={"1"}>{details.Balance_Strings[storageIdx].TradeArea_Name}</Caption>
+                                <div className='itemDetails-tradeArea-packs'>
+                                    <Caption weight={"1"}>{packsCount(details.Balance_Strings[storageIdx], details)}&nbsp;упак</Caption>
+                                    <Caption weight={"1"}>{details.Balance_Strings[storageIdx].Quantity} м<sup>2</sup></Caption>
+                                </div>
+                            </div>
+                            <div className='tradearea-button'>
+                                {basket.hasProduct(element.id)
+                                    ? <Counter initValue={basket.getDetails(element)?.packCount}
+                                               onChange={debouncedHandleQuantityChange} suffix={'упак'}/>
+                                    : <Button onClick={() => handleAddProductToBasket(1)}>Добавить</Button>
+                                }
+                            </div>
+                        </div>
+                    )
+
+                    }
                     {details.Balance_Strings
-                        .filter(b => b.TradeArea_Name.toLowerCase() !== 'всего')
-                        .map(b => (
-                            (
+                        .filter((b, i) => b.TradeArea_Name.toLowerCase() !== 'всего' && i !== storageIdx)
+                        .map((b) => (
                                 <div key={b.TradeArea_Id} className='itemDetails-tradearea tradearea'>
-                                    <Selectable className='tradearea-checkbox' defaultChecked={b.TradeArea_Id === balance?.TradeArea_Id} />
+                                    <Selectable className='tradearea-checkbox'/>
                                     <div className='tradearea-content'>
                                         <Caption>{b.TradeArea_Name}</Caption>
                                         <div className='itemDetails-tradeArea-packs'>
@@ -314,24 +372,11 @@ function TabContent({tabId, details, element, balance}: TabContentProps) {
                                             <Caption>{b.Quantity} м<sup>2</sup></Caption>
                                         </div>
                                     </div>
-                                    <div className='tradearea-button'>
-                                        {/*<Button>order</Button>*/}
-                                        <Counter  suffix={'м2'}/>
-                                    </div>
                                 </div>
                             )
-                        ))}
+                        )}
                 </Section>
             )
-        // case 3:
-        //     return (
-        //         <Cell before={
-        //             <Caption className={'link'}>
-        //                 {details.LinkToSite}
-        //             </Caption>
-        //         }
-        //         />
-        //     )
         default:
             return <></>
     }

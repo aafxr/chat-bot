@@ -23,15 +23,20 @@
       z-index: 2;
     }
     input{
-      min-width: 56px;
-      padding: 0 24px 0 0;
+      padding: 0 0 0 0;
       text-align: center;
       color: var(--tg-theme-text-color);
       font-weight: 700;
       background-color: var(--tg-theme-bg-color);
       border: none;
     }
+    &-suffix{
+      padding: 0 24px 0 0;
+      width: 56px;
+    }
   }
+
+
 
   &-button{
     padding: 0;

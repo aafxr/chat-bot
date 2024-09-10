@@ -25,6 +25,7 @@ export class AppUser {
     country: string
     tgUser: TgUser | null
     storehouseId: string | null
+    storehouseCity: string | null
 
     canEdite: boolean
 
@@ -52,6 +53,7 @@ export class AppUser {
         this.country = u.country !== undefined ? u.country : ''
         this.tgUser = u.tgUser !== undefined ? u.tgUser : null
         this.storehouseId = u.storehouseId !== undefined ? u.storehouseId : null
+        this.storehouseCity = u.storehouseCity !== undefined ? u.storehouseCity : null
 
         this.canEdite = false
     }

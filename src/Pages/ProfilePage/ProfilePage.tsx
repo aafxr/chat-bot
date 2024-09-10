@@ -14,6 +14,7 @@ import {AppUser} from "../../core/classes/AppUser";
 import {TgUser} from "../../core/classes/TgUser";
 
 import './ProfilePage.scss'
+import {StorehouseService} from "../../core/services/StorehouseService";
 
 
 
@@ -68,11 +69,11 @@ const appUserFields: Array<Field<keyof AppUser>> = [
         key:'org',
         value: 'Организация'
     },
-    {
-        id: 5,
-        key:'storehouse',
-        value: 'Склад'
-    }
+    // {
+    //     id: 5,
+    //     key:'storehouseId',
+    //     value: 'Склад'
+    // }
 ]
 
 
@@ -106,10 +107,6 @@ export function ProfilePage() {
         },
     ];
 
-
-    function handleUserFieldClick(f: Field<keyof AppUser>) {
-
-    }
 
     function handleEditeButtonClick() {
         navigate('/profile/edite')
@@ -164,14 +161,22 @@ export function ProfilePage() {
                             />
                         )
                     )}
-                    {!!user && appUserFields.map(k => (
+                    {!!user && (
+                        <>
+                            {appUserFields.map(k => (
+                                <Cell
+                                    key={k.id}
+                                    before={<Caption weight={"2"}>{k.value}</Caption>}
+                                    after={<Caption weight={"2"}>{user[k.key]}</Caption>}
+                                />
+                            ))
+                            }
                             <Cell
-                                key={k.id}
-                                before={<Caption weight={"2"}>{k.value}</Caption>}
-                                after={<Caption weight={"2"}>{user[k.key]}</Caption>}
-                                onClick={() => handleUserFieldClick(k)}
+                                before={<Caption weight={"2"}>Склад</Caption>}
+                                after={<Caption weight={"2"}>{StorehouseService.getStoreHousesList().find(sh => sh.id === user.storehouseId)?.storehouse}</Caption>}
                             />
-                        )
+                        </>
+
                     )}
                 </Section>
                 <Section

@@ -10,6 +10,8 @@ import {useAppDispatch} from "../../redux/hooks";
 import {Counter} from "../Counter";
 
 import './BasketDetailsComponent.scss'
+import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 
 type BasketDetailsComponentProps = {
@@ -19,6 +21,7 @@ type BasketDetailsComponentProps = {
 
 
 export function BasketDetailsComponent({bd, className}: BasketDetailsComponentProps) {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const catalog = useCatalog()
     const product = catalog?.getElementByID(bd.id)
@@ -35,31 +38,49 @@ export function BasketDetailsComponent({bd, className}: BasketDetailsComponentPr
     }
 
     function handleRemoveBasketProduct() {
+        if (!product) return
         try {
-            Telegram.WebApp.showConfirm(`Удалить товар: ${bd.title}?`, (confirm) => {
-                if (product && confirm) {
-                    dispatch(removeBasketProduct(product))
-                }
-            })
+            if (Telegram.WebApp.showConfirm) {
+                Telegram.WebApp.showConfirm(`Удалить товар: ${bd.title}?`, (confirm) => {
+                    if (confirm) dispatch(removeBasketProduct(product))
+                })
+                return
+            }
+            dispatch(removeBasketProduct(product))
         } catch (e) {
             console.error(e)
         }
     }
 
 
+    function handleNavigate() {
+        if (!product) return
+        navigate(`/${product.id}`)
+    }
+
+
     return (
         <div className={clsx('basketItem basketItem-container', className)}>
             <div className='basketItem-image'>
-                <LazyLoadImage className='img-abs' src={product?.preview} alt={bd.title}/>
+                <LazyLoadImage
+                    className='img-abs'
+                    src={product?.preview}
+                    alt={bd.title}
+                    onClick={handleNavigate}
+                />
             </div>
             <div className='basketItem-inner'>
-                <Caption weight={'2'}>{bd.title}</Caption>
+                <Caption
+                    weight={'2'}
+                    onClick={handleNavigate}
+                >{bd.title}</Caption>
                 <div className='basketItem-units'>
                     <Caption>{bd.count}&nbsp;{bd.measure}</Caption>
                     <Caption>{bd.packCount}&nbsp;{bd.packMeasure}</Caption>
                 </div>
                 <div className='basketItem-footer'>
-                    <Counter className='basketItem-counter' onChange={handleChangeQuantity} initValue={bd.packCount}/>
+                    <Counter className='basketItem-counter' onChange={handleChangeQuantity}
+                             initValue={bd.packCount}/>
                     <Button
                         className='basketItem-removeBtn'
                         mode='plain'
@@ -69,7 +90,6 @@ export function BasketDetailsComponent({bd, className}: BasketDetailsComponentPr
                     </Button>
                 </div>
             </div>
-
         </div>
     );
 }

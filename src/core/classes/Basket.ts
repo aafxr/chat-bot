@@ -119,9 +119,19 @@ export class BasketDetail {
     title: CatalogItem['title']
     count: number
     price: CatalogItem['price']
+
     measure: ProductDetails['PackUnitMeasure']
+    /**
+     * число упаковок
+     */
     packCount: number
+    /**
+     * количество м2 в упаковке
+     */
     packUnitQuantity: number
+    /**
+     * единица измереия упаковки
+     */
     packMeasure: ProductDetails['PackUnitMeasure']
 
     constructor(bd: Partial<BasketDetail> = {}) {

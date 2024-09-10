@@ -171,3 +171,7 @@ a {
 .inputBase{
   border-radius: var(--br-main)!important;
 }
+
+.errorText{
+  color: var(--tgui--destructive_text_color);
+}
