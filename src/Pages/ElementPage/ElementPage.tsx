@@ -15,6 +15,7 @@ import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
 
 import './ElementPage.scss'
+import {Counter} from "../../components/Counter";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -311,25 +312,10 @@ function TabContent({tabId, details, element, balance}: TabContentProps) {
                                         </div>
                                     </div>
                                     <div className='tradearea-button'>
-                                        <Button>order</Button>
+                                        {/*<Button>order</Button>*/}
+                                        <Counter  suffix={'м2'}/>
                                     </div>
                                 </div>
-                                // <Cell
-                                //     key={b.TradeArea_Name}
-                                //     before={
-                                //         <div className='itemDetails-tradeArea'>
-                                //             <Radio
-                                //                 checked={b.TradeArea_Id === balance?.TradeArea_Id}/>
-                                //         </div>
-                                //     }
-                                //     // onClick={() => setState({...state, balance: b})}
-                                // >
-                                //     <Caption>{b.TradeArea_Name}</Caption>
-                                //     <div className='itemDetails-tradeArea-packs'>
-                                //         <Caption>{packsCount(b, details)}&nbsp;упак</Caption>
-                                //         <Caption>{b.Quantity} м<sup>2</sup></Caption>
-                                //     </div>
-                                // </Cell>
                             )
                         ))}
                 </Section>

@@ -10,6 +10,7 @@ export type CounterProps = {
     min?: number
     max?: number
     onChange?: (v: number) => unknown
+    suffix?: string
 }
 
 
@@ -18,15 +19,15 @@ type CounterTempState = {
 }
 
 
-export function Counter({className, initValue, min, max, onChange}: CounterProps) {
+export function Counter({className, initValue, min, max, onChange, suffix = ''}: CounterProps) {
     const [v, setV] = useState(0)
     const [text, setText] = useState('')
     const ref = useRef<CounterTempState>({})
 
 
     const updateState = (n: number) => {
-        if(min) n = Math.max(min, n)
-        if(max) n = Math.min(max, n)
+        if (min) n = Math.max(min, n)
+        if (max) n = Math.min(max, n)
         setV(n)
         setText('' + n)
         onChange?.(n)
@@ -43,10 +44,10 @@ export function Counter({className, initValue, min, max, onChange}: CounterProps
 
 
     const handleChangedText = (t: string) => {
-        if(ref.current.timer) clearTimeout(ref.current.timer as number);
+        if (ref.current.timer) clearTimeout(ref.current.timer as number);
         delete ref.current.timer
         const n = parseInt(t)
-        if(!Number.isNaN(n))updateState(n)
+        if (!Number.isNaN(n)) updateState(n)
     }
 
 
@@ -61,11 +62,16 @@ export function Counter({className, initValue, min, max, onChange}: CounterProps
     }
 
 
-    const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
-        const text = e.target.value
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let text = e.target.value
+        // let v = parseFloat(text)
+        // if (!v) v = 0
+        // text = v.toString()
+        // if(suffix) text += ' ' + suffix
+
         setText(text)
-        if(ref.current.timer) clearTimeout(ref.current.timer as number);
-        ref.current.timer = setTimeout(() => handleChangedText(text), 500)
+        if (ref.current.timer) clearTimeout(ref.current.timer as number);
+        ref.current.timer = setTimeout(() => handleChangedText(text), 300)
     }
 
 
@@ -77,14 +83,15 @@ export function Counter({className, initValue, min, max, onChange}: CounterProps
                 disabled={(min && v <= min) || v <= 0}
             >-
             </button>
-            <input
-                className='counter-input'
-                type="text"
-                inputMode={'numeric'}
-                value={text}
-                onChange={handleInputChange}
-                size={1}
-            />
+            <div className='counter-input' data-after={suffix || ''}>
+                <input
+                    type="text"
+                    inputMode={'numeric'}
+                    value={text}
+                    onChange={handleInputChange}
+                    size={1}
+                />
+            </div>
             <button
                 className='counter-button'
                 onClick={handleIncrease}
