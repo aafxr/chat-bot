@@ -24,7 +24,7 @@ export class AppUser {
     phone: number
     country: string
     tgUser: TgUser | null
-    storehouse: string | null
+    storehouseId: string | null
 
     canEdite: boolean
 
@@ -51,7 +51,7 @@ export class AppUser {
         this.phone = u.phone !== undefined ? u.phone : -1
         this.country = u.country !== undefined ? u.country : ''
         this.tgUser = u.tgUser !== undefined ? u.tgUser : null
-        this.storehouse = u.storehouse !== undefined ? u.storehouse : null
+        this.storehouseId = u.storehouseId !== undefined ? u.storehouseId : null
 
         this.canEdite = false
     }

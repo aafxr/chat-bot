@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {Icon16Chevron} from "@telegram-apps/telegram-ui/dist/icons/16/chevron";
 import {Avatar, Button, Caption, Cell, Headline, Section} from "@telegram-apps/telegram-ui";
 
@@ -13,7 +14,6 @@ import {AppUser} from "../../core/classes/AppUser";
 import {TgUser} from "../../core/classes/TgUser";
 
 import './ProfilePage.scss'
-import {useNavigate} from "react-router";
 
 
 

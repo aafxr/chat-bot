@@ -1,4 +1,9 @@
-const storehouses = [
+export type StoreHouseType = {
+    id: string
+    storehouse: string
+}
+
+const storehouses: StoreHouseType[] = [
     {
         id: "65bb02e7-e5a3-11e9-a1cf-902b3434e458",
         storehouse: "Иркутск"
