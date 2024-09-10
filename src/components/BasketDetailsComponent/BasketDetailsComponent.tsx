@@ -7,11 +7,10 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {BasketDetail} from "../../core/classes/Basket";
 import {useAppDispatch} from "../../redux/hooks";
+import {useNavigate} from "react-router";
 import {Counter} from "../Counter";
 
 import './BasketDetailsComponent.scss'
-import {Link} from "react-router-dom";
-import {useNavigate} from "react-router";
 
 
 type BasketDetailsComponentProps = {
