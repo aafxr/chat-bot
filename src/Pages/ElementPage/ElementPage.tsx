@@ -1,4 +1,5 @@
 import debounce from "debounce";
+import {Link} from "react-router-dom";
 import {Carousel} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useMemo, useState} from 'react';
@@ -6,6 +7,7 @@ import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/Ta
 
 import {Button, Caption, Cell, Section, Selectable, TabsList} from "@telegram-apps/telegram-ui";
 import {removeBasketProduct, setBasket} from "../../redux/slices/user-slice";
+import {StorehouseService} from "../../core/services/StorehouseService";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
@@ -22,9 +24,6 @@ import {Counter} from "../../components/Counter";
 import {Block} from "../../components/Block";
 
 import './ElementPage.scss'
-import {StorehouseService} from "../../core/services/StorehouseService";
-import {store} from "../../redux/store";
-import {Link} from "react-router-dom";
 
 type ElementPageState = {
     productDetails?: ProductDetails

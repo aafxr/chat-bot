@@ -11,6 +11,8 @@ import {fetchElementDetail} from "../../api/fetchElementDetail";
 import {fetchRelatedProducts} from "../../api/fetchRelatedProducts";
 import {FavoriteType} from "../../types/FavoriteType";
 import {TgService} from "./TgService";
+import {AppUser} from "../classes/AppUser";
+import {Basket} from "../classes/Basket";
 
 
 const ARTICLES_KEY = 'articles'
@@ -143,6 +145,15 @@ export class CatalogService {
 
         f = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
         return f
+    }
+
+
+    static async checkBasketProductsAtStoreHouse(u: AppUser, b: Basket){
+        const bdl = b.items
+        for (const bd of bdl){
+            let prod = await DB.getOne(StoreName.ITEMS, bd.id)
+
+        }
     }
 
 

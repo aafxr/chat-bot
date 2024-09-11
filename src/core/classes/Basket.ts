@@ -4,13 +4,22 @@ import {Catalog} from "./Catalog";
 import {Company} from "./Company";
 import {AppUser} from "./AppUser";
 
+/**
+ * сущность представляет корзину пользователя
+ */
 export class Basket {
+    /** карта с основными храктеристиками продуктов в корзине */
     _items: Map<BasketDetail['id'], BasketDetail>
 
+    /** комментарий к заказу */
     comment: string
+    /** ид заказчика */
     userId: AppUser['id']
+    /** номер телефрна заказчика */
     userPhone: AppUser['phone']
+    /** ид компании */
     companyID: Company['id']
+    /** прикрепленная компания*/
     company: Company | null
 
     constructor(b: Partial<Basket> = {}) {
@@ -29,13 +38,12 @@ export class Basket {
         }
     }
 
+    /** массив продуктов в корзине */
     get items() {
         return Array.from(this._items.values())
     }
 
-    /**
-     * сумма заказа
-     */
+    /** полная сумма заказа */
     sum(c: Catalog) {
         let s = 0
         for (const item of Array.from(this._items.values())) {
@@ -45,13 +53,14 @@ export class Basket {
         return s
     }
 
+    /** количество позиций в заказе */
     get length() {
         return this._items.size
     }
 
 
     /**
-     * добавляет товар если его нет, или обновляет количество товара в корзине
+     * добавляет продукт если его нет, или обновляет количество продукта в корзине
      * @param p
      * @param pd
      * @param quantity
@@ -82,6 +91,7 @@ export class Basket {
         return true
     }
 
+    /** */
     setBasketDetail(bd: BasketDetail) {
         this._items.set(bd.id, bd)
     }
@@ -95,6 +105,7 @@ export class Basket {
     }
 
 
+    /** полная стоимость всех позиций в корзине */
     get totalPrice() {
         let sum = 0
         for (const item of this.items) {
@@ -104,35 +115,46 @@ export class Basket {
     }
 
 
+    /**
+     * позволяет получить описание позиции корзины
+     * @param p продукт каталога
+     */
     getDetails(p: CatalogItem) {
         return this._items.get(p.id)
     }
 
+    /**
+     *  позволяет проверить наличие позиции в корзине
+     * @param id ид продукта
+     */
     hasProduct(id: CatalogItem['id']){
         return this._items.has(id)
     }
 }
 
 
+/**
+ * структура описывает продукт в корзине
+ */
 export class BasketDetail {
+    /** ид продукта */
     id: CatalogItem['id']
+    /** название продукта */
     title: CatalogItem['title']
+    /** количество продукта в м2 */
     count: number
+    /** цена продукта */
     price: CatalogItem['price']
-
+    /** единица измерения продукта */
     measure: ProductDetails['PackUnitMeasure']
-    /**
-     * число упаковок
-     */
+    /** число упаковок */
     packCount: number
-    /**
-     * количество м2 в упаковке
-     */
+    /** количество м2 в упаковке */
     packUnitQuantity: number
-    /**
-     * единица измереия упаковки
-     */
+    /** единица измереия упаковки */
     packMeasure: ProductDetails['PackUnitMeasure']
+    /** флаг указывает на то, что продукт отсутствует на складе */
+    isMissing: boolean
 
     constructor(bd: Partial<BasketDetail> = {}) {
         this.id = bd.id !== undefined ? bd.id : ''
@@ -143,13 +165,21 @@ export class BasketDetail {
         this.packCount = bd.packCount !== undefined ? bd.packCount : 0
         this.packUnitQuantity = bd.packUnitQuantity !== undefined ? bd.packUnitQuantity : 0
         this.packMeasure = bd.packMeasure !== undefined ? bd.packMeasure : ''
+        this.isMissing = bd.isMissing !== undefined ? bd.isMissing : false
     }
 
+    /**
+     * устанавливает число упаковок и пересчитыпает количество продукта пуием умножения с * packUnitQuantity
+     * @param c число упаковок
+     */
     setCount(c: number) {
         this.count = +(c * this.packUnitQuantity).toFixed(3)
         this.packCount = c
     }
 
+    /**
+     * расчет стоимости позиции путем умножения count * price
+     */
     get positionPrice() {
         return this.count * (+this.price) || 0
     }

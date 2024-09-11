@@ -29,6 +29,7 @@ export function BasketPage() {
         navigate('/confirmOrder')
     }
 
+    console.log(basket)
     return (
         <div className='wrapper basketPage'>
             <div className='wrapper-content'>
