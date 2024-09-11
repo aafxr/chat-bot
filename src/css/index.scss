@@ -175,3 +175,7 @@ a {
 .errorText{
   color: var(--tgui--destructive_text_color);
 }
+
+.modal{
+  z-index: var(--z-modal);
+}

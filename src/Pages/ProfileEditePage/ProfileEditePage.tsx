@@ -8,6 +8,7 @@ import {useAppUser} from "../../redux/hooks/useAppUser";
 import {AppUser} from "../../core/classes/AppUser";
 
 import './ProfileEditePage.scss'
+import {SelectStorehouse} from "../../components/SelectStorehouse";
 
 type ProfileEditePageState = {
     changed: boolean
@@ -42,10 +43,10 @@ export function ProfileEditePage() {
     }, []);
 
 
-    function handleStorehouseChange(shId: StoreHouseType['id']) {
+    function handleStorehouseChange(sh: StoreHouseType) {
         const newUser = new AppUser(s.user)
-        if (newUser.storehouseId !== shId) {
-            newUser.storehouseId = shId
+        if (newUser.storehouseId !== sh.id) {
+            newUser.storehouseId = sh.id
             setState({...s, changed: true, user: newUser})
         }
     }
@@ -74,18 +75,7 @@ export function ProfileEditePage() {
                 )}
                 <Section className='sectionBlock'>
                     <div className='profileEdite-field'>
-                        <Select header='Склад' onChange={e => handleStorehouseChange(e.target.value)}>
-                            {
-                                s.storehouses.map(sh => (
-                                    <option
-                                        key={sh.id}
-                                        selected={user?.storehouseId === sh.id}
-                                        value={sh.id}
-                                    >{sh.storehouse}</option>
-                                ))
-                            }
-                        </Select>
-
+                        <SelectStorehouse onChange={handleStorehouseChange}/>
                     </div>
                 </Section>
             </div>

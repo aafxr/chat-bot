@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 
+import {SelectStoreHouseModal} from "./components/modals/SelectStoreHouseModal";
 import {setCatalog, setFavorite} from './redux/slices/catalog-slice'
 import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
 import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
+import {ProfileEditePage} from "./Pages/ProfileEditePage";
 import {CompaniesPage} from "./Pages/CompaniesPage";
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {setBasket} from "./redux/slices/user-slice";
@@ -20,18 +22,29 @@ import {BasketPage} from "./Pages/BasketPage";
 import {useAppDispatch} from "./redux/hooks";
 import {OrderPage} from "./Pages/OrderPage";
 import {Noop} from "./Pages/Noop/Noop";
+import {store} from "./redux/store";
 
 
 import './css/App.css';
-import {ProfileEditePage} from "./Pages/ProfileEditePage";
 
 
 function App() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const catalog = useCatalog()
+    /** storehouse select modal open */
+    const [shsOpen, setSHSOpen] = useState(false)
 
     useInitUser()
+
+
+    // отобраажение модального окна с выбором склада
+    useEffect(() => {
+        setTimeout(() => {
+            setSHSOpen(!store.getState().user.app_user?.storehouseId)
+        }, 4000)
+    }, []);
+
 
 
     useEffect(() => {
@@ -95,6 +108,7 @@ function App() {
                 <Route path={'/confirmOrder'} element={<ConfirmOrderPage/>}/>
                 <Route path={'*'} element={<Navigate to={'/'}/>}/>
             </Routes>
+            <SelectStoreHouseModal open={shsOpen} onOpenChange={setSHSOpen}/>
         </>
     );
 }

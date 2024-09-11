@@ -1,29 +1,30 @@
+import debounce from "debounce";
 import {Carousel} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useMemo, useState} from 'react';
 import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
-import {Button, Caption, Cell, Radio, Section, Selectable, TabsList} from "@telegram-apps/telegram-ui";
+import {Button, Caption, Cell, Section, Selectable, TabsList} from "@telegram-apps/telegram-ui";
+import {removeBasketProduct, setBasket} from "../../redux/slices/user-slice";
 import {useCatalogElement} from "../../redux/hooks/useCatalogElement";
 import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
+import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {RelatedItems} from "../../components/RelatedItems";
 import {CatalogItem} from "../../core/classes/CatalogItem";
+import {useAppUser} from "../../redux/hooks/useAppUser";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {FooterMenu} from "../../components/FooterMenu";
-import {AddOrder} from "../../components/AddOrder";
 import {Balance} from "../../core/classes/Balance";
+import {Basket} from "../../core/classes/Basket";
+import {useAppDispatch} from "../../redux/hooks";
+import {Counter} from "../../components/Counter";
+import {Block} from "../../components/Block";
 
 import './ElementPage.scss'
-import {Counter} from "../../components/Counter";
-import {AppUser} from "../../core/classes/AppUser";
-import {useAppUser} from "../../redux/hooks/useAppUser";
-import {Basket} from "../../core/classes/Basket";
-import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {StorehouseService} from "../../core/services/StorehouseService";
-import {useAppDispatch} from "../../redux/hooks";
-import {removeBasketProduct, setBasket} from "../../redux/slices/user-slice";
-import debounce from "debounce";
+import {store} from "../../redux/store";
+import {Link} from "react-router-dom";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -90,7 +91,7 @@ export function ElementPage() {
     const user = useAppUser()
     const basket = useUserBasket()
 
-    const {productDetails, balance} = state
+    const {productDetails} = state
 
     const storageIdx = useMemo(() => {
         if (!user || !productDetails) return -1
@@ -98,6 +99,12 @@ export function ElementPage() {
     }, [user, productDetails])
 
     const isProductAtStorage = ~storageIdx
+
+
+    const storehouseName = useMemo(() => {
+        if (!user) return ''
+        return StorehouseService.getStoreHousesList().find(sh => sh.id === user.storehouseId)?.storehouse || ''
+    }, [user])
 
 
     useEffect(() => {
@@ -110,7 +117,7 @@ export function ElementPage() {
 
         setState({...state, productDetailsLoading: true})
         CatalogService.getProductDetails(element,
-            (e, pd) => {
+            (_, pd) => {
                 if (pd) {
                     setState(p => ({...p, productDetails: pd}))
                 }
@@ -205,11 +212,16 @@ export function ElementPage() {
                         {productDetails && (
                             <>
                                 {!isProductAtStorage && (
-                                    <Section className='sectionBlock'>
+                                    <Block>
                                         <Caption className='errorText p-2' size={1}>На выбранном Вами складе нет данного
                                             товара</Caption>
-                                    </Section>
+                                    </Block>
                                 )}
+                                <Block className={'mt-2'}>
+                                    <Caption>Оформление заказа со склада: <b>{storehouseName}</b></Caption><br/>
+                                    <Caption>Выбрать другой склад можно в&nbsp;
+                                        <Link to={'/profile'} className='link'>профиле</Link></Caption>
+                                </Block>
                                 {/*{total && productDetails &&*/}
                                 {/*    <section className='sectionBlock itemDetails-buttons'>*/}
                                 {/*        <div className='row mt-2'>*/}
@@ -253,8 +265,6 @@ export function ElementPage() {
                                         tabId={selectedTab}
                                         details={productDetails}
                                         element={element}
-                                        balance={balance}
-                                        user={user}
                                         basket={basket}
                                         storageIdx={storageIdx}
                                     />
@@ -279,17 +289,15 @@ export function ElementPage() {
 
 
 type TabContentProps = {
-    user?: AppUser
     tabId: TabItemType['id']
     details: ProductDetails
     element: CatalogItem
-    balance?: Balance
     basket: Basket
     storageIdx: number
 }
 
 
-function TabContent({tabId, details, element, balance, user, basket, storageIdx}: TabContentProps) {
+function TabContent({tabId, details, element, basket, storageIdx}: TabContentProps) {
     const dispatch = useAppDispatch()
 
     function handleAddProductToBasket(count: number) {
@@ -345,14 +353,19 @@ function TabContent({tabId, details, element, balance, user, basket, storageIdx}
                             <div className='tradearea-content'>
                                 <Caption weight={"1"}>{details.Balance_Strings[storageIdx].TradeArea_Name}</Caption>
                                 <div className='itemDetails-tradeArea-packs'>
-                                    <Caption weight={"1"}>{packsCount(details.Balance_Strings[storageIdx], details)}&nbsp;упак</Caption>
-                                    <Caption weight={"1"}>{details.Balance_Strings[storageIdx].Quantity} м<sup>2</sup></Caption>
+                                    <Caption
+                                        weight={"1"}>{packsCount(details.Balance_Strings[storageIdx], details)}&nbsp;упак</Caption>
+                                    <Caption
+                                        weight={"1"}>{details.Balance_Strings[storageIdx].Quantity} м<sup>2</sup></Caption>
                                 </div>
                             </div>
                             <div className='tradearea-button'>
                                 {basket.hasProduct(element.id)
-                                    ? <Counter initValue={basket.getDetails(element)?.packCount}
-                                               onChange={debouncedHandleQuantityChange} suffix={'упак'}/>
+                                    ? <Counter
+                                        initValue={basket.getDetails(element)?.packCount}
+                                        onChange={debouncedHandleQuantityChange}
+                                        suffix={'упак'}
+                                    />
                                     : <Button onClick={() => handleAddProductToBasket(1)}>Добавить</Button>
                                 }
                             </div>

@@ -1,7 +1,7 @@
 .footerMenu {
   &-container{
     padding: 0;
-    z-index: 1000;
+    //z-index: 1000;
   }
 
 
@@ -12,34 +12,6 @@
       text-overflow: unset;
     }
   }
-
-    //&-item {
-  //  flex: 1 1;
-  //  height: 100%;
-  //  display: flex;
-  //  justify-content: center;
-  //  align-items: center;
-  //  color: var(--tg-theme-text-color);
-  //  cursor:  pointer;
-  //
-  //  a{
-  //    color: var(--tg-theme-text-color);
-  //    fill: var(--tg-theme-text-color);
-  //    display: flex;
-  //    flex-direction: column;
-  //    align-items: center;
-  //  }
-  //
-  //  a.active{
-  //    color: var(--tg-theme-accent-text-color);
-  //    fill: var(--tg-theme-accent-text-color);
-  //  }
-  //}
-  //
-  //&-text{
-  //  font-size: 0.75rem;
-  //  font-weight: 600;
-  //}
 
   &-icon {
     width: 24px;
