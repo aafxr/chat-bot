@@ -12,7 +12,7 @@ interface UserSliceState {
     tg_user?: TgUser
     app_user?: AppUser
     userCompanies: Company[]
-    orders: Array<any>
+    orders: Array<Order>
     basket: Basket
 }
 

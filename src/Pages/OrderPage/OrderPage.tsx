@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Caption} from "@telegram-apps/telegram-ui";
 
@@ -18,6 +18,7 @@ import './OrderPage.scss'
 export function OrderPage() {
     const dispatch = useAppDispatch()
     const orders = useUserOrders()
+    const ol = useMemo(() =>  [...orders].reverse(), [orders])
 
 
     const [removeOrder, setRemoveOrder] = useState<Order>()
@@ -44,7 +45,7 @@ export function OrderPage() {
                 <div className='order-list'>
                     {orders.length
                         ? (
-                            orders.map((o) => (
+                            ol.map((o) => (
                                 <OrderCard
                                     order={o}
                                     onRemove={() => setRemoveOrder(o)}
