@@ -1,9 +1,12 @@
 /**
- * структура описывает остаток товара на складах
+ * структура описывает остаток товара на складе
  */
 export class Balance{
+    /** количество товара */
     Quantity: string
+    /** ид склада */
     TradeArea_Id: string
+    /** название (город) склада */
     TradeArea_Name: string
 
     constructor(b: Partial<Balance> = {}) {

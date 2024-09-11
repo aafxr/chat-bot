@@ -1,8 +1,16 @@
+/**
+ * описывает поступление товара на склад
+ */
 export class Transit{
+    /** название (город) склада */
     Storehouse: string
+    /** поступающще количество товара на склад */
     Transit_Strings: {
+        /** количество товара */
         Quantity: string
+        /** ид склада */
         TradeArea_Id: string
+        /** название (город) склада */
         TradeArea_Name: string
     }
 
