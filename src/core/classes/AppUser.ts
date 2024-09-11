@@ -1,32 +1,57 @@
 import {TgUser} from "./TgUser";
 
 
-
+/**
+ * сущность представляет пользователя приложения
+ */
 export class AppUser {
+    /** ид пользователя приложения */
     id: number
+    /** телеграм ид пользователя */
     telegram_id: string
+    /** имя пользователя */
     username: string
+    /** ??? */
     activity: string
+    /** дата создания пользователя */
     created_at: string
+    /** даа обновления */
     updated_at: string
+    /** ??? */
     stage: string
+    /** ??? */
     article: any | null
+    /** ??? */
     product: any | null
+    /** ??? */
     order_available: number
+    /** ??? */
     trade_area: any | null
+    /** ??? */
     basket_item_id: any | null
+    /** ид менеджера */
     manager: number
+    /** название организации */
     org: string
+    /** ??? */
     buttonstat: any | null
+    /** ??? */
     inputstat: any | null
+    /** город пользователя */
     city: string
+    /** ??? */
     request: number
+    /** номер телефона */
     phone: number
+    /** страна */
     country: string
+    /** представление сущности тг пользователя */
     tgUser: TgUser | null
+    /** ид склада, выбранного пользователем по умолчанию */
     storehouseId: string | null
+    /** город склада */
     storehouseCity: string | null
-
+    /** флаг доступна ли пользователю возможность редактировать продуктв */
     canEdite: boolean
 
 
