@@ -13,6 +13,7 @@ import {FavoriteType} from "../../types/FavoriteType";
 import {TgService} from "./TgService";
 import {AppUser} from "../classes/AppUser";
 import {Basket} from "../classes/Basket";
+import {ErrorService} from "./ErrorService";
 
 
 const ARTICLES_KEY = 'articles'
@@ -73,7 +74,7 @@ export class CatalogService {
                 for (const el of catalog.sections) {
                     await DB.update(StoreName.SECTIONS, el)
                 }
-            }).catch(console.error)
+            }).catch(ErrorService.handleError)
             return catalog
         }
     }
@@ -114,7 +115,7 @@ export class CatalogService {
     static async addFavorite(el: Product) {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
         fav[el.id] = el.id
-        TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(console.error)
+        TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(ErrorService.handleError)
         await DB.setStoreItem(FAVORITE_KEY, fav)
     }
 
@@ -123,7 +124,7 @@ export class CatalogService {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY)
         if (fav) {
             delete fav[el.id]
-            TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(console.error)
+            TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(ErrorService.handleError)
             await DB.setStoreItem(FAVORITE_KEY, fav)
         }
     }
@@ -139,7 +140,7 @@ export class CatalogService {
             console.error(e)
         }
         if (f) {
-            DB.setStoreItem(FAVORITE_KEY, f).catch(console.error)
+            DB.setStoreItem(FAVORITE_KEY, f).catch(ErrorService.handleError)
             return f
         }
 

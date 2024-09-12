@@ -24,6 +24,7 @@ import {Counter} from "../../components/Counter";
 import {Block} from "../../components/Block";
 
 import './ElementPage.scss'
+import {ErrorService} from "../../core/services/ErrorService";
 
 type ElementPageState = {
     productDetails?: ProductDetails
@@ -121,7 +122,7 @@ export function ElementPage() {
                     setState(p => ({...p, productDetails: pd}))
                 }
             })
-            .catch(console.error)
+            .catch(ErrorService.handleError)
             .finally(() => setState(p => ({
                 ...p,
                 productDetailsLoading: false,
@@ -144,7 +145,7 @@ export function ElementPage() {
                     setState(prev => ({...prev, relatedItems}))
                 }
             })
-            .catch(console.error)
+            .catch(ErrorService.handleError)
             .finally(() => setState(p => ({...p, relatedLoading: false})))
 
     }, [state, catalog]);

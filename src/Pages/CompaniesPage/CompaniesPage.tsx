@@ -7,6 +7,7 @@ import {UserService} from "../../core/services/UserService";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {PageHeader} from "../../components/PageHeader";
 import {Company} from "../../core/classes/Company";
+import {ErrorService} from "../../core/services/ErrorService";
 
 type CompanyField = {
     key: keyof Omit<Company, "id" | "validate">
@@ -64,7 +65,7 @@ export function CompaniesPage() {
         e.stopPropagation()
         e.preventDefault()
         if (!user) return
-        UserService.removeCompany(user, c).catch(console.error)
+        UserService.removeCompany(user, c).catch(ErrorService.handleError)
     }
 
 

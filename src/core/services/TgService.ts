@@ -1,6 +1,8 @@
 import {TgUser} from "../classes/TgUser";
 import {Order} from "../classes/Order";
 import {Basket} from "../classes/Basket";
+import {fetchOrders} from "../../api/fetchOrders";
+import {store} from "../../redux/store";
 
 
 const CURRENT_ORDER_KEY = 'currentOrder'
@@ -10,10 +12,7 @@ const BASKET_KEY = "basket"
 
 export class TgService {
     static getInitData(){
-        if(Telegram.WebApp.initData){
-              return Telegram.WebApp.initData
-        }
-
+        if(Telegram.WebApp.initData)return Telegram.WebApp.initData
         return 'query_id=AAGYnLRHAAAAAJictEcjQpZD&user=%7B%22id%22%3A1203018904%2C%22first_name%22%3A%22Alexandr%22%2C%22last_name%22%3A%22A%22%2C%22username%22%3A%22AlexandrNS70%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1723104146&hash=5f0ea35b8b571b89399f715258d4664c02f4b03214765be9153cc204879444c6'
     }
 
@@ -29,33 +28,36 @@ export class TgService {
         return Telegram.WebApp.initDataUnsafe.start_param
     }
 
+    //
+    // static async getOrdersList(): Promise<Order[]> {
+    //     const keys = await new Promise<string[]>((res, rej) =>
+    //         Telegram.WebApp.CloudStorage.getKeys(
+    //             (e: Error | null, keys) => e ? rej(e) : res(keys)
+    //         ))
+    //
+    //     if (!keys || !keys.length) return []
+    //
+    //     const orders = await new Promise<Order[]>((res, rej) => {
+    //         Telegram.WebApp.CloudStorage.getItems(
+    //             keys,
+    //             (e: Error | null, items: string[]) => e ? rej(e) : res(items.map(i => JSON.parse(i)))
+    //         )
+    //     })
+    //
+    //     if (orders && orders.length) {
+    //         return orders.map(o => new Order(o))
+    //     }
+    //
+    //     return []
+    // }
 
-    static async getOrdersList(): Promise<Order[]> {
-        const keys = await new Promise<string[]>((res, rej) =>
-            Telegram.WebApp.CloudStorage.getKeys(
-                (e: Error | null, keys) => e ? rej(e) : res(keys)
-            ))
 
-        if (!keys || !keys.length) return []
-
-        const orders = await new Promise<Order[]>((res, rej) => {
-            Telegram.WebApp.CloudStorage.getItems(
-                keys,
-                (e: Error | null, items: string[]) => e ? rej(e) : res(items.map(i => JSON.parse(i)))
-            )
+    static loadOrders(){
+        return Promise.resolve(async () => {
+            const res = await fetchOrders()
         })
-
-        if (orders && orders.length) {
-            return orders.map(o => new Order(o))
-        }
-
-        return []
-    }
-
-
-    static async loadOrders(){
-        const orders = await this.getCloudItem<Order[]>(CURRENT_ORDER_KEY)
-        return orders.map(o => new Order(o))
+        // const orders = await this.getCloudItem<Order[]>(CURRENT_ORDER_KEY)
+        // return orders.map(o => new Order(o))
     }
 
 

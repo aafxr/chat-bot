@@ -1,5 +1,7 @@
 import {CatalogPhotoType} from "../../types/CatalogPhotoType";
 import {ProductProperty} from "./ProductProperty";
+import {ProductDetails} from "./ProductDetails";
+import {Balance} from "./Balance";
 
 export class Product{
     id: string
@@ -12,6 +14,8 @@ export class Product{
     photo: CatalogPhotoType[]
     properties: ProductProperty[]
 
+    details: ProductDetails | null
+
 
     constructor(item: Partial<Product> = {}) {
         this.id = item.id !== undefined ? item.id : ''
@@ -23,5 +27,11 @@ export class Product{
         this.price = item.price !== undefined ? item.price : ''
         this.photo = item.photo !== undefined ? item.photo : []
         this.properties = item.properties !== undefined ? item.properties : []
+        this.details = item.details  ? new ProductDetails(item.details) : null
+    }
+
+    isInStorehouse(shId: Balance['TradeArea_Id']){
+        if(!this.details) return false
+        return !!this.details.Balance_Strings.find(bs => bs.TradeArea_Id === shId)
     }
 }

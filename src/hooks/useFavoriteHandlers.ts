@@ -2,6 +2,7 @@ import {Product} from "../core/classes/Product";
 import {CatalogService} from "../core/services/CatalogService";
 import {useAppDispatch} from "../redux/hooks";
 import {setFavorite} from "../redux/slices/catalog-slice";
+import {ErrorService} from "../core/services/ErrorService";
 
 export function useFavoriteHandlers(){
     const dispatch = useAppDispatch()
@@ -9,19 +10,19 @@ export function useFavoriteHandlers(){
     function addFavorite(el : Product){
         CatalogService.addFavorite(el)
             .then(updateFavoriteState)
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }
 
     function removeFavorite(el: Product){
         CatalogService.removeFavorite(el)
             .then(updateFavoriteState)
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }
 
     function updateFavoriteState(){
         CatalogService.getFavorites()
             .then(f => dispatch(setFavorite(f)))
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }
 
 

@@ -16,6 +16,7 @@ import {Basket} from "../../core/classes/Basket";
 import {Block} from "../../components/Block";
 
 import './ConfirmOrderPage.scss'
+import {ErrorService} from "../../core/services/ErrorService";
 
 
 
@@ -61,7 +62,7 @@ export function ConfirmOrderPage() {
             newUser.phone = +p
             UserService.updateAppUser(newUser)
                 .then(() => dispatch(setAppUser(newUser)))
-                .catch(console.error)
+                .catch(ErrorService.handleError)
         }
 
         if(!companies.length){
@@ -79,7 +80,7 @@ export function ConfirmOrderPage() {
         console.log(basket)
         BasketService.submitBasket(basket, user)
             .then(() => navigate('/orderSuccess'))
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }
 
 

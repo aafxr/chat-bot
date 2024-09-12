@@ -15,7 +15,6 @@ import {ProfilePage} from "./Pages/ProfilePage";
 import {CatalogPage} from "./Pages/CatalogPage";
 import {ElementPage} from "./Pages/ElementPage";
 import {useInitUser} from "./hooks/useInitUser";
-import {TestApiPage} from "./Pages/TestApiPage";
 import {CompanyEdit} from "./Pages/CompanyEdit";
 import {Catalog} from "./core/classes/Catalog";
 import {BasketPage} from "./Pages/BasketPage";
@@ -26,6 +25,7 @@ import {store} from "./redux/store";
 
 
 import './css/App.css';
+import {ErrorService} from "./core/services/ErrorService";
 
 
 function App() {
@@ -55,21 +55,21 @@ function App() {
 
         CatalogService
             .getCatalog(handleService)
-            .catch(console.error)
-    }, [dispatch]);
+            .catch(ErrorService.handleError)
+    },  [dispatch]);
 
 
     useEffect(() => {
         CatalogService.getFavorites()
             .then(f => dispatch(setFavorite(f)))
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }, [dispatch]);
 
 
     // useEffect(() => {
     //     OrderService.loadOrders()
     //         .then(o => o && dispatch(setOrders(o)))
-    //         .catch(console.error)
+    //         .catch(ErrorService.handleError)
     // }, [dispatch]);
 
 
@@ -84,7 +84,7 @@ function App() {
     useEffect(() => {
         TgService.getBasket()
             .then(b => dispatch(setBasket(b)))
-            .catch(console.error)
+            .catch(ErrorService.handleError)
     }, [])
 
 
@@ -100,7 +100,6 @@ function App() {
                 <Route path={'/favorite'} element={<FavoritePage/>}/>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
                 <Route path={'/profile/edite'} element={<ProfileEditePage/>}/>
-                <Route path={'/Telegram_bot/test'} element={<TestApiPage/>}/>
                 <Route path={'/companies'} element={<CompaniesPage/>}/>
                 <Route path={'/company/:companyID'} element={<CompanyEdit/>}/>
                 <Route path={'/company/new'} element={<CompanyEdit/>}/>

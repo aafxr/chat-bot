@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {UserService} from "../core/services/UserService";
 import {useAppDispatch} from "../redux/hooks";
+import {ErrorService} from "../core/services/ErrorService";
 
 
 type initUserState = {
@@ -28,7 +29,7 @@ export function useInitUser() {
         setState(p => ({...p, loading: true}))
 
             UserService.getAppUser()
-                .catch(console.error)
+                .catch(ErrorService.handleError)
                 .finally(() => setState(p => ({...p, loading: false})))
     }, [dispatch, state])
 

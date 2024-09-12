@@ -6,6 +6,7 @@ import {StoreHouseType} from "../../../core/services/StorehouseService";
 import {useAppUser} from "../../../redux/hooks/useAppUser";
 import {AppUser} from "../../../core/classes/AppUser";
 import {Subtitle} from "../../Subtitle";
+import {ErrorService} from "../../../core/services/ErrorService";
 
 
 type SelectStoreHouseModalProps = {
@@ -23,7 +24,7 @@ export function SelectStoreHouseModal({open, onOpenChange}: SelectStoreHouseModa
         const u = new AppUser(user)
         u.storehouseId = sh.id
         UserService.updateAppUser(u)
-            .catch(console.error)
+            .catch(ErrorService.handleError)
             .finally(() => onOpenChange?.(false))
     }
 
