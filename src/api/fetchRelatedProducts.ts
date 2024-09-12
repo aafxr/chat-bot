@@ -1,5 +1,6 @@
 import axios from "axios";
 import {ProductDetails} from "../core/classes/ProductDetails";
+import {NetworkError} from "../core/errors";
 
 
 type FetchRelatedProductsResponse = {
@@ -9,8 +10,13 @@ type FetchRelatedProductsResponse = {
 }
 
 export async function fetchRelatedProducts(p: ProductDetails){
-    const res = await axios.post<FetchRelatedProductsResponse>(`https://refloor-bot.ru/api/getRelated.php?code=${p.ProductArticleForChatBot}`)
-    if(res.status > 199 && res.status < 300 ){
-        return res.data.result
+    try {
+        const res = await axios.post<FetchRelatedProductsResponse>(`https://refloor-bot.ru/api/getRelated.php?code=${p.ProductArticleForChatBot}`)
+        if(res.status > 199 && res.status < 300 ){
+            return res.data.result
+        }
+    } catch (e){
+        if (axios.isAxiosError(e)) throw NetworkError.connectionError()
+        throw e
     }
 }

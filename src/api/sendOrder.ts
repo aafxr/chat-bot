@@ -3,22 +3,17 @@ import {botFetch} from "../axios";
 import {Order} from "../core/classes/Order";
 import {BasketDTO} from "../core/dto/BasketDTO";
 import {AppUser} from "../core/classes/AppUser";
+import axios from "axios";
+import {NetworkError} from "../core/errors";
 
 export async function sendOrder(b:BasketDTO, u : AppUser){
-    // const payload = {
-    //     OrderItems : b.items,
-    //     'Client' : {
-    //         'ID': user.id,
-    //         'Phone' : user.phone,
-    //         'UID' : b.company?.id,
-    //     },
-    //     'TradeArea_Id' : 'selectedWarehouse.id',
-    //     'Comment' : b.comment,
-    //     'OrderNumber' : 'tg-pwa-'+Date.now()
-    // }
-
-    const res = await botFetch.post<BotResponseType<Order>>('/api/order/new?uid=' + u.id, b)
-    if(res.status > 199 && res.status < 300){
-        return res.data
+    try {
+        const res = await botFetch.post<BotResponseType<Order>>('/api/order/new?uid=' + u.id, b)
+        if(res.status > 199 && res.status < 300){
+            return res.data
+        }
+    } catch (e){
+        if (axios.isAxiosError(e)) throw NetworkError.connectionError()
+        throw e
     }
 }
