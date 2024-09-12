@@ -7,6 +7,7 @@ import {FavoritePage} from "./Pages/FavoritePage/FavoritePage";
 import {CatalogService} from "./core/services/CatalogService";
 import {ConfirmOrderPage} from "./Pages/ConfirmOrderPage";
 import {ProfileEditePage} from "./Pages/ProfileEditePage";
+import {ErrorService} from "./core/services/ErrorService";
 import {CompaniesPage} from "./Pages/CompaniesPage";
 import {useCatalog} from "./redux/hooks/useCatalog";
 import {setBasket} from "./redux/slices/user-slice";
@@ -25,7 +26,6 @@ import {store} from "./redux/store";
 
 
 import './css/App.css';
-import {ErrorService} from "./core/services/ErrorService";
 
 
 function App() {
