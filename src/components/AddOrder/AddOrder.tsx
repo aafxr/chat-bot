@@ -6,7 +6,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {removeBasketProduct, setBasketProductQuantity} from "../../redux/slices/user-slice";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {Product} from "../../core/classes/Product";
 import {useAppDispatch} from "../../redux/hooks";
 import {CloseIcon} from "../svg";
 
@@ -16,7 +16,7 @@ import './AddOrder.scss'
 
 export type AddOrderProps = {
     className?: string
-    product: CatalogItem
+    product: Product
     details: ProductDetails
     max: number
 }

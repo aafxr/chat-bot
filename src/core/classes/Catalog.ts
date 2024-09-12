@@ -1,5 +1,5 @@
 import {CatalogArticlesType} from "../../types/CatalogArticlesType";
-import {CatalogItem} from "./CatalogItem";
+import {Product} from "./Product";
 import {CatalogSection} from "./CatalogSection";
 
 
@@ -13,11 +13,11 @@ Object.freeze(allSection)
 
 export class Catalog {
     articles: CatalogArticlesType
-    elements: Record<CatalogItem['id'], CatalogItem>
+    elements: Record<Product['id'], Product>
     sections: CatalogSection[]
     currentSection: CatalogSection
 
-    filteredItems: Record<CatalogItem['id'], CatalogItem>
+    filteredItems: Record<Product['id'], Product>
 
     _filter: string
 
@@ -32,11 +32,11 @@ export class Catalog {
         if (c.elements !== undefined) {
             const values = Object.values(c.elements)
             if (values.length) {
-                if (values[0] instanceof CatalogItem){
+                if (values[0] instanceof Product){
                     this.elements = c.elements
                 } else{
-                    this.elements = values.reduce<Record<CatalogItem['id'], CatalogItem>>((a, e) => {
-                        a[e.id] = new CatalogItem(e)
+                    this.elements = values.reduce<Record<Product['id'], Product>>((a, e) => {
+                        a[e.id] = new Product(e)
                         return a
                     }, {})
                 }
@@ -54,13 +54,13 @@ export class Catalog {
     }
 
 
-    getElementByID(id: CatalogItem['id']) {
+    getElementByID(id: Product['id']) {
         return this.elements[id]
     }
 
 
-    getElements(ids: CatalogItem['id'][]) {
-        const res: CatalogItem[] = new Array(ids.length)
+    getElements(ids: Product['id'][]) {
+        const res: Product[] = new Array(ids.length)
         for (let i = 0; i < ids.length;i++ ) {
             const id = ids[i]
             const c = this.elements[id]
@@ -85,7 +85,7 @@ export class Catalog {
         const words = text.split(/\s+/)
 
         this.filteredItems = Object.values(this.elements)
-            .reduce<Record<CatalogItem['id'], CatalogItem>>((a, e) => {
+            .reduce<Record<Product['id'], Product>>((a, e) => {
                 const v = e.title.toLowerCase()
                 if (words.every(k => v.includes(k))) a[e.id] = e
                 return a

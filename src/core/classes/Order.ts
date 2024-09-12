@@ -21,7 +21,7 @@ export class Order extends Basket{
 
 /*
 id: number
-    orders: Record<CatalogItem['id'], OrderItem>
+    orders: Record<Product['id'], OrderItem>
 
     constructor(o: Partial<Order> = {}) {
         this.id = o.id || 0
@@ -41,7 +41,7 @@ id: number
         }
     }
 
-    has(p: CatalogItem){
+    has(p: Product){
         return !!this.orders[p.id]
     }
 
@@ -49,19 +49,19 @@ id: number
         this.orders[o.product.id] = o
     }
 
-    get(p: CatalogItem): [CatalogItem, number] | undefined{
+    get(p: Product): [Product, number] | undefined{
         const oi = this.orders[p.id]
         if(oi){
             return [oi.product, oi.quantity]
         }
     }
 
-    delete(p:CatalogItem){
+    delete(p:Product){
         delete this.orders[p.id]
     }
 
 
-    entries(): [CatalogItem, number][]{
+    entries(): [Product, number][]{
         return Object.values(this.orders).map(v => [v.product,v.quantity])
     }
  */

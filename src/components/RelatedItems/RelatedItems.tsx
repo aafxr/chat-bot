@@ -4,7 +4,7 @@ import {useNavigate} from "react-router";
 import {Offcanvas} from "react-bootstrap";
 import {OffcanvasProps} from "react-bootstrap/Offcanvas";
 
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {Product} from "../../core/classes/Product";
 import {ProductCard} from "../ProductCard";
 
 import './RelatedItems.scss'
@@ -12,7 +12,7 @@ import './RelatedItems.scss'
 
 export interface RelatedItemsProps extends OffcanvasProps {
     className?: string
-    items: CatalogItem[]
+    items: Product[]
 }
 
 
@@ -20,7 +20,7 @@ export function RelatedItems({items, className, ...props}: RelatedItemsProps) {
     const navigate = useNavigate()
 
 
-    const handleItemClick = (item: CatalogItem) => navigate(`/${item.id}`)
+    const handleItemClick = (item: Product) => navigate(`/${item.id}`)
 
 
     return (

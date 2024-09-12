@@ -6,7 +6,7 @@ import {Button, Caption, IconButton} from "@telegram-apps/telegram-ui";
 
 import {useFavoriteHandlers} from "../../hooks/useFavoriteHandlers";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {Product} from "../../core/classes/Product";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {CartIcon, HeartIcon, PenIcon} from "../svg";
 import {Currency} from "../../constants/currency";
@@ -17,10 +17,10 @@ import './ProductCard.scss'
 
 export type ProductCardProps = {
     to?: string
-    item: CatalogItem
+    item: Product
     mode?: CardMode
     className?: string
-    onClick?: (item: CatalogItem) => unknown
+    onClick?: (item: Product) => unknown
 }
 
 export function ProductCard({mode = 'vertical', to, className, onClick, item}: ProductCardProps) {

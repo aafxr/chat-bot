@@ -13,7 +13,7 @@ import {CatalogService} from "../../core/services/CatalogService";
 import {ProductDetails} from "../../core/classes/ProductDetails";
 import {useUserBasket} from "../../redux/hooks/useUserBasket";
 import {RelatedItems} from "../../components/RelatedItems";
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {Product} from "../../core/classes/Product";
 import {useAppUser} from "../../redux/hooks/useAppUser";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {FooterMenu} from "../../components/FooterMenu";
@@ -32,7 +32,7 @@ type ElementPageState = {
 
     balance?: Balance
 
-    relatedItems: CatalogItem[]
+    relatedItems: Product[]
     relatedLoading: boolean
     relatedRequested: boolean
 
@@ -290,7 +290,7 @@ export function ElementPage() {
 type TabContentProps = {
     tabId: TabItemType['id']
     details: ProductDetails
-    element: CatalogItem
+    element: Product
     basket: Basket
     storageIdx: number
 }

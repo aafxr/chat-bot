@@ -3,7 +3,7 @@ import {CbWithErrorType} from "../../types/CbWithErrorType";
 import {DB} from "../db/DB";
 import {CatalogArticlesType} from "../../types/CatalogArticlesType";
 import {StoreName} from "../../types/StoreName";
-import {CatalogItem} from "../classes/CatalogItem";
+import {Product} from "../classes/Product";
 import {CatalogSection} from "../classes/CatalogSection";
 import {fetchCatalog} from "../../api/fetchCatalog";
 import {ProductDetails} from "../classes/ProductDetails";
@@ -43,11 +43,11 @@ export class CatalogService {
         const articles = await DB.getStoreItem<CatalogArticlesType>(ARTICLES_KEY)
         if (!articles) return
 
-        const items = (await DB.getAll<CatalogItem>(StoreName.ITEMS))
+        const items = (await DB.getAll<Product>(StoreName.ITEMS))
         if (!items.length) return
 
         const elements = items.reduce<Catalog['elements']>((a, e) => {
-            a[e.id] = new CatalogItem(e)
+            a[e.id] = new Product(e)
             return a
         }, {})
 
@@ -79,7 +79,7 @@ export class CatalogService {
     }
 
 
-    static async getProductDetails(item: CatalogItem | undefined, cb: CbWithErrorType<ProductDetails>) {
+    static async getProductDetails(item: Product | undefined, cb: CbWithErrorType<ProductDetails>) {
         if(!item) return
 
         DB.getOne<ProductDetails>(StoreName.PRODUCT_DETAILS, item.id)
@@ -111,7 +111,7 @@ export class CatalogService {
     }
 
 
-    static async addFavorite(el: CatalogItem) {
+    static async addFavorite(el: Product) {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY) || {}
         fav[el.id] = el.id
         TgService.setCloudItem<FavoriteType>(FAVORITE_KEY, fav).catch(console.error)
@@ -119,7 +119,7 @@ export class CatalogService {
     }
 
 
-    static async removeFavorite(el: CatalogItem) {
+    static async removeFavorite(el: Product) {
         const fav = await DB.getStoreItem<FavoriteType>(FAVORITE_KEY)
         if (fav) {
             delete fav[el.id]

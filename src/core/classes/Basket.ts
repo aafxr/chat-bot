@@ -1,4 +1,4 @@
-import {CatalogItem} from "./CatalogItem";
+import {Product} from "./Product";
 import {ProductDetails} from "./ProductDetails";
 import {Catalog} from "./Catalog";
 import {Company} from "./Company";
@@ -65,7 +65,7 @@ export class Basket {
      * @param pd
      * @param quantity
      */
-    setProduct(p: CatalogItem, pd: ProductDetails, quantity: number) {
+    setProduct(p: Product, pd: ProductDetails, quantity: number) {
         if (quantity <= 0) return false
         let bd: BasketDetail | undefined
         bd = this._items.get(p.id)
@@ -100,7 +100,7 @@ export class Basket {
      * удаляет продукт из корзины
      * @param p
      */
-    removeProduct(p: CatalogItem) {
+    removeProduct(p: Product) {
         return this._items.delete(p.id)
     }
 
@@ -119,7 +119,7 @@ export class Basket {
      * позволяет получить описание позиции корзины
      * @param p продукт каталога
      */
-    getDetails(p: CatalogItem) {
+    getDetails(p: Product) {
         return this._items.get(p.id)
     }
 
@@ -127,7 +127,7 @@ export class Basket {
      *  позволяет проверить наличие позиции в корзине
      * @param id ид продукта
      */
-    hasProduct(id: CatalogItem['id']){
+    hasProduct(id: Product['id']){
         return this._items.has(id)
     }
 }
@@ -138,13 +138,13 @@ export class Basket {
  */
 export class BasketDetail {
     /** ид продукта */
-    id: CatalogItem['id']
+    id: Product['id']
     /** название продукта */
-    title: CatalogItem['title']
+    title: Product['title']
     /** количество продукта в м2 */
     count: number
     /** цена продукта */
-    price: CatalogItem['price']
+    price: Product['price']
     /** единица измерения продукта */
     measure: ProductDetails['PackUnitMeasure']
     /** число упаковок */

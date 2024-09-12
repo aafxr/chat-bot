@@ -1,5 +1,5 @@
 import {ProductDetails} from "../../../core/classes/ProductDetails";
-import {CatalogItem} from "../../../core/classes/CatalogItem";
+import {Product} from "../../../core/classes/Product";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TgService} from "../../../core/services/TgService";
 import {AppUser} from "../../../core/classes/AppUser";
@@ -25,7 +25,7 @@ const initialState: UserSliceState = {
 
 
 export type BasketProductDetails = {
-    product: CatalogItem
+    product: Product
     details: ProductDetails
     quantity: number
 }
@@ -99,7 +99,7 @@ const userSlice = createSlice({
          * @param state
          * @param action
          */
-        removeBasketProduct(state, action: PayloadAction<CatalogItem>){
+        removeBasketProduct(state, action: PayloadAction<Product>){
             state.basket.removeProduct(action.payload)
             state.basket = new Basket(state.basket)
             TgService.setBasket(state.basket).catch(console.error)

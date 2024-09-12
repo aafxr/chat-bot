@@ -1,4 +1,4 @@
-import {CatalogItem} from "../core/classes/CatalogItem";
+import {Product} from "../core/classes/Product";
 import axios from "axios";
 import {ProductDetails} from "../core/classes/ProductDetails";
 import {NetworkError} from "../core/errors";
@@ -11,7 +11,7 @@ type FetchElementDetailResponse = {
 }
 
 
-export async function fetchElementDetail(item: CatalogItem){
+export async function fetchElementDetail(item: Product){
     try {
         const res = await axios.get<FetchElementDetailResponse>(`https://refloor-bot.ru/api/getDetail?code=${item.apiCode}`)
         if(res.status > 199 &&  res.status < 300){

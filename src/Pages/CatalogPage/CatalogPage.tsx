@@ -5,7 +5,7 @@ import {Headline, List} from "@telegram-apps/telegram-ui";
 
 import {CatalogSection} from "../../core/classes/CatalogSection";
 import {setCatalog} from "../../redux/slices/catalog-slice";
-import {CatalogItem} from "../../core/classes/CatalogItem";
+import {Product} from "../../core/classes/Product";
 import {ProductCard} from "../../components/ProductCard";
 import {useCatalog} from "../../redux/hooks/useCatalog";
 import {FooterMenu} from "../../components/FooterMenu";
@@ -49,7 +49,7 @@ export function CatalogPage() {
     }, [section]);
 
 
-    function handleElementClick(item: CatalogItem) {
+    function handleElementClick(item: Product) {
         navigate(`/${item.id}`)
     }
 

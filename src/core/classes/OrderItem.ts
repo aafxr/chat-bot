@@ -1,8 +1,8 @@
-import {CatalogItem} from "./CatalogItem";
+import {Product} from "./Product";
 
 export class OrderItem{
     quantity: number
-    product: CatalogItem
+    product: Product
 
     constructor(o : Pick<OrderItem, 'quantity' | 'product'>) {
         this.product = o.product

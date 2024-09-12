@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import React from 'react';
 
-import {CatalogItemProperty} from "../../core/classes/CatalogItemProperty";
+import {ProductProperty} from "../../core/classes/ProductProperty";
 
 import './ElementProperty.scss'
 
 
 export type ElementPropertyProps = {
     className?: string
-    property: CatalogItemProperty
-    onClick?: (p: CatalogItemProperty) => unknown
+    property: ProductProperty
+    onClick?: (p: ProductProperty) => unknown
 }
 
 

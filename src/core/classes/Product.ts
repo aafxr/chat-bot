@@ -1,7 +1,7 @@
 import {CatalogPhotoType} from "../../types/CatalogPhotoType";
-import {CatalogItemProperty} from "./CatalogItemProperty";
+import {ProductProperty} from "./ProductProperty";
 
-export class CatalogItem{
+export class Product{
     id: string
     title: string
     apiCode: string
@@ -10,10 +10,10 @@ export class CatalogItem{
     preview: string
     price: string
     photo: CatalogPhotoType[]
-    properties: CatalogItemProperty[]
+    properties: ProductProperty[]
 
 
-    constructor(item: Partial<CatalogItem> = {}) {
+    constructor(item: Partial<Product> = {}) {
         this.id = item.id !== undefined ? item.id : ''
         this.title = item.title !== undefined ? item.title : ''
         this.apiCode = item.apiCode !== undefined ? item.apiCode : ''

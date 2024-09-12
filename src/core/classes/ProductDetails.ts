@@ -1,10 +1,10 @@
 import {Balance} from "./Balance";
 import {Price} from "./Price";
 import {Transit} from "./Transit";
-import {CatalogItem} from "./CatalogItem";
+import {Product} from "./Product";
 
 export class ProductDetails{
-    id: CatalogItem['id']
+    id: Product['id']
     Balance_Strings: Balance[]
     LinkToSite: string
     PackUnitMeasure: string

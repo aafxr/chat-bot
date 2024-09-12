@@ -1,3 +1,3 @@
-import {CatalogItem} from "../core/classes/CatalogItem";
+import {Product} from "../core/classes/Product";
 
-export type FavoriteType = Record<CatalogItem['id'], CatalogItem['id']>
+export type FavoriteType = Record<Product['id'], Product['id']>
